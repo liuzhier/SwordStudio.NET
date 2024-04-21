@@ -78,7 +78,7 @@ namespace PalMain
             //
             // Load custom Tabpage
             //
-            PAL_LoadTabPage();
+            //PAL_LoadTabPage();
 
             return;
         }

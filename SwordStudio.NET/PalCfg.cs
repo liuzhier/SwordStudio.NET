@@ -19,8 +19,10 @@ using LPSTR     = System.String;
 
 using PAL_POS   = System.UInt64;
 
-using static PalGlobal.Pal_Global;
 using PalGlobal;
+
+using static PalGlobal.Pal_Global;
+using static PalUtil.Pal_Util;
 
 namespace PalCfg
 {
@@ -356,5 +358,50 @@ namespace PalCfg
         {
             return Pal_Cfg.pcnRootList.Where(node => node.lpszNodeName.Equals(_lpszNodeName)).First();
         }
+
+        public static PalCfgNodeItem
+        Pal_Cfg_GetCfgNodeItem(
+            LPSTR       _lpszNodeName,
+            LPSTR       _lpszItemNodeName
+        )
+        {
+            return Pal_Cfg_GetCfgNode(_lpszNodeName).pcniItem.Where(item => item.lpszNodeName.Equals(_lpszItemNodeName)).First();
+        }
+
+        public static INT
+        Pal_Cfg_GetCfgNodeItemIndex(
+            LPSTR _lpszNodeName,
+            LPSTR _lpszItemNodeName
+        )
+        {
+            List<PalCfgNodeItem> pcniTmp = Pal_Cfg_GetCfgNode(_lpszNodeName).pcniItem;
+            return pcniTmp.IndexOf(pcniTmp.Where(item => item.lpszNodeName.Equals(_lpszItemNodeName)).First());
+        }
+
+
+        public static INT
+        Pal_Cfg_GetChunkSize(
+            LPSTR _lpszNodeName
+        )
+        {
+            INT                     iSize = 0;
+            List<PalCfgNodeItem>    pcnTmpList = Pal_Cfg_GetCfgNode(_lpszNodeName).pcniItem;
+
+            //pcnTmpList  = Pal_Cfg.pcnRootList.Where(file => file.lpszNodeName.Equals(lpszUnitSystem)).First().pcniItem;
+            if (pcnTmpList[0].lpszType == lpszUnion)
+            {
+                pcnTmpList = Pal_Cfg_GetCfgNode(pcnTmpList[0].lpszNodeName).pcniItem;
+            }
+
+            foreach (PalCfgNodeItem pcn in pcnTmpList)
+            {
+                if ((pcn.Version & (Pal_VERSION.UNION | (fIsWIN95 ? Pal_VERSION.WIN : Pal_VERSION.DOS))) == 0) continue;
+
+                iSize += UTIL_GetTypeSize(pcn.lpszType);
+            }
+
+            return iSize;
+        }
+
     }
 }

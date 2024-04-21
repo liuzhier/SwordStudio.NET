@@ -50,10 +50,11 @@
             this.LowLayer_ToolsBar_Word_Button = new UitlCtrls.UtilButton();
             this.HighLayer_ToolsBar_Word_Button = new UitlCtrls.UtilButton();
             this.NoPassLayer_ToolsBar_Word_Button = new UitlCtrls.UtilButton();
-            this.button4 = new UitlCtrls.UtilButton();
+            this.EventLayer_ToolsBar_Word_Button = new UitlCtrls.UtilButton();
             this.ContentBox_World_SplitContainer = new System.Windows.Forms.SplitContainer();
             this.ActualBox_ContentBox_World_SplitContainer = new System.Windows.Forms.SplitContainer();
             this.BitMapBox_ActualBox_World_SplitContainer = new System.Windows.Forms.SplitContainer();
+            this.BoxLR_ThisBitmap_World_SplitContainer = new System.Windows.Forms.SplitContainer();
             this.Status_Word_StatusStrip = new System.Windows.Forms.StatusStrip();
             this.Message_Status_Word_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.XBlock_Status_Word_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -66,6 +67,32 @@
             this.Value_X_Status_Word_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Y_Status_Word_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Value_Y_Status_Word_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.BitmapID_ThisBitmap_Label = new System.Windows.Forms.Label();
+            this.Picture_ThisBitmap_PictureBox = new System.Windows.Forms.PictureBox();
+            this.BoxLR_BitmapList_Word_SplitContainer = new System.Windows.Forms.SplitContainer();
+            this.ScrollBar_BitmapList_Word_VScrollBar = new System.Windows.Forms.VScrollBar();
+            this.BitmapList_World_TableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.BitmapID_1_BitmapList_Label = new System.Windows.Forms.Label();
+            this.Picture_1_BitmapList_PictureBox = new System.Windows.Forms.PictureBox();
+            this.BitmapID_2_BitmapList_Label = new System.Windows.Forms.Label();
+            this.Picture_2_BitmapList_PictureBox = new System.Windows.Forms.PictureBox();
+            this.BitmapID_3_BitmapList_Label = new System.Windows.Forms.Label();
+            this.Picture_3_BitmapList_PictureBox = new System.Windows.Forms.PictureBox();
+            this.BitmapID_4_BitmapList_Label = new System.Windows.Forms.Label();
+            this.Picture_4_BitmapList_PictureBox = new System.Windows.Forms.PictureBox();
+            this.BitmapID_5_BitmapList_Label = new System.Windows.Forms.Label();
+            this.Picture_5_BitmapList_PictureBox = new System.Windows.Forms.PictureBox();
+            this.BitmapID_6_BitmapList_Label = new System.Windows.Forms.Label();
+            this.Picture_6_BitmapList_PictureBox = new System.Windows.Forms.PictureBox();
+            this.BitmapID_7_BitmapList_Label = new System.Windows.Forms.Label();
+            this.Picture_7_BitmapList_PictureBox = new System.Windows.Forms.PictureBox();
+            this.BitmapID_8_BitmapList_Label = new System.Windows.Forms.Label();
+            this.Picture_8_BitmapList_PictureBox = new System.Windows.Forms.PictureBox();
+            this.BitmapID_9_BitmapList_Label = new System.Windows.Forms.Label();
+            this.Picture_9_BitmapList_PictureBox = new System.Windows.Forms.PictureBox();
+            this.BitmapID_10_BitmapList_Label = new System.Windows.Forms.Label();
+            this.Picture_10_BitmapList_PictureBox = new System.Windows.Forms.PictureBox();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.Main_TabControl.SuspendLayout();
             this.About_TabPage.SuspendLayout();
             this.World_TabPage.SuspendLayout();
@@ -86,8 +113,30 @@
             this.ActualBox_ContentBox_World_SplitContainer.Panel1.SuspendLayout();
             this.ActualBox_ContentBox_World_SplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BitMapBox_ActualBox_World_SplitContainer)).BeginInit();
+            this.BitMapBox_ActualBox_World_SplitContainer.Panel1.SuspendLayout();
+            this.BitMapBox_ActualBox_World_SplitContainer.Panel2.SuspendLayout();
             this.BitMapBox_ActualBox_World_SplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BoxLR_ThisBitmap_World_SplitContainer)).BeginInit();
+            this.BoxLR_ThisBitmap_World_SplitContainer.Panel1.SuspendLayout();
+            this.BoxLR_ThisBitmap_World_SplitContainer.Panel2.SuspendLayout();
+            this.BoxLR_ThisBitmap_World_SplitContainer.SuspendLayout();
             this.Status_Word_StatusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_ThisBitmap_PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BoxLR_BitmapList_Word_SplitContainer)).BeginInit();
+            this.BoxLR_BitmapList_Word_SplitContainer.Panel1.SuspendLayout();
+            this.BoxLR_BitmapList_Word_SplitContainer.Panel2.SuspendLayout();
+            this.BoxLR_BitmapList_Word_SplitContainer.SuspendLayout();
+            this.BitmapList_World_TableLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_1_BitmapList_PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_2_BitmapList_PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_3_BitmapList_PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_4_BitmapList_PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_5_BitmapList_PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_6_BitmapList_PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_7_BitmapList_PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_8_BitmapList_PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_9_BitmapList_PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_10_BitmapList_PictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // Main_TabControl
@@ -211,12 +260,14 @@
             this.Open_ToolsBar_Word_Button.Size = new System.Drawing.Size(50, 50);
             this.Open_ToolsBar_Word_Button.TabIndex = 2;
             this.Open_ToolsBar_Word_Button.UseVisualStyleBackColor = true;
+            this.Open_ToolsBar_Word_Button.Click += new System.EventHandler(this.Open_ToolsBar_Word_Button_Click);
             // 
             // Save_ToolsBar_Word_Button
             // 
             this.Save_ToolsBar_Word_Button.BackColor = System.Drawing.Color.Transparent;
             this.Save_ToolsBar_Word_Button.ButtonTipText = "保存场景";
             this.Save_ToolsBar_Word_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Save_ToolsBar_Word_Button.Enabled = false;
             this.Save_ToolsBar_Word_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Save_ToolsBar_Word_Button.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_Save;
             this.Save_ToolsBar_Word_Button.Location = new System.Drawing.Point(115, 3);
@@ -245,6 +296,7 @@
             this.Select_ToolsBar_Word_Button.ButtonTipText = "选择元素";
             this.Select_ToolsBar_Word_Button.ButtonType = UitlCtrls.UtilButton.UtilButtonType.Radio;
             this.Select_ToolsBar_Word_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Select_ToolsBar_Word_Button.Enabled = false;
             this.Select_ToolsBar_Word_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Select_ToolsBar_Word_Button.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_Select;
             this.Select_ToolsBar_Word_Button.Location = new System.Drawing.Point(3, 3);
@@ -259,6 +311,7 @@
             this.Edit_ToolsBar_Word_Button.ButtonTipText = "编辑元素";
             this.Edit_ToolsBar_Word_Button.ButtonType = UitlCtrls.UtilButton.UtilButtonType.Radio;
             this.Edit_ToolsBar_Word_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Edit_ToolsBar_Word_Button.Enabled = false;
             this.Edit_ToolsBar_Word_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Edit_ToolsBar_Word_Button.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_Edit;
             this.Edit_ToolsBar_Word_Button.Location = new System.Drawing.Point(59, 3);
@@ -273,6 +326,7 @@
             this.Delete_ToolsBar_Word_Button.ButtonTipText = "删除元素";
             this.Delete_ToolsBar_Word_Button.ButtonType = UitlCtrls.UtilButton.UtilButtonType.Radio;
             this.Delete_ToolsBar_Word_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Delete_ToolsBar_Word_Button.Enabled = false;
             this.Delete_ToolsBar_Word_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Delete_ToolsBar_Word_Button.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_Delete;
             this.Delete_ToolsBar_Word_Button.Location = new System.Drawing.Point(115, 3);
@@ -300,6 +354,7 @@
             this.NoPassBlock_ToolsBar_Word_Button.ButtonTipText = "显示障碍块";
             this.NoPassBlock_ToolsBar_Word_Button.ButtonType = UitlCtrls.UtilButton.UtilButtonType.CheckBox;
             this.NoPassBlock_ToolsBar_Word_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.NoPassBlock_ToolsBar_Word_Button.Enabled = false;
             this.NoPassBlock_ToolsBar_Word_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NoPassBlock_ToolsBar_Word_Button.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_NoPass;
             this.NoPassBlock_ToolsBar_Word_Button.Location = new System.Drawing.Point(3, 3);
@@ -314,6 +369,7 @@
             this.EventBlock_ToolsBar_Word_Button.ButtonTipText = "显示事件块";
             this.EventBlock_ToolsBar_Word_Button.ButtonType = UitlCtrls.UtilButton.UtilButtonType.CheckBox;
             this.EventBlock_ToolsBar_Word_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.EventBlock_ToolsBar_Word_Button.Enabled = false;
             this.EventBlock_ToolsBar_Word_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EventBlock_ToolsBar_Word_Button.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_EventBlock;
             this.EventBlock_ToolsBar_Word_Button.Location = new System.Drawing.Point(59, 3);
@@ -330,7 +386,7 @@
             this.LayerMode_ToolsBarGroup_World_FlowLayoutPanel.Controls.Add(this.LowLayer_ToolsBar_Word_Button);
             this.LayerMode_ToolsBarGroup_World_FlowLayoutPanel.Controls.Add(this.HighLayer_ToolsBar_Word_Button);
             this.LayerMode_ToolsBarGroup_World_FlowLayoutPanel.Controls.Add(this.NoPassLayer_ToolsBar_Word_Button);
-            this.LayerMode_ToolsBarGroup_World_FlowLayoutPanel.Controls.Add(this.button4);
+            this.LayerMode_ToolsBarGroup_World_FlowLayoutPanel.Controls.Add(this.EventLayer_ToolsBar_Word_Button);
             this.LayerMode_ToolsBarGroup_World_FlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayerMode_ToolsBarGroup_World_FlowLayoutPanel.Location = new System.Drawing.Point(454, 0);
             this.LayerMode_ToolsBarGroup_World_FlowLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -344,6 +400,7 @@
             this.LowLayer_ToolsBar_Word_Button.ButtonTipText = "地面下层";
             this.LowLayer_ToolsBar_Word_Button.ButtonType = UitlCtrls.UtilButton.UtilButtonType.Radio;
             this.LowLayer_ToolsBar_Word_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LowLayer_ToolsBar_Word_Button.Enabled = false;
             this.LowLayer_ToolsBar_Word_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LowLayer_ToolsBar_Word_Button.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_Low;
             this.LowLayer_ToolsBar_Word_Button.Location = new System.Drawing.Point(3, 3);
@@ -358,6 +415,7 @@
             this.HighLayer_ToolsBar_Word_Button.ButtonTipText = "地面上层";
             this.HighLayer_ToolsBar_Word_Button.ButtonType = UitlCtrls.UtilButton.UtilButtonType.Radio;
             this.HighLayer_ToolsBar_Word_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.HighLayer_ToolsBar_Word_Button.Enabled = false;
             this.HighLayer_ToolsBar_Word_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HighLayer_ToolsBar_Word_Button.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_High;
             this.HighLayer_ToolsBar_Word_Button.Location = new System.Drawing.Point(59, 3);
@@ -372,6 +430,7 @@
             this.NoPassLayer_ToolsBar_Word_Button.ButtonTipText = "障碍层";
             this.NoPassLayer_ToolsBar_Word_Button.ButtonType = UitlCtrls.UtilButton.UtilButtonType.Radio;
             this.NoPassLayer_ToolsBar_Word_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.NoPassLayer_ToolsBar_Word_Button.Enabled = false;
             this.NoPassLayer_ToolsBar_Word_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NoPassLayer_ToolsBar_Word_Button.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_NoPassBlock;
             this.NoPassLayer_ToolsBar_Word_Button.Location = new System.Drawing.Point(115, 3);
@@ -380,19 +439,20 @@
             this.NoPassLayer_ToolsBar_Word_Button.TabIndex = 11;
             this.NoPassLayer_ToolsBar_Word_Button.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // EventLayer_ToolsBar_Word_Button
             // 
-            this.button4.BackColor = System.Drawing.Color.Transparent;
-            this.button4.ButtonTipText = "事件层";
-            this.button4.ButtonType = UitlCtrls.UtilButton.UtilButtonType.Radio;
-            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_Event;
-            this.button4.Location = new System.Drawing.Point(171, 3);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(50, 50);
-            this.button4.TabIndex = 12;
-            this.button4.UseVisualStyleBackColor = false;
+            this.EventLayer_ToolsBar_Word_Button.BackColor = System.Drawing.Color.Transparent;
+            this.EventLayer_ToolsBar_Word_Button.ButtonTipText = "事件层";
+            this.EventLayer_ToolsBar_Word_Button.ButtonType = UitlCtrls.UtilButton.UtilButtonType.Radio;
+            this.EventLayer_ToolsBar_Word_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.EventLayer_ToolsBar_Word_Button.Enabled = false;
+            this.EventLayer_ToolsBar_Word_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EventLayer_ToolsBar_Word_Button.Image = global::SwordStudio.NET.Properties.Resources.ToolBar_Event;
+            this.EventLayer_ToolsBar_Word_Button.Location = new System.Drawing.Point(171, 3);
+            this.EventLayer_ToolsBar_Word_Button.Name = "EventLayer_ToolsBar_Word_Button";
+            this.EventLayer_ToolsBar_Word_Button.Size = new System.Drawing.Size(50, 50);
+            this.EventLayer_ToolsBar_Word_Button.TabIndex = 12;
+            this.EventLayer_ToolsBar_Word_Button.UseVisualStyleBackColor = false;
             // 
             // ContentBox_World_SplitContainer
             // 
@@ -417,6 +477,7 @@
             // 
             this.ActualBox_ContentBox_World_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ActualBox_ContentBox_World_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ActualBox_ContentBox_World_SplitContainer.Enabled = false;
             this.ActualBox_ContentBox_World_SplitContainer.IsSplitterFixed = true;
             this.ActualBox_ContentBox_World_SplitContainer.Location = new System.Drawing.Point(0, 0);
             this.ActualBox_ContentBox_World_SplitContainer.Name = "ActualBox_ContentBox_World_SplitContainer";
@@ -432,13 +493,38 @@
             // 
             this.BitMapBox_ActualBox_World_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.BitMapBox_ActualBox_World_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BitMapBox_ActualBox_World_SplitContainer.IsSplitterFixed = true;
             this.BitMapBox_ActualBox_World_SplitContainer.Location = new System.Drawing.Point(0, 0);
             this.BitMapBox_ActualBox_World_SplitContainer.Name = "BitMapBox_ActualBox_World_SplitContainer";
             this.BitMapBox_ActualBox_World_SplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // BitMapBox_ActualBox_World_SplitContainer.Panel1
+            // 
+            this.BitMapBox_ActualBox_World_SplitContainer.Panel1.Controls.Add(this.BoxLR_ThisBitmap_World_SplitContainer);
+            // 
+            // BitMapBox_ActualBox_World_SplitContainer.Panel2
+            // 
+            this.BitMapBox_ActualBox_World_SplitContainer.Panel2.Controls.Add(this.BoxLR_BitmapList_Word_SplitContainer);
             this.BitMapBox_ActualBox_World_SplitContainer.Size = new System.Drawing.Size(222, 618);
-            this.BitMapBox_ActualBox_World_SplitContainer.SplitterDistance = 59;
+            this.BitMapBox_ActualBox_World_SplitContainer.SplitterDistance = 80;
             this.BitMapBox_ActualBox_World_SplitContainer.TabIndex = 0;
+            // 
+            // BoxLR_ThisBitmap_World_SplitContainer
+            // 
+            this.BoxLR_ThisBitmap_World_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BoxLR_ThisBitmap_World_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BoxLR_ThisBitmap_World_SplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.BoxLR_ThisBitmap_World_SplitContainer.Name = "BoxLR_ThisBitmap_World_SplitContainer";
+            // 
+            // BoxLR_ThisBitmap_World_SplitContainer.Panel1
+            // 
+            this.BoxLR_ThisBitmap_World_SplitContainer.Panel1.Controls.Add(this.BitmapID_ThisBitmap_Label);
+            // 
+            // BoxLR_ThisBitmap_World_SplitContainer.Panel2
+            // 
+            this.BoxLR_ThisBitmap_World_SplitContainer.Panel2.Controls.Add(this.Picture_ThisBitmap_PictureBox);
+            this.BoxLR_ThisBitmap_World_SplitContainer.Size = new System.Drawing.Size(218, 76);
+            this.BoxLR_ThisBitmap_World_SplitContainer.SplitterDistance = 52;
+            this.BoxLR_ThisBitmap_World_SplitContainer.TabIndex = 0;
             // 
             // Status_Word_StatusStrip
             // 
@@ -542,6 +628,295 @@
             this.Value_Y_Status_Word_ToolStripStatusLabel.Size = new System.Drawing.Size(115, 25);
             this.Value_Y_Status_Word_ToolStripStatusLabel.Text = "65535(0XFFFF)";
             // 
+            // BitmapID_ThisBitmap_Label
+            // 
+            this.BitmapID_ThisBitmap_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_ThisBitmap_Label.Location = new System.Drawing.Point(0, 0);
+            this.BitmapID_ThisBitmap_Label.Name = "BitmapID_ThisBitmap_Label";
+            this.BitmapID_ThisBitmap_Label.Size = new System.Drawing.Size(50, 74);
+            this.BitmapID_ThisBitmap_Label.TabIndex = 0;
+            this.BitmapID_ThisBitmap_Label.Text = "-----";
+            this.BitmapID_ThisBitmap_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_ThisBitmap_PictureBox
+            // 
+            this.Picture_ThisBitmap_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_ThisBitmap_PictureBox.Location = new System.Drawing.Point(0, 0);
+            this.Picture_ThisBitmap_PictureBox.Name = "Picture_ThisBitmap_PictureBox";
+            this.Picture_ThisBitmap_PictureBox.Size = new System.Drawing.Size(160, 74);
+            this.Picture_ThisBitmap_PictureBox.TabIndex = 0;
+            this.Picture_ThisBitmap_PictureBox.TabStop = false;
+            // 
+            // BoxLR_BitmapList_Word_SplitContainer
+            // 
+            this.BoxLR_BitmapList_Word_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.BoxLR_BitmapList_Word_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BoxLR_BitmapList_Word_SplitContainer.IsSplitterFixed = true;
+            this.BoxLR_BitmapList_Word_SplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.BoxLR_BitmapList_Word_SplitContainer.Name = "BoxLR_BitmapList_Word_SplitContainer";
+            // 
+            // BoxLR_BitmapList_Word_SplitContainer.Panel1
+            // 
+            this.BoxLR_BitmapList_Word_SplitContainer.Panel1.Controls.Add(this.BitmapList_World_TableLayoutPanel);
+            // 
+            // BoxLR_BitmapList_Word_SplitContainer.Panel2
+            // 
+            this.BoxLR_BitmapList_Word_SplitContainer.Panel2.Controls.Add(this.ScrollBar_BitmapList_Word_VScrollBar);
+            this.BoxLR_BitmapList_Word_SplitContainer.Size = new System.Drawing.Size(222, 534);
+            this.BoxLR_BitmapList_Word_SplitContainer.SplitterDistance = 192;
+            this.BoxLR_BitmapList_Word_SplitContainer.TabIndex = 0;
+            // 
+            // ScrollBar_BitmapList_Word_VScrollBar
+            // 
+            this.ScrollBar_BitmapList_Word_VScrollBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ScrollBar_BitmapList_Word_VScrollBar.Location = new System.Drawing.Point(0, 0);
+            this.ScrollBar_BitmapList_Word_VScrollBar.Name = "ScrollBar_BitmapList_Word_VScrollBar";
+            this.ScrollBar_BitmapList_Word_VScrollBar.Size = new System.Drawing.Size(22, 530);
+            this.ScrollBar_BitmapList_Word_VScrollBar.TabIndex = 0;
+            // 
+            // BitmapList_World_TableLayoutPanel
+            // 
+            this.BitmapList_World_TableLayoutPanel.ColumnCount = 2;
+            this.BitmapList_World_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.BitmapList_World_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.BitmapID_10_BitmapList_Label, 0, 9);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.Picture_10_BitmapList_PictureBox, 1, 9);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.BitmapID_9_BitmapList_Label, 0, 8);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.Picture_9_BitmapList_PictureBox, 1, 8);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.BitmapID_8_BitmapList_Label, 0, 7);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.Picture_8_BitmapList_PictureBox, 1, 7);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.BitmapID_7_BitmapList_Label, 0, 6);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.Picture_7_BitmapList_PictureBox, 1, 6);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.BitmapID_6_BitmapList_Label, 0, 5);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.Picture_6_BitmapList_PictureBox, 1, 5);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.BitmapID_5_BitmapList_Label, 0, 4);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.Picture_5_BitmapList_PictureBox, 1, 4);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.BitmapID_4_BitmapList_Label, 0, 3);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.Picture_4_BitmapList_PictureBox, 1, 3);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.BitmapID_3_BitmapList_Label, 0, 2);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.Picture_3_BitmapList_PictureBox, 1, 2);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.BitmapID_2_BitmapList_Label, 0, 1);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.Picture_2_BitmapList_PictureBox, 1, 1);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.BitmapID_1_BitmapList_Label, 0, 0);
+            this.BitmapList_World_TableLayoutPanel.Controls.Add(this.Picture_1_BitmapList_PictureBox, 1, 0);
+            this.BitmapList_World_TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapList_World_TableLayoutPanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+            this.BitmapList_World_TableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.BitmapList_World_TableLayoutPanel.Name = "BitmapList_World_TableLayoutPanel";
+            this.BitmapList_World_TableLayoutPanel.RowCount = 10;
+            this.BitmapList_World_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.BitmapList_World_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.BitmapList_World_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.BitmapList_World_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.BitmapList_World_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.BitmapList_World_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.BitmapList_World_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.BitmapList_World_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.BitmapList_World_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.BitmapList_World_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.BitmapList_World_TableLayoutPanel.Size = new System.Drawing.Size(188, 530);
+            this.BitmapList_World_TableLayoutPanel.TabIndex = 0;
+            // 
+            // BitmapID_1_BitmapList_Label
+            // 
+            this.BitmapID_1_BitmapList_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_1_BitmapList_Label.Location = new System.Drawing.Point(3, 0);
+            this.BitmapID_1_BitmapList_Label.Name = "BitmapID_1_BitmapList_Label";
+            this.BitmapID_1_BitmapList_Label.Size = new System.Drawing.Size(50, 53);
+            this.BitmapID_1_BitmapList_Label.TabIndex = 1;
+            this.BitmapID_1_BitmapList_Label.Text = "-----";
+            this.BitmapID_1_BitmapList_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_1_BitmapList_PictureBox
+            // 
+            this.Picture_1_BitmapList_PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_1_BitmapList_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_1_BitmapList_PictureBox.Location = new System.Drawing.Point(59, 3);
+            this.Picture_1_BitmapList_PictureBox.Name = "Picture_1_BitmapList_PictureBox";
+            this.Picture_1_BitmapList_PictureBox.Size = new System.Drawing.Size(126, 47);
+            this.Picture_1_BitmapList_PictureBox.TabIndex = 2;
+            this.Picture_1_BitmapList_PictureBox.TabStop = false;
+            // 
+            // BitmapID_2_BitmapList_Label
+            // 
+            this.BitmapID_2_BitmapList_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_2_BitmapList_Label.Location = new System.Drawing.Point(3, 53);
+            this.BitmapID_2_BitmapList_Label.Name = "BitmapID_2_BitmapList_Label";
+            this.BitmapID_2_BitmapList_Label.Size = new System.Drawing.Size(50, 53);
+            this.BitmapID_2_BitmapList_Label.TabIndex = 3;
+            this.BitmapID_2_BitmapList_Label.Text = "-----";
+            this.BitmapID_2_BitmapList_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_2_BitmapList_PictureBox
+            // 
+            this.Picture_2_BitmapList_PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_2_BitmapList_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_2_BitmapList_PictureBox.Location = new System.Drawing.Point(59, 56);
+            this.Picture_2_BitmapList_PictureBox.Name = "Picture_2_BitmapList_PictureBox";
+            this.Picture_2_BitmapList_PictureBox.Size = new System.Drawing.Size(126, 47);
+            this.Picture_2_BitmapList_PictureBox.TabIndex = 4;
+            this.Picture_2_BitmapList_PictureBox.TabStop = false;
+            // 
+            // BitmapID_3_BitmapList_Label
+            // 
+            this.BitmapID_3_BitmapList_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_3_BitmapList_Label.Location = new System.Drawing.Point(3, 106);
+            this.BitmapID_3_BitmapList_Label.Name = "BitmapID_3_BitmapList_Label";
+            this.BitmapID_3_BitmapList_Label.Size = new System.Drawing.Size(50, 53);
+            this.BitmapID_3_BitmapList_Label.TabIndex = 5;
+            this.BitmapID_3_BitmapList_Label.Text = "-----";
+            this.BitmapID_3_BitmapList_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_3_BitmapList_PictureBox
+            // 
+            this.Picture_3_BitmapList_PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_3_BitmapList_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_3_BitmapList_PictureBox.Location = new System.Drawing.Point(59, 109);
+            this.Picture_3_BitmapList_PictureBox.Name = "Picture_3_BitmapList_PictureBox";
+            this.Picture_3_BitmapList_PictureBox.Size = new System.Drawing.Size(126, 47);
+            this.Picture_3_BitmapList_PictureBox.TabIndex = 6;
+            this.Picture_3_BitmapList_PictureBox.TabStop = false;
+            // 
+            // BitmapID_4_BitmapList_Label
+            // 
+            this.BitmapID_4_BitmapList_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_4_BitmapList_Label.Location = new System.Drawing.Point(3, 159);
+            this.BitmapID_4_BitmapList_Label.Name = "BitmapID_4_BitmapList_Label";
+            this.BitmapID_4_BitmapList_Label.Size = new System.Drawing.Size(50, 53);
+            this.BitmapID_4_BitmapList_Label.TabIndex = 7;
+            this.BitmapID_4_BitmapList_Label.Text = "-----";
+            this.BitmapID_4_BitmapList_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_4_BitmapList_PictureBox
+            // 
+            this.Picture_4_BitmapList_PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_4_BitmapList_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_4_BitmapList_PictureBox.Location = new System.Drawing.Point(59, 162);
+            this.Picture_4_BitmapList_PictureBox.Name = "Picture_4_BitmapList_PictureBox";
+            this.Picture_4_BitmapList_PictureBox.Size = new System.Drawing.Size(126, 47);
+            this.Picture_4_BitmapList_PictureBox.TabIndex = 8;
+            this.Picture_4_BitmapList_PictureBox.TabStop = false;
+            // 
+            // BitmapID_5_BitmapList_Label
+            // 
+            this.BitmapID_5_BitmapList_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_5_BitmapList_Label.Location = new System.Drawing.Point(3, 212);
+            this.BitmapID_5_BitmapList_Label.Name = "BitmapID_5_BitmapList_Label";
+            this.BitmapID_5_BitmapList_Label.Size = new System.Drawing.Size(50, 53);
+            this.BitmapID_5_BitmapList_Label.TabIndex = 9;
+            this.BitmapID_5_BitmapList_Label.Text = "-----";
+            this.BitmapID_5_BitmapList_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_5_BitmapList_PictureBox
+            // 
+            this.Picture_5_BitmapList_PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_5_BitmapList_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_5_BitmapList_PictureBox.Location = new System.Drawing.Point(59, 215);
+            this.Picture_5_BitmapList_PictureBox.Name = "Picture_5_BitmapList_PictureBox";
+            this.Picture_5_BitmapList_PictureBox.Size = new System.Drawing.Size(126, 47);
+            this.Picture_5_BitmapList_PictureBox.TabIndex = 10;
+            this.Picture_5_BitmapList_PictureBox.TabStop = false;
+            // 
+            // BitmapID_6_BitmapList_Label
+            // 
+            this.BitmapID_6_BitmapList_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_6_BitmapList_Label.Location = new System.Drawing.Point(3, 265);
+            this.BitmapID_6_BitmapList_Label.Name = "BitmapID_6_BitmapList_Label";
+            this.BitmapID_6_BitmapList_Label.Size = new System.Drawing.Size(50, 53);
+            this.BitmapID_6_BitmapList_Label.TabIndex = 11;
+            this.BitmapID_6_BitmapList_Label.Text = "-----";
+            this.BitmapID_6_BitmapList_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_6_BitmapList_PictureBox
+            // 
+            this.Picture_6_BitmapList_PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_6_BitmapList_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_6_BitmapList_PictureBox.Location = new System.Drawing.Point(59, 268);
+            this.Picture_6_BitmapList_PictureBox.Name = "Picture_6_BitmapList_PictureBox";
+            this.Picture_6_BitmapList_PictureBox.Size = new System.Drawing.Size(126, 47);
+            this.Picture_6_BitmapList_PictureBox.TabIndex = 12;
+            this.Picture_6_BitmapList_PictureBox.TabStop = false;
+            // 
+            // BitmapID_7_BitmapList_Label
+            // 
+            this.BitmapID_7_BitmapList_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_7_BitmapList_Label.Location = new System.Drawing.Point(3, 318);
+            this.BitmapID_7_BitmapList_Label.Name = "BitmapID_7_BitmapList_Label";
+            this.BitmapID_7_BitmapList_Label.Size = new System.Drawing.Size(50, 53);
+            this.BitmapID_7_BitmapList_Label.TabIndex = 13;
+            this.BitmapID_7_BitmapList_Label.Text = "-----";
+            this.BitmapID_7_BitmapList_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_7_BitmapList_PictureBox
+            // 
+            this.Picture_7_BitmapList_PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_7_BitmapList_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_7_BitmapList_PictureBox.Location = new System.Drawing.Point(59, 321);
+            this.Picture_7_BitmapList_PictureBox.Name = "Picture_7_BitmapList_PictureBox";
+            this.Picture_7_BitmapList_PictureBox.Size = new System.Drawing.Size(126, 47);
+            this.Picture_7_BitmapList_PictureBox.TabIndex = 14;
+            this.Picture_7_BitmapList_PictureBox.TabStop = false;
+            // 
+            // BitmapID_8_BitmapList_Label
+            // 
+            this.BitmapID_8_BitmapList_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_8_BitmapList_Label.Location = new System.Drawing.Point(3, 371);
+            this.BitmapID_8_BitmapList_Label.Name = "BitmapID_8_BitmapList_Label";
+            this.BitmapID_8_BitmapList_Label.Size = new System.Drawing.Size(50, 53);
+            this.BitmapID_8_BitmapList_Label.TabIndex = 15;
+            this.BitmapID_8_BitmapList_Label.Text = "-----";
+            this.BitmapID_8_BitmapList_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_8_BitmapList_PictureBox
+            // 
+            this.Picture_8_BitmapList_PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_8_BitmapList_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_8_BitmapList_PictureBox.Location = new System.Drawing.Point(59, 374);
+            this.Picture_8_BitmapList_PictureBox.Name = "Picture_8_BitmapList_PictureBox";
+            this.Picture_8_BitmapList_PictureBox.Size = new System.Drawing.Size(126, 47);
+            this.Picture_8_BitmapList_PictureBox.TabIndex = 16;
+            this.Picture_8_BitmapList_PictureBox.TabStop = false;
+            // 
+            // BitmapID_9_BitmapList_Label
+            // 
+            this.BitmapID_9_BitmapList_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_9_BitmapList_Label.Location = new System.Drawing.Point(3, 424);
+            this.BitmapID_9_BitmapList_Label.Name = "BitmapID_9_BitmapList_Label";
+            this.BitmapID_9_BitmapList_Label.Size = new System.Drawing.Size(50, 53);
+            this.BitmapID_9_BitmapList_Label.TabIndex = 17;
+            this.BitmapID_9_BitmapList_Label.Text = "-----";
+            this.BitmapID_9_BitmapList_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_9_BitmapList_PictureBox
+            // 
+            this.Picture_9_BitmapList_PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_9_BitmapList_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_9_BitmapList_PictureBox.Location = new System.Drawing.Point(59, 427);
+            this.Picture_9_BitmapList_PictureBox.Name = "Picture_9_BitmapList_PictureBox";
+            this.Picture_9_BitmapList_PictureBox.Size = new System.Drawing.Size(126, 47);
+            this.Picture_9_BitmapList_PictureBox.TabIndex = 18;
+            this.Picture_9_BitmapList_PictureBox.TabStop = false;
+            // 
+            // BitmapID_10_BitmapList_Label
+            // 
+            this.BitmapID_10_BitmapList_Label.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BitmapID_10_BitmapList_Label.Location = new System.Drawing.Point(3, 477);
+            this.BitmapID_10_BitmapList_Label.Name = "BitmapID_10_BitmapList_Label";
+            this.BitmapID_10_BitmapList_Label.Size = new System.Drawing.Size(50, 53);
+            this.BitmapID_10_BitmapList_Label.TabIndex = 19;
+            this.BitmapID_10_BitmapList_Label.Text = "-----";
+            this.BitmapID_10_BitmapList_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Picture_10_BitmapList_PictureBox
+            // 
+            this.Picture_10_BitmapList_PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_10_BitmapList_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture_10_BitmapList_PictureBox.Location = new System.Drawing.Point(59, 480);
+            this.Picture_10_BitmapList_PictureBox.Name = "Picture_10_BitmapList_PictureBox";
+            this.Picture_10_BitmapList_PictureBox.Size = new System.Drawing.Size(126, 47);
+            this.Picture_10_BitmapList_PictureBox.TabIndex = 20;
+            this.Picture_10_BitmapList_PictureBox.TabStop = false;
+            // 
             // SWORD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -556,6 +931,7 @@
             this.Name = "SWORD";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SWORD Studio";
+            this.Load += new System.EventHandler(this.SWORD_Load);
             this.Main_TabControl.ResumeLayout(false);
             this.About_TabPage.ResumeLayout(false);
             this.About_TabPage.PerformLayout();
@@ -577,10 +953,32 @@
             this.ActualBox_ContentBox_World_SplitContainer.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ActualBox_ContentBox_World_SplitContainer)).EndInit();
             this.ActualBox_ContentBox_World_SplitContainer.ResumeLayout(false);
+            this.BitMapBox_ActualBox_World_SplitContainer.Panel1.ResumeLayout(false);
+            this.BitMapBox_ActualBox_World_SplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.BitMapBox_ActualBox_World_SplitContainer)).EndInit();
             this.BitMapBox_ActualBox_World_SplitContainer.ResumeLayout(false);
+            this.BoxLR_ThisBitmap_World_SplitContainer.Panel1.ResumeLayout(false);
+            this.BoxLR_ThisBitmap_World_SplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BoxLR_ThisBitmap_World_SplitContainer)).EndInit();
+            this.BoxLR_ThisBitmap_World_SplitContainer.ResumeLayout(false);
             this.Status_Word_StatusStrip.ResumeLayout(false);
             this.Status_Word_StatusStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_ThisBitmap_PictureBox)).EndInit();
+            this.BoxLR_BitmapList_Word_SplitContainer.Panel1.ResumeLayout(false);
+            this.BoxLR_BitmapList_Word_SplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BoxLR_BitmapList_Word_SplitContainer)).EndInit();
+            this.BoxLR_BitmapList_Word_SplitContainer.ResumeLayout(false);
+            this.BitmapList_World_TableLayoutPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_1_BitmapList_PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_2_BitmapList_PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_3_BitmapList_PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_4_BitmapList_PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_5_BitmapList_PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_6_BitmapList_PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_7_BitmapList_PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_8_BitmapList_PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_9_BitmapList_PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_10_BitmapList_PictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -622,8 +1020,35 @@
         private UitlCtrls.UtilButton LowLayer_ToolsBar_Word_Button;
         private UitlCtrls.UtilButton HighLayer_ToolsBar_Word_Button;
         private UitlCtrls.UtilButton NoPassLayer_ToolsBar_Word_Button;
-        private UitlCtrls.UtilButton button4;
+        private UitlCtrls.UtilButton EventLayer_ToolsBar_Word_Button;
         private System.Windows.Forms.SplitContainer BitMapBox_ActualBox_World_SplitContainer;
+        private System.Windows.Forms.SplitContainer BoxLR_ThisBitmap_World_SplitContainer;
+        private System.Windows.Forms.Label BitmapID_ThisBitmap_Label;
+        private System.Windows.Forms.PictureBox Picture_ThisBitmap_PictureBox;
+        private System.Windows.Forms.SplitContainer BoxLR_BitmapList_Word_SplitContainer;
+        private System.Windows.Forms.VScrollBar ScrollBar_BitmapList_Word_VScrollBar;
+        private System.Windows.Forms.TableLayoutPanel BitmapList_World_TableLayoutPanel;
+        private System.Windows.Forms.Label BitmapID_10_BitmapList_Label;
+        private System.Windows.Forms.PictureBox Picture_10_BitmapList_PictureBox;
+        private System.Windows.Forms.Label BitmapID_9_BitmapList_Label;
+        private System.Windows.Forms.PictureBox Picture_9_BitmapList_PictureBox;
+        private System.Windows.Forms.Label BitmapID_8_BitmapList_Label;
+        private System.Windows.Forms.PictureBox Picture_8_BitmapList_PictureBox;
+        private System.Windows.Forms.Label BitmapID_7_BitmapList_Label;
+        private System.Windows.Forms.PictureBox Picture_7_BitmapList_PictureBox;
+        private System.Windows.Forms.Label BitmapID_6_BitmapList_Label;
+        private System.Windows.Forms.PictureBox Picture_6_BitmapList_PictureBox;
+        private System.Windows.Forms.Label BitmapID_5_BitmapList_Label;
+        private System.Windows.Forms.PictureBox Picture_5_BitmapList_PictureBox;
+        private System.Windows.Forms.Label BitmapID_4_BitmapList_Label;
+        private System.Windows.Forms.PictureBox Picture_4_BitmapList_PictureBox;
+        private System.Windows.Forms.Label BitmapID_3_BitmapList_Label;
+        private System.Windows.Forms.PictureBox Picture_3_BitmapList_PictureBox;
+        private System.Windows.Forms.Label BitmapID_2_BitmapList_Label;
+        private System.Windows.Forms.PictureBox Picture_2_BitmapList_PictureBox;
+        private System.Windows.Forms.Label BitmapID_1_BitmapList_Label;
+        private System.Windows.Forms.PictureBox Picture_1_BitmapList_PictureBox;
+        private System.Windows.Forms.ColorDialog colorDialog1;
     }
 }
 

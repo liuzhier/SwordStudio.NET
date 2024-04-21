@@ -46,11 +46,7 @@ namespace UitlCtrls
             set { _ButtonTipText = value; }
         }
 
-        public  bool            fIsClink
-        {
-            get { return _fIsClink; }
-            set { _fIsClink = value; }
-        }
+        public bool             GetIsClink()    => _fIsClink;
 
         public UtilButton()
         {

@@ -72,7 +72,7 @@ namespace PalUtil
                 iLength = array.Length - iOffset;
             }
 
-            return new ArraySegment<BYTE>(array, iOffset, iLength).Array;
+            return new ArraySegment<BYTE>(array, iOffset, iLength).ToArray();
         }
 
         public static BYTE[]
@@ -82,7 +82,7 @@ namespace PalUtil
             INT             iLength
         )
         {
-            BYTE[] tmp = new ArraySegment<BYTE>(array, iOffset, iLength).Array;
+            BYTE[] tmp = new ArraySegment<BYTE>(array, iOffset, iLength).ToArray();
             iOffset += iLength;
 
             return tmp;

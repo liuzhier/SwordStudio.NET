@@ -23,6 +23,7 @@ using SwordStudio.NET.Properties;
 using PalCfg;
 using PalMain;
 
+using static PalGlobal.PAL_File;
 using static PalUtil.Pal_Util;
 using static PalCfg.Pal_Cfg;
 using static PalCommon.Pal_Common;
@@ -37,6 +38,14 @@ namespace PalGlobal
         public LPSTR[]  lpszFileText        = null;
         public LPSTR[]  lpszArchiveMethod   = null;
         public BYTE[]   bufTmp              = null;
+
+        public static PAL_File
+        Pal_File_GetFile(
+            LPSTR _lpszNodeName
+        )
+        {
+            return Pal_Global.pfFileList.Where(file => file.lpszNodeName.Equals(_lpszNodeName)).First();
+        }
     }
 
     public class Pal_Global
@@ -52,13 +61,12 @@ namespace PalGlobal
         public static readonly LPSTR    lpszGaemPath    = $"F:{PathDSC}PALDOS{PathDSC}pal";
 
         public static readonly LPSTR    lpszMainData    = "MainData";
-        public static readonly LPSTR    lpszTabMain     = "TAB_MAIN";
+        public static readonly LPSTR    lpszGameMap     = "GameMap";
+        public static readonly LPSTR    lpszEvent       = "Event";
+        public static readonly LPSTR    lpszScene       = "Scene";
         public static readonly LPSTR    lpszUnit        = "Unit";
         public static readonly LPSTR    lpszUnitSystem  = "UNIT_System";
-
-        public static LPSTR[]           lpszTabLabel    = {
-            "关于",   "主世界",  "单位",   "战斗"
-        };
+        public static readonly LPSTR    lpszUnion       = "UNION";
 
         public static TabControl        tcMainTabCtrl   = new TabControl();
 
@@ -74,7 +82,6 @@ namespace PalGlobal
             PAL_File                pfFileTmp;
             BYTE[]                  bufTmp;
             PalCfgNode              pcnTmp;
-            List<PalCfgNodeItem>    pcnTmpList;
 
             fIsWIN95 = Pal_Cfg.Version == Pal_VERSION.WIN;
 
@@ -82,7 +89,8 @@ namespace PalGlobal
             // Unpacking files data
             //
             {
-                pfFileTmp = Pal_Global.pfFileList.Where(file => file.lpszNodeName.Equals(lpszMainData)).First();
+                //pfFileTmp = Pal_Global.pfFileList.Where(file => file.lpszNodeName.Equals(lpszMainData)).First();
+                pfFileTmp   = Pal_File_GetFile(lpszMainData);
 
                 //
                 // Extract sub data "Unit"
@@ -97,17 +105,7 @@ namespace PalGlobal
             //
             // Get the size of the chunk "Unit"
             //
-            {
-                pcnTmpList  = Pal_Cfg.pcnRootList.Where(file => file.lpszNodeName.Equals(lpszUnitSystem)).First().pcniItem;
-                iSize       = 0;
-
-                foreach (PalCfgNodeItem pcn in pcnTmpList)
-                {
-                    if ((pcn.Version & (Pal_VERSION.UNION | (fIsWIN95 ? Pal_VERSION.WIN : Pal_VERSION.DOS))) == 0) continue;
-
-                    iSize += UTIL_GetTypeSize(pcn.lpszType);
-                }
-            }
+            iSize = Pal_Cfg_GetChunkSize(lpszUnit);
 
             //
             // Check if the file format is correct
@@ -178,6 +176,7 @@ namespace PalGlobal
             }
         }
 
+        /*
         public static void
         PAL_LoadTabPage()
         {
@@ -243,8 +242,6 @@ namespace PalGlobal
 
             //for (i = 0; i < Pal_Global.lpszTabLabel.Length; i++)
             {
-
-                /*
                 //
                 // Splitting node links
                 //
@@ -289,8 +286,8 @@ namespace PalGlobal
                 // 
                 //
                 pcnSubNode.pcniItem.Where(subNode => subNode.lpszNodeName.Equals(lpszNodeNameList[1])).First();
-                */
             }
         }
+        */
     }
 }
