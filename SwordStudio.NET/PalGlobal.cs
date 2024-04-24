@@ -13,8 +13,8 @@ using SHORT     = System.Int16;
 using WORD      = System.UInt16;
 using INT       = System.Int32;
 using UINT      = System.UInt32;
-using SDWORD    = System.Int64;
-using DWORD     = System.UInt64;
+using SDWORD    = System.Int32;
+using DWORD     = System.UInt32;
 using LPSTR     = System.String;
 using FILE      = System.IO.File;
 
@@ -23,14 +23,15 @@ using SwordStudio.NET.Properties;
 using PalCfg;
 using PalMain;
 
-using static PalGlobal.PAL_File;
+using static PalGlobal.Pal_File;
 using static PalUtil.Pal_Util;
 using static PalCfg.Pal_Cfg;
 using static PalCommon.Pal_Common;
+using PalVideo;
 
 namespace PalGlobal
 {
-    public class PAL_File
+    public class Pal_File
     {
         public LPSTR    lpszNodeName        = null;
         public LPSTR    lpszFileName        = null;
@@ -39,7 +40,7 @@ namespace PalGlobal
         public LPSTR[]  lpszArchiveMethod   = null;
         public BYTE[]   bufTmp              = null;
 
-        public static PAL_File
+        public static Pal_File
         Pal_File_GetFile(
             LPSTR _lpszNodeName
         )
@@ -52,7 +53,8 @@ namespace PalGlobal
     {
         public const BOOL   TRUE  = true;
         public const BOOL   FALSE = false;
-
+        
+        public static readonly Encoding GB2312  = Encoding.GetEncoding("GB2312");
         public static readonly CHAR     PathDSC = (Environment.OSVersion.Platform == PlatformID.Win32NT) ? '\\' : '/';
         public static readonly LPSTR    NewLine = Environment.NewLine;
 
@@ -60,26 +62,39 @@ namespace PalGlobal
         public static readonly LPSTR    lpszCfgName     = $"F:{PathDSC}liuzhier{PathDSC}SwordStudio.NET{PathDSC}docs{PathDSC}SwordStudio.NET.ini.example";
         public static readonly LPSTR    lpszGaemPath    = $"F:{PathDSC}PALDOS{PathDSC}pal";
 
-        public static readonly LPSTR    lpszMainData    = "MainData";
-        public static readonly LPSTR    lpszGameMap     = "GameMap";
-        public static readonly LPSTR    lpszEvent       = "Event";
-        public static readonly LPSTR    lpszScene       = "Scene";
-        public static readonly LPSTR    lpszUnit        = "Unit";
-        public static readonly LPSTR    lpszUnitSystem  = "UNIT_System";
-        public static readonly LPSTR    lpszUnion       = "UNION";
+        public const LPSTR  lpszSetting     = "SETTING";
+        public const LPSTR  lpszFile        = "FILE";
+        public const LPSTR  lpszMainData    = "MainData";
+        public const LPSTR  lpszEvent       = "Event";
+        public const LPSTR  lpszScene       = "Scene";
+        public const LPSTR  lpszUnit        = "Unit";
+        public const LPSTR  lpszUnitSystem  = "UNIT_System";
+        public const LPSTR  lpszUnion       = "UNION";
+        public const LPSTR  lpszSciptDesc   = "SCRIPT_DESC";
+        public const LPSTR  lpszSceneDesc   = "SCENE_DESC";
+
+        public const LPSTR  lpszEnemyBMP    = "EnemyBMP";
+        public const LPSTR  lpszGameMapTile = "GameMapTile";
+        public const LPSTR  lpszGameMap     = "GameMap";
+        public const LPSTR  lpszPalette     = "Palette";
+
+        public const LPSTR  lpszMapID       = "MapID";
+
+        public const LPSTR  lpszEventObjectIndex = "EventObjectIndex";
 
         public static TabControl        tcMainTabCtrl   = new TabControl();
-
         public static BOOL              fIsRegEncode    = FALSE;
+        public static List<Pal_File>    pfFileList      = new List<Pal_File>();
+        public static INT               iiThisScene     = -1;
 
-        public static List<PAL_File>    pfFileList      = new List<PAL_File>();
+        public        Pal_Video         pvMapEdit       = null;
 
         public static BOOL
         PAL_IsWINVersion()
         {
             BOOL                    fIsWIN95;
             INT                     iSize, data_size;
-            PAL_File                pfFileTmp;
+            Pal_File                pfFileTmp;
             BYTE[]                  bufTmp;
             PalCfgNode              pcnTmp;
 
@@ -96,7 +111,7 @@ namespace PalGlobal
                 // Extract sub data "Unit"
                 //
                 pcnTmp      = Pal_Cfg.Pal_Cfg_GetCfgNode(lpszMainData);
-                iSize       = pcnTmp.pcniItem.IndexOf(pcnTmp.pcniItem.Where(item => item.lpszNodeName.Equals(lpszUnit)).First());
+                iSize       = pcnTmp.pcniItems.IndexOf(pcnTmp.pcniItems.Where(item => item.lpszNodeName.Equals(lpszUnit)).First());
                 data_size   = PAL_MKFGetChunkSize(iSize, ref pfFileTmp.bufFile);
                 bufTmp      = new BYTE[data_size];
                 PAL_MKFReadChunk(ref bufTmp, iSize, ref pfFileTmp.bufFile);
@@ -136,13 +151,13 @@ namespace PalGlobal
         --*/
         {
             List<PalCfgNodeItem>    pcniNodeItemList;
-            PAL_File                pfThisFile;
+            Pal_File                pfThisFile;
             LPSTR                   lpszPath;
 
             //
             // Get the number of files
             //
-            pcniNodeItemList = Pal_Cfg.pcnRootList.Where(node => node.lpszNodeName == "FILE").First().pcniItem;
+            pcniNodeItemList = Pal_Cfg.pcnRootList.Where(node => node.lpszNodeName == "FILE").First().pcniItems;
 
             //
             // Register text encoding set
@@ -161,7 +176,7 @@ namespace PalGlobal
                 //
                 if (!FILE.Exists(lpszPath)) continue;
 
-                pfThisFile              = new PAL_File();
+                pfThisFile              = new Pal_File();
                 pfThisFile.lpszNodeName = pcniThis.lpszNodeName;
                 pfThisFile.lpszFileName = pcniThis.lpszFileName;
 
@@ -186,7 +201,7 @@ namespace PalGlobal
             TabPage         tpTabPageThis;
             TabControl      tcTabCtrl;
             LPSTR[]         lpszNodeNameList;
-            PAL_File        pfFileThis;
+            Pal_File        pfFileThis;
 
             LPSTR           This_TabLabel, This_NodeName;
             PalCfgNodeItem  This_NodeItem;

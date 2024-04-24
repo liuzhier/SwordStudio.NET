@@ -11,8 +11,8 @@ using SHORT     = System.Int16;
 using WORD      = System.UInt16;
 using INT       = System.Int32;
 using UINT      = System.UInt32;
-using SDWORD    = System.Int64;
-using DWORD     = System.UInt64;
+using SDWORD    = System.Int32;
+using DWORD     = System.UInt32;
 using LPSTR     = System.String;
 
 using static PalGlobal.Pal_Global;
@@ -64,15 +64,44 @@ namespace PalUtil
         UTIL_SubBytes(
             BYTE[]  array,
             INT     iOffset,
-            INT     iLength = -1
+            INT     iLength         = -1,
+            INT     iAlignmentNum   = -1
         )
         {
-            if (iLength == -1)
+            //ArraySegment<BYTE>  asList;
+            BYTE[]      bytes;
+            INT         i, iRealLength = iLength;
+
+            if (iRealLength == -1)
             {
-                iLength = array.Length - iOffset;
+                iRealLength = array.Length - iOffset;
             }
 
-            return new ArraySegment<BYTE>(array, iOffset, iLength).ToArray();
+            if (iAlignmentNum != -1 && iRealLength % iAlignmentNum != 0)
+            {
+                iRealLength += iAlignmentNum - (iRealLength + iAlignmentNum) % iAlignmentNum;
+            }
+
+            bytes = new BYTE[iRealLength];
+
+            if (iLength == -1) iLength =  iRealLength;
+            for (i = 0; i < iLength; i++) bytes[i] = array[iOffset + i];
+
+
+            //asList = new ArraySegment<BYTE>(array, iOffset, iLength);
+                /*
+                if (iAlignmentNum != -1)
+                {
+                    if (asList.Count % iAlignmentNum != 0)
+                    {
+                        for (i = 0; i < iAlignmentNum - (asList.Count % iAlignmentNum); i++) asList.Append((BYTE)0);
+                    }
+                }
+
+                return asList.ToArray();
+                */
+
+            return bytes;
         }
 
         public static BYTE[]

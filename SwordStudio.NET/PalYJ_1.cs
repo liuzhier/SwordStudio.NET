@@ -69,14 +69,16 @@ namespace PalYJ_1
 
             bitptr += count;
 
+            if (i >= src.Length) return 0;
+
             if (count > 16 - bptr)
             {
-                count  += bptr - 16;
-                mask    = (ushort)(0xffff >> (int)bptr);
+                count += bptr - 16;
+                mask = (ushort)(0xffff >> (int)bptr);
 
-                usLow  = (ushort)(((src[i] | (src[i + 1] << 8)) & mask) << (int)count);
+                usLow = (ushort)(((src[i] | (src[i + 1] << 8)) & mask) << (int)count);
                 usHigh = (ushort)((src[i + 2] | (src[i + 3] << 8)) >> (int)(16 - count));
-                uiBits  = (uint)(usLow | usHigh);
+                uiBits = (uint)(usLow | usHigh);
             }
             else
             {
@@ -350,7 +352,11 @@ namespace PalYJ_1
                     }
                 }
 
-                iDestOffset = UTIL_SwapLE16(BH_YJ_1_This.CompressedLength);
+                //iDestOffset = UTIL_SwapLE16(BH_YJ_1_This.CompressedLength);
+
+                iSrcOffset += UTIL_SwapLE16(BH_YJ_1_This.CompressedLength) - 24;
+                //src = Source[iSrcOffset..];
+                src = UTIL_SubBytes(Source, iSrcOffset);
             }
 
             return (int)UTIL_SwapLE32(FH_YJ_1.UncompressedLength);

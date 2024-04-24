@@ -7,11 +7,11 @@ using SHORT     = System.Int16;
 using WORD      = System.UInt16;
 using INT       = System.Int32;
 using UINT      = System.UInt32;
-using SDWORD    = System.Int64;
-using DWORD     = System.UInt64;
+using SDWORD    = System.Int32;
+using DWORD     = System.UInt32;
 using LPSTR     = System.String;
 
-using PAL_POS   = System.UInt64;
+using PAL_POS   = System.UInt32;
 
 using SwordStudio.NET;
 using PalCfg;
@@ -30,11 +30,11 @@ namespace PalCommon
         public static PAL_POS
         PAL_XY(WORD x, WORD y)  => (PAL_POS) (((y << 16) & 0xFFFF0000) | (x & 0xFFFF));
 
-        public static SHORT
-        PAL_X(PAL_POS xy)       => (SHORT) ((xy) & 0xFFFF);
+        public static WORD
+        PAL_X(PAL_POS xy)       => (WORD) ((xy) & 0xFFFF);
 
-        public static SHORT
-        PAL_Y(PAL_POS xy)       => (SHORT) (((xy) >> 16) & 0xFFFF);
+        public static WORD
+        PAL_Y(PAL_POS xy)       => (WORD) (((xy) >> 16) & 0xFFFF);
 
         public static BYTE
         PAL_CalcShadowColor(
@@ -1095,7 +1095,7 @@ namespace PalCommon
             //
             // Get the offset of the chunk.
             //
-            iByteOffset = iChunkNum << 2;
+            iByteOffset = (iChunkNum + 1) << 2;
             //iOffset     = BitConverter.ToInt32(lpFileBuf[iByteOffset..(iByteOffset += 4)]);
             //buf[0]      = BitConverter.ToUInt32(lpFileBuf[iOffset..(iOffset += 4)]);
             iOffset     = BitConverter.ToInt32( UTIL_SubBytes(lpFileBuf, ref iByteOffset, 4), 0);
@@ -1111,7 +1111,7 @@ namespace PalCommon
             else
             {
                 //buf[1] = BitConverter.ToUInt32(lpFileBuf[iOffset..(iOffset += 4)]);
-                buf[1] = BitConverter.ToUInt32(UTIL_SubBytes(lpFileBuf, ref iOffset, 4), 0);
+                buf[1] = BitConverter.ToUInt32(UTIL_SubBytes(lpFileBuf, iOffset, 4), 0);
 
                 return (buf[0] != 0x315f4a59) ? -1 : (INT)buf[1];
             }
@@ -1149,6 +1149,8 @@ namespace PalCommon
             len = PAL_MKFGetChunkSize(iChunkNum, ref lpFileBuf);
 
             if (len <= 0) return len;
+
+            if (lpBuffer == null) lpBuffer = new BYTE[PAL_MKFGetDecompressedSize(iChunkNum, ref lpFileBuf)];
 
             buf = new BYTE[len];
 
@@ -1201,13 +1203,8 @@ namespace PalCommon
             //
             // 初始化 Surface
             //
-            Pal_Video palVideo = new Pal_Video();
-            Surface bufSprite = palVideo._Surface;
-            bufSprite.w       = iWidth;
-            bufSprite.h       = iHeight;
-            bufSprite.pitch   = bufSprite.w * 1;
-            bufSprite.pixels  = new BYTE[bufSprite.pitch * bufSprite.h];
-            bufSprite.colors  = new BYTE[bufSprite.w     * bufSprite.h * 3];
+            Pal_Video   palVideo    = new Pal_Video(iWidth, iHeight);
+            Surface     bufSprite   = palVideo._Surface;
 
             //
             // 初始化 Surface 的调色板

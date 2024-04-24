@@ -13,8 +13,8 @@ using SHORT     = System.Int16;
 using WORD      = System.UInt16;
 using INT       = System.Int32;
 using UINT      = System.UInt32;
-using SDWORD    = System.Int64;
-using DWORD     = System.UInt64;
+using SDWORD    = System.Int32;
+using DWORD     = System.UInt32;
 using LPSTR     = System.String;
 
 using PAL_POS   = System.UInt64;
@@ -61,7 +61,7 @@ namespace PalCfg
     public class PalCfgNode
     {
         public LPSTR                lpszNodeName    = null;
-        public List<PalCfgNodeItem> pcniItem        = new List<PalCfgNodeItem>();
+        public List<PalCfgNodeItem> pcniItems       = new List<PalCfgNodeItem>();
     }
 
     public class Pal_Cfg
@@ -202,7 +202,7 @@ namespace PalCfg
                         //
                         switch (lpszNodeName)
                         {
-                            case "SETTING":
+                            case lpszSetting:
                                 {
                                     fIsSystemTag = TRUE;
 
@@ -243,7 +243,7 @@ namespace PalCfg
                                 }
                                 break;
 
-                            case "FILE":
+                            case lpszFile:
                                 {
                                     pcniThisNodeItem.lpszType           = lpszParameterTable[i++];
                                     pcniThisNodeItem.lpszNodeName       = lpszParameterTable[i++];
@@ -263,13 +263,7 @@ namespace PalCfg
                                 }
                                 break;
 
-                            case "TAB_MAIN":
-                                {
-                                    pcniThisNodeItem.lpszTitle  = lpszParameterTable[i++];
-                                }
-                                break;
-
-                            case "SCRIPT_DESC":
+                            case lpszSciptDesc:
                                 {
                                     pcniThisNodeItem.lpszCommandID          = lpszParameterTable[i++];
                                     pcniThisNodeItem.lpszScriptTitle        = lpszParameterTable[i++];
@@ -280,6 +274,12 @@ namespace PalCfg
                                 }
                                 break;
 
+                            case lpszSceneDesc:
+                                {
+                                    pcniThisNodeItem.lpszNodeName   = lpszParameterTable[i++];
+                                    pcniThisNodeItem.lpszTitle      = lpszParameterTable[i++];
+                                }
+                                break;
                             default:
                                 {
                                     //
@@ -346,7 +346,7 @@ namespace PalCfg
                     //
                     // Add item to node
                     //
-                    if (!fIsSystemTag) pcnThisNode.pcniItem.Add(pcniThisNodeItem);
+                    if (!fIsSystemTag) pcnThisNode.pcniItems.Add(pcniThisNodeItem);
                 }
             }
         }
@@ -365,7 +365,7 @@ namespace PalCfg
             LPSTR       _lpszItemNodeName
         )
         {
-            return Pal_Cfg_GetCfgNode(_lpszNodeName).pcniItem.Where(item => item.lpszNodeName.Equals(_lpszItemNodeName)).First();
+            return Pal_Cfg_GetCfgNode(_lpszNodeName).pcniItems.Where(item => item.lpszNodeName.Equals(_lpszItemNodeName)).First();
         }
 
         public static INT
@@ -374,7 +374,7 @@ namespace PalCfg
             LPSTR _lpszItemNodeName
         )
         {
-            List<PalCfgNodeItem> pcniTmp = Pal_Cfg_GetCfgNode(_lpszNodeName).pcniItem;
+            List<PalCfgNodeItem> pcniTmp = Pal_Cfg_GetCfgNode(_lpszNodeName).pcniItems;
             return pcniTmp.IndexOf(pcniTmp.Where(item => item.lpszNodeName.Equals(_lpszItemNodeName)).First());
         }
 
@@ -385,12 +385,12 @@ namespace PalCfg
         )
         {
             INT                     iSize = 0;
-            List<PalCfgNodeItem>    pcnTmpList = Pal_Cfg_GetCfgNode(_lpszNodeName).pcniItem;
+            List<PalCfgNodeItem>    pcnTmpList = Pal_Cfg_GetCfgNode(_lpszNodeName).pcniItems;
 
             //pcnTmpList  = Pal_Cfg.pcnRootList.Where(file => file.lpszNodeName.Equals(lpszUnitSystem)).First().pcniItem;
             if (pcnTmpList[0].lpszType == lpszUnion)
             {
-                pcnTmpList = Pal_Cfg_GetCfgNode(pcnTmpList[0].lpszNodeName).pcniItem;
+                pcnTmpList = Pal_Cfg_GetCfgNode(pcnTmpList[0].lpszNodeName).pcniItems;
             }
 
             foreach (PalCfgNodeItem pcn in pcnTmpList)
@@ -402,6 +402,5 @@ namespace PalCfg
 
             return iSize;
         }
-
     }
 }

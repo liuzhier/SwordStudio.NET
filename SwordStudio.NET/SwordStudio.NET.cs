@@ -15,8 +15,8 @@ using SHORT     = System.Int16;
 using WORD      = System.UInt16;
 using INT       = System.Int32;
 using UINT      = System.UInt32;
-using SDWORD    = System.Int64;
-using DWORD     = System.UInt64;
+using SDWORD    = System.Int32;
+using DWORD     = System.UInt32;
 using LPSTR     = System.String;
 
 using UitlCtrls;
@@ -26,60 +26,47 @@ using PalGlobal;
 using static PalMain.Pal_Main;
 using static PalCfg.Pal_Cfg;
 using static PalGlobal.Pal_Global;
-using static PalGlobal.PAL_File;
+using static PalGlobal.Pal_File;
 using static PalCommon.Pal_Common;
 
 namespace SwordStudio.NET
 {
     public partial class SWORD : Form
     {
+        Form_SceneSelect SceneSelect;
+
         public SWORD()
         {
             InitializeComponent();
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            SceneSelect.Dispose();
+            this.Dispose();
+        }
+
         private void SWORD_Load(object sender, EventArgs e)
         {
             main(null);
+
+            SceneSelect = new Form_SceneSelect(this);
         }
 
         private void Open_ToolsBar_Word_Button_Click(object sender, EventArgs e)
         {
-            PAL_File        pfFile_Map, pfFile_SSS;
-            INT             iEventIndex, iSceneIndex, iSizeOfEvent, iSizeOfScene, iSceneCount;
+            SceneSelect.ShowDialog();
 
-            //
-            // Get the map file node
-            //
-            pfFile_Map      = Pal_File_GetFile(lpszGameMap);
+            if (SceneSelect._fIsEnter)
+            {
+                //
+                // Load scene edit
+                //
+                Pal_Global.iiThisScene = SceneSelect._iThisScene;
 
-            //
-            // Get file indexes for events and scenes
-            //
-            //iEventIndex = Pal_Cfg_GetCfgNodeItemIndex(lpszMainData, lpszEvent);
-            iSceneIndex     = Pal_Cfg_GetCfgNodeItemIndex(lpszMainData, lpszScene);
-
-            //
-            // Get main file data
-            //
-            pfFile_SSS      = Pal_File_GetFile(lpszMainData);
-
-            //
-            // Get the size of scenes data
-            //
-            //iEventIndex = PAL_MKFGetChunkSize(iEventIndex, ref pfFile_SSS.bufFile);
-            iSceneIndex     = PAL_MKFGetChunkSize(iSceneIndex, ref pfFile_SSS.bufFile);
-
-            //
-            // Get the size of each group of events and scenes
-            //
-            //iSizeOfEvent    = Pal_Cfg_GetChunkSize(lpszEvent);
-            iSizeOfScene    = Pal_Cfg_GetChunkSize(lpszScene);
-
-            //
-            // Get the number of scenes
-            //
-            iSceneCount     = iSceneIndex / iSizeOfScene;
+            }
         }
 
         private void EventBlock_ToolsBar_Word_Button_Click(object sender, EventArgs e)

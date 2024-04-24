@@ -11,8 +11,8 @@ using SHORT	    = System.Int16;
 using WORD	    = System.UInt16;
 using INT	    = System.Int32;
 using UINT      = System.UInt32;
-using SDWORD    = System.Int64;
-using DWORD	    = System.UInt64;
+using SDWORD    = System.Int32;
+using DWORD     = System.UInt32;
 using LPSTR	    = System.String;
 
 using SwordStudio.NET;
@@ -49,7 +49,7 @@ namespace PalMain
                 // The configuration file already exists,
                 // starting to load local configuration
                 //
-                lpszCfgUser = File.ReadAllLines(lpszCfgName);
+                lpszCfgUser = File.ReadAllLines(lpszCfgName, GB2312);
             }
             else
             {

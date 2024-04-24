@@ -83,11 +83,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Form_SceneSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_SceneSelect.Designer.cs">
+      <DependentUpon>Form_SceneSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="PalCfg.cs" />
     <Compile Include="PalCommon.cs" />
     <Compile Include="PalConfig.cs" />
     <Compile Include="PalGlobal.cs" />
     <Compile Include="PalMain.cs" />
+    <Compile Include="PalMap.cs" />
     <Compile Include="PalUtil.cs" />
     <Compile Include="PalVideo.cs" />
     <Compile Include="PalYJ_1.cs" />
@@ -107,6 +114,9 @@
     <Compile Include="UitlCtrls.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Form_SceneSelect.resx">
+      <DependentUpon>Form_SceneSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SwordStudio.NET.resx">
       <DependentUpon>SwordStudio.NET.cs</DependentUpon>
     </EmbeddedResource>
