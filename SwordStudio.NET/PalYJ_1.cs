@@ -14,6 +14,7 @@ namespace PalYJ_1
 {
     public unsafe class Pal_YJ_1
     {
+        public static byte[]    bSrc_YJ_1, bDest_YJ_1;
 
         public class YJ1_TreeNode   // 节点
         {
@@ -57,32 +58,32 @@ namespace PalYJ_1
 
         public static uint
         yj1_get_bits(
-            ref byte[]  src,
-            ref uint    bitptr,
+            int         iOffset,
+        ref uint        bitptr,
             uint        count
         )
         {
-            uint        i = (bitptr >> 4) << 1;
+            uint        i = (uint)(((bitptr >> 4) << 1) + iOffset);
             uint        bptr = bitptr & 0xf, uiBits;
             ushort      mask;
             ushort      usLow, usHigh;
 
             bitptr += count;
 
-            if (i >= src.Length) return 0;
+            if (i >= bSrc_YJ_1.Length) return 0;
 
             if (count > 16 - bptr)
             {
                 count += bptr - 16;
                 mask = (ushort)(0xffff >> (int)bptr);
 
-                usLow = (ushort)(((src[i] | (src[i + 1] << 8)) & mask) << (int)count);
-                usHigh = (ushort)((src[i + 2] | (src[i + 3] << 8)) >> (int)(16 - count));
+                usLow  = (ushort)(((bSrc_YJ_1[i]    | (bSrc_YJ_1[i + 1] << 8)) & mask) << (int)      count);
+                usHigh = (ushort)((bSrc_YJ_1[i + 2] | (bSrc_YJ_1[i + 3] << 8))         >> (int)(16 - count));
                 uiBits = (uint)(usLow | usHigh);
             }
             else
             {
-                usLow = (ushort)((src[i] | (src[i + 1] << 8)) << (int)bptr);
+                usLow  = (ushort)((bSrc_YJ_1[i] | (bSrc_YJ_1[i + 1] << 8)) << (int)bptr);
                 uiBits = (uint)(usLow >> (int)(16 - count));
             }
 
@@ -91,22 +92,22 @@ namespace PalYJ_1
 
         public static ushort
         yj1_get_loop(
-            ref byte[]              src,
-            ref uint                bitptr,
-            ref YJ_1_BLOCKHEADER    header
+            int                 iOffset,
+        ref uint                bitptr,
+        ref YJ_1_BLOCKHEADER    header
         )
         {
-            if (yj1_get_bits(ref src, ref bitptr, 1) != 0)
+            if (yj1_get_bits(iOffset, ref bitptr, 1) != 0)
             {
                 return header.CodeCountTable[0];
             }
             else
             {
-                uint temp = yj1_get_bits(ref src, ref bitptr, 2);
+                uint temp = yj1_get_bits(iOffset, ref bitptr, 2);
 
                 if (temp != 0)
                 {
-                    return (ushort)yj1_get_bits(ref src, ref bitptr, header.CodeCountCodeLengthTable[temp - 1]);
+                    return (ushort)yj1_get_bits(iOffset, ref bitptr, header.CodeCountCodeLengthTable[temp - 1]);
                 }
                 else
                 {
@@ -117,17 +118,17 @@ namespace PalYJ_1
 
         public static ushort
         yj1_get_count(
-            ref byte[] src,
-            ref uint bitptr,
-            ref YJ_1_BLOCKHEADER header
+            int                 iOffset,
+        ref uint                bitptr,
+        ref YJ_1_BLOCKHEADER    header
         )
         {
             ushort temp;
 
-            if ((temp = (ushort)yj1_get_bits(ref src, ref bitptr, 2)) != 0)
+            if ((temp = (ushort)yj1_get_bits(iOffset, ref bitptr, 2)) != 0)
             {
-                if (yj1_get_bits(ref src, ref bitptr, 1) != 0)
-                    return (ushort)yj1_get_bits(ref src, ref bitptr, header.LZSSRepeatCodeLengthTable[temp - 1]);
+                if (yj1_get_bits(iOffset, ref bitptr, 1) != 0)
+                    return (ushort)yj1_get_bits(iOffset, ref bitptr, header.LZSSRepeatCodeLengthTable[temp - 1]);
                 else
                     return UTIL_SwapLE16(header.LZSSRepeatTable[temp]);
             }
@@ -139,17 +140,15 @@ namespace PalYJ_1
 
         public static int
         YJ1_Decompress(
-            ref byte[]      Source,
-            ref byte[]      Destination
+        ref byte[]      Source,
+        ref byte[]      Destination
         )
         {
-            int              i, j, iOffset = 0, iNodeOffset = 0, iSrcOffset = 0, iDestOffset = 0;
+            int              i, j, iOffset = 0, iSrcOffset = 0, iDestOffset = 0;
             YJ_1_FILEHEADER  FH_YJ_1;
             YJ1_TreeNode     TN_YJ_1_This;
             YJ_1_BLOCKHEADER BH_YJ_1_This;
             ArrayList        root;
-
-            byte[]           src;
 
             //
             // 判断源文件是否为空
@@ -159,8 +158,6 @@ namespace PalYJ_1
                 return -1;
             }
 
-            src = Source;
-
             //
             // 获取 YJ_1 文件头部信息
             //
@@ -169,12 +166,12 @@ namespace PalYJ_1
             //FH_YJ_1.UncompressedLength = BitConverter.ToUInt32(src[iOffset..(iOffset += 4)], 0);
             //FH_YJ_1.CompressedLength   = BitConverter.ToUInt32(src[iOffset..(iOffset += 4)], 0);
             //FH_YJ_1.BlockCount         = BitConverter.ToUInt32(src[iOffset..(iOffset += 4)], 0);
-            FH_YJ_1.Signature           = BitConverter.ToUInt32(UTIL_SubBytes(src, ref iOffset, 4), 0);
-            FH_YJ_1.UncompressedLength  = BitConverter.ToUInt32(UTIL_SubBytes(src, ref iOffset, 4), 0);
-            FH_YJ_1.CompressedLength    = BitConverter.ToUInt32(UTIL_SubBytes(src, ref iOffset, 4), 0);
-            FH_YJ_1.BlockCount          = (ushort)(src[iOffset] | (src[++iOffset] << 8));
-            FH_YJ_1.Unknown             = src[++iOffset];
-            FH_YJ_1.HuffmanTreeLength   = src[++iOffset];
+            FH_YJ_1.Signature           = BitConverter.ToUInt32(UTIL_SubBytes(Source, ref iOffset, 4), 0);
+            FH_YJ_1.UncompressedLength  = BitConverter.ToUInt32(UTIL_SubBytes(Source, ref iOffset, 4), 0);
+            FH_YJ_1.CompressedLength    = BitConverter.ToUInt32(UTIL_SubBytes(Source, ref iOffset, 4), 0);
+            FH_YJ_1.BlockCount          = (ushort)(Source[iOffset] | (Source[++iOffset] << 8));
+            FH_YJ_1.Unknown             = Source[++iOffset];
+            FH_YJ_1.HuffmanTreeLength   = Source[++iOffset];
 
             //
             // 验证文件头部标识 'YJ_1'
@@ -189,19 +186,24 @@ namespace PalYJ_1
             //
             Destination = new byte[FH_YJ_1.UncompressedLength];
 
+            //
+            // 初始化源数据和目标数据到全局
+            //
+            bSrc_YJ_1   = Source;
+            bDest_YJ_1  = Destination;
+
             do
             {
                 //
                 // 获取 Huffman 树长度，当前比特位的索引
                 // 还有 ...... flag 标识？？？
                 //
-                ushort tree_len = (ushort)(FH_YJ_1.HuffmanTreeLength * 2);
-                uint   bitptr   = 0;
-                byte[] flag;
+                ushort  tree_len = (ushort)(FH_YJ_1.HuffmanTreeLength * 2);
+                uint    bitptr   = 0;
+                int     flag;
 
                 i    = 16 + tree_len;
-                //flag = src[i..];
-                flag = UTIL_SubBytes(src, i);
+                flag = i;
 
                 root = new ArrayList();
 
@@ -227,8 +229,8 @@ namespace PalYJ_1
                 for (i = 1; i <= tree_len; i++)
                 {
                     TN_YJ_1_This       = (YJ1_TreeNode)root[i];
-                    TN_YJ_1_This.leaf  = (byte)(!(yj1_get_bits(ref flag, ref bitptr, 1) != 0) ? 1 : 0);
-                    TN_YJ_1_This.value = src[15 + i];
+                    TN_YJ_1_This.leaf  = (byte)(!(yj1_get_bits(flag, ref bitptr, 1) != 0) ? 1 : 0);
+                    TN_YJ_1_This.value = Source[15 + i];
 
                     if (TN_YJ_1_This.leaf != 0)
                     {
@@ -245,48 +247,45 @@ namespace PalYJ_1
                 }
 
                 iSrcOffset += 16 + tree_len + ((((tree_len & 0xf) != 0) ? (tree_len >> 4) + 1 : (tree_len >> 4)) << 1);
-                //src = Source[iSrcOffset..];
-                src = UTIL_SubBytes(Source, iSrcOffset);
             } while (false);
 
             for (i = 0; i < UTIL_SwapLE16(FH_YJ_1.BlockCount); i++)
             {
                 uint bitptr = 0;
-                iOffset = 0;
+                iOffset = iSrcOffset;
 
                 //
                 // 获取当前区块的头部数据块
                 //
                 BH_YJ_1_This = new YJ_1_BLOCKHEADER();
-                BH_YJ_1_This.UncompressedLength           = (ushort)(src[  iOffset] | (src[++iOffset] << 8));
-                BH_YJ_1_This.CompressedLength             = (ushort)(src[++iOffset] | (src[++iOffset] << 8));
+                BH_YJ_1_This.UncompressedLength           = (ushort)(Source[  iOffset] | (Source[++iOffset] << 8));
+                BH_YJ_1_This.CompressedLength             = (ushort)(Source[++iOffset] | (Source[++iOffset] << 8));
 
-                BH_YJ_1_This.LZSSRepeatTable[0]           = (ushort)(src[++iOffset] | (src[++iOffset] << 8));
-                BH_YJ_1_This.LZSSRepeatTable[1]           = (ushort)(src[++iOffset] | (src[++iOffset] << 8));
-                BH_YJ_1_This.LZSSRepeatTable[2]           = (ushort)(src[++iOffset] | (src[++iOffset] << 8));
-                BH_YJ_1_This.LZSSRepeatTable[3]           = (ushort)(src[++iOffset] | (src[++iOffset] << 8));
+                BH_YJ_1_This.LZSSRepeatTable[0]           = (ushort)(Source[++iOffset] | (Source[++iOffset] << 8));
+                BH_YJ_1_This.LZSSRepeatTable[1]           = (ushort)(Source[++iOffset] | (Source[++iOffset] << 8));
+                BH_YJ_1_This.LZSSRepeatTable[2]           = (ushort)(Source[++iOffset] | (Source[++iOffset] << 8));
+                BH_YJ_1_This.LZSSRepeatTable[3]           = (ushort)(Source[++iOffset] | (Source[++iOffset] << 8));
 
-                BH_YJ_1_This.LZSSOffsetCodeLengthTable[0] = src[++iOffset];
-                BH_YJ_1_This.LZSSOffsetCodeLengthTable[1] = src[++iOffset];
-                BH_YJ_1_This.LZSSOffsetCodeLengthTable[2] = src[++iOffset];
-                BH_YJ_1_This.LZSSOffsetCodeLengthTable[3] = src[++iOffset];
+                BH_YJ_1_This.LZSSOffsetCodeLengthTable[0] = Source[++iOffset];
+                BH_YJ_1_This.LZSSOffsetCodeLengthTable[1] = Source[++iOffset];
+                BH_YJ_1_This.LZSSOffsetCodeLengthTable[2] = Source[++iOffset];
+                BH_YJ_1_This.LZSSOffsetCodeLengthTable[3] = Source[++iOffset];
 
-                BH_YJ_1_This.LZSSRepeatCodeLengthTable[0] = src[++iOffset];
-                BH_YJ_1_This.LZSSRepeatCodeLengthTable[1] = src[++iOffset];
-                BH_YJ_1_This.LZSSRepeatCodeLengthTable[2] = src[++iOffset];
+                BH_YJ_1_This.LZSSRepeatCodeLengthTable[0] = Source[++iOffset];
+                BH_YJ_1_This.LZSSRepeatCodeLengthTable[1] = Source[++iOffset];
+                BH_YJ_1_This.LZSSRepeatCodeLengthTable[2] = Source[++iOffset];
 
-                BH_YJ_1_This.CodeCountCodeLengthTable[0]  = src[++iOffset];
-                BH_YJ_1_This.CodeCountCodeLengthTable[1]  = src[++iOffset];
-                BH_YJ_1_This.CodeCountCodeLengthTable[2]  = src[++iOffset];
+                BH_YJ_1_This.CodeCountCodeLengthTable[0]  = Source[++iOffset];
+                BH_YJ_1_This.CodeCountCodeLengthTable[1]  = Source[++iOffset];
+                BH_YJ_1_This.CodeCountCodeLengthTable[2]  = Source[++iOffset];
 
-                BH_YJ_1_This.CodeCountTable[0]            = src[++iOffset];
-                BH_YJ_1_This.CodeCountTable[1]            = src[++iOffset];
+                BH_YJ_1_This.CodeCountTable[0]            = Source[++iOffset];
+                BH_YJ_1_This.CodeCountTable[1]            = Source[++iOffset];
 
                 //
+                // 偏移到 LZ77 重复表
                 //
                 iSrcOffset += 4;
-                //src = Source[iSrcOffset..];
-                src = UTIL_SubBytes(Source, iSrcOffset);
 
                 //
                 // 判断压缩后的块大小是否大于 0
@@ -297,9 +296,7 @@ namespace PalYJ_1
 
                     while (hul-- != 0)
                     {
-                        Destination[iDestOffset++] = src[iSrcOffset++];
-                        //src = Source[iSrcOffset..];
-                        src = UTIL_SubBytes(Source, iSrcOffset);
+                        Destination[iDestOffset++] = Source[iSrcOffset++];
                     }
 
                     continue;
@@ -309,13 +306,11 @@ namespace PalYJ_1
                 // 直接跳到 代码计数 \ 代码长度表
                 //
                 iSrcOffset += 20;
-                //src = Source[iSrcOffset..];
-                src = UTIL_SubBytes(Source, iSrcOffset);
 
                 for (j = 0;; j++)
                 {
                     ushort loop;
-                    if ((loop = yj1_get_loop(ref src, ref bitptr, ref BH_YJ_1_This)) == 0)
+                    if ((loop = yj1_get_loop(iSrcOffset, ref bitptr, ref BH_YJ_1_This)) == 0)
                         break;
 
                     while (loop-- != 0)
@@ -324,7 +319,7 @@ namespace PalYJ_1
 
                         for (; !(TN_YJ_1_This.leaf != 0);)
                         {
-                            if (yj1_get_bits(ref src, ref bitptr, 1) != 0)
+                            if (yj1_get_bits(iSrcOffset, ref bitptr, 1) != 0)
                                 TN_YJ_1_This = TN_YJ_1_This.right;
                             else
                                 TN_YJ_1_This = TN_YJ_1_This.left;
@@ -333,16 +328,16 @@ namespace PalYJ_1
                         Destination[iDestOffset++] = TN_YJ_1_This.value;
                     }
 
-                    if ((loop = yj1_get_loop(ref src, ref bitptr, ref BH_YJ_1_This)) == 0)
+                    if ((loop = yj1_get_loop(iSrcOffset, ref bitptr, ref BH_YJ_1_This)) == 0)
                         break;
 
                     while (loop-- != 0)
                     {
                         uint pos, count;
 
-                        count = yj1_get_count(ref src, ref bitptr, ref BH_YJ_1_This);
-                        pos   = yj1_get_bits(ref src, ref bitptr, 2);
-                        pos   = yj1_get_bits(ref src, ref bitptr, BH_YJ_1_This.LZSSOffsetCodeLengthTable[pos]);
+                        count = yj1_get_count(iSrcOffset, ref bitptr, ref BH_YJ_1_This);
+                        pos   = yj1_get_bits(iSrcOffset, ref bitptr, 2);
+                        pos   = yj1_get_bits(iSrcOffset, ref bitptr, BH_YJ_1_This.LZSSOffsetCodeLengthTable[pos]);
 
                         while (count-- != 0)
                         {
@@ -352,12 +347,14 @@ namespace PalYJ_1
                     }
                 }
 
-                //iDestOffset = UTIL_SwapLE16(BH_YJ_1_This.CompressedLength);
-
                 iSrcOffset += UTIL_SwapLE16(BH_YJ_1_This.CompressedLength) - 24;
-                //src = Source[iSrcOffset..];
-                src = UTIL_SubBytes(Source, iSrcOffset);
             }
+
+            //
+            // 释放内存
+            //
+            bSrc_YJ_1   = null;
+            bDest_YJ_1  = null;
 
             return (int)UTIL_SwapLE32(FH_YJ_1.UncompressedLength);
         }
