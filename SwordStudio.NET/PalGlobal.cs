@@ -22,12 +22,12 @@ using SwordStudio.NET;
 using SwordStudio.NET.Properties;
 using PalCfg;
 using PalMain;
+using PalVideo;
 
 using static PalGlobal.Pal_File;
 using static PalUtil.Pal_Util;
 using static PalCfg.Pal_Cfg;
 using static PalCommon.Pal_Common;
-using PalVideo;
 
 namespace PalGlobal
 {
@@ -85,7 +85,7 @@ namespace PalGlobal
         public static TabControl        tcMainTabCtrl   = new TabControl();
         public static BOOL              fIsRegEncode    = FALSE;
         public static List<Pal_File>    pfFileList      = new List<Pal_File>();
-        public static INT               iiThisScene     = -1;
+        public static INT               iThisScene      = -1;
 
         public        Pal_Video         pvMapEdit       = null;
 
@@ -112,7 +112,7 @@ namespace PalGlobal
                 //
                 pcnTmp      = Pal_Cfg.Pal_Cfg_GetCfgNode(lpszMainData);
                 iSize       = pcnTmp.pcniItems.IndexOf(pcnTmp.pcniItems.Where(item => item.lpszNodeName.Equals(lpszUnit)).First());
-                data_size   = PAL_MKFGetChunkSize(iSize, ref pfFileTmp.bufFile);
+                data_size   = PAL_MKFGetChunkSize(iSize, pfFileTmp.bufFile);
                 bufTmp      = new BYTE[data_size];
                 PAL_MKFReadChunk(ref bufTmp, iSize, ref pfFileTmp.bufFile);
             }

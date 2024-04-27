@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
+using System.Windows.Forms;
 
 using BOOL      = System.Boolean;
 using CHAR      = System.Char;
@@ -16,8 +18,6 @@ using DWORD     = System.UInt32;
 using LPSTR     = System.String;
 
 using static PalGlobal.Pal_Global;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace PalUtil
 {

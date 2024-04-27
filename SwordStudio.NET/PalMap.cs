@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 using BOOL      = System.Boolean;
 using CHAR      = System.Char;
@@ -21,7 +22,6 @@ using PalVideo;
 using static PalGlobal.Pal_Global;
 using static PalCommon.Pal_Common;
 using static PalVideo.Pal_Video;
-using System.Windows.Forms;
 
 namespace PalMap
 {
@@ -29,7 +29,10 @@ namespace PalMap
     {
         public static   DWORD[,,]   Tiles;
         public static   BYTE[]      TileSprite;
-        public static   INT         iMapNum = -1;
+        public static   INT         iMapNum     = -1;
+        public const    WORD        iTileWidth  = 32, iTileHeight = 15;
+        public static   Surface     TileSurface = new Surface(Pal_Map.iTileWidth, Pal_Map.iTileHeight);
+        public static   Image       TileImage   = new Bitmap(Pal_Map.TileSurface.w, Pal_Map.TileSurface.h);
 
         public static BYTE[]
         PAL_MapGetTileBitmap(
@@ -81,14 +84,14 @@ namespace PalMap
                 // Top layer
                 //
                 d >>= 16;
-                return PAL_SpriteGetFrame(ref TileSprite, (INT)(((d & 0xFF) | ((d >> 4) & 0x100)) - 1));
+                return PAL_SpriteGetFrame(TileSprite, (INT)(((d & 0xFF) | ((d >> 4) & 0x100)) - 1));
             }
             else
             {
                 //
                 // Bottom layer
                 //
-                return PAL_SpriteGetFrame(ref TileSprite, (INT)((d & 0xFF) | ((d >> 4) & 0x100)));
+                return PAL_SpriteGetFrame(TileSprite, (INT)((d & 0xFF) | ((d >> 4) & 0x100)));
             }
         }
 
@@ -151,7 +154,7 @@ namespace PalMap
                             Bitmap = PAL_MapGetTileBitmap(0, 0, 0, fLayer);
                         }
 
-                        PAL_RLEBlitToSurface(ref Bitmap, sfSurface, PAL_XY(xPos, yPos));
+                        PAL_RLEBlitToSurface(Bitmap, sfSurface, PAL_XY(xPos, yPos));
                     }
                 }
             }

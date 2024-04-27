@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -36,28 +37,29 @@ using static PalUtil.Pal_Util;
 using static PalCfg.Pal_Cfg;
 using static PalMap.Pal_Map;
 using static PalVideo.Pal_Video;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace SwordStudio.NET
 {
     public partial class Form_SceneSelect : Form
     {
-        private static INT      nEvent, nScene, iSizeOfScene;
-        private static Pal_File pfFile_Map = null, pfFile_SSS = null;
-        private static Surface  sfMapPreview        = null;
-        private static BYTE[]   Map_Tmp             = null;
-        private static BOOL     fIsLoadingCompleted = FALSE;
-        private static Rect     rect                = new Rect();
-        private const  WORD     wMapWidth           = 2064, wMapHeight = 2055;
+        private static      INT         nEvent, nScene, iSizeOfScene;
+        private static      Pal_File    pfFile_Map = null, pfFile_SSS = null;
+        private static      Surface     sfMapPreview        = null;
+        private static      BYTE[]      Map_Tmp             = null;
+        private static      BOOL        fIsLoadingCompleted = FALSE;
+        private static      Rect        rect                = new Rect();
+        private const       WORD        wMapWidth           = 2064, wMapHeight = 2055;
+        private static readonly PAL_POS     dwMinMapPos         = PAL_XY(0, 0);
+        private readonly    PAL_POS     dwMaxMapPos;
 
-        private static BOOL     fIsMovingMap        = FALSE;
-        private static Point    MouseBeginPos;
-        private static Point    MouseEndPos;
+        private static      BOOL        fIsMovingMap        = FALSE;
+        private static      Point       MouseBeginPos;
+        private static      Point        MouseEndPos;
 
-        public         INT      _iThisScene = -1;
-        public         BOOL     _fIsEnter   = FALSE;
-        public         PAL_POS  _iMapPos    = PAL_XY(0, 0);
-        public         BYTE[]   _AllSceneData;
+        public              INT         _iThisScene         = -1;
+        public              BOOL        _fIsEnter           = FALSE;
+        public              PAL_POS     _dwMapPos           = dwMinMapPos;
+        public              BYTE[]      _AllSceneData;
 
         private Form_SceneSelect() { }
 
@@ -70,12 +72,14 @@ namespace SwordStudio.NET
             this.Owner                  = Father_Form;
 
             MapPreview_PictureBox.Image = new Bitmap(MapPreview_PictureBox.Width, MapPreview_PictureBox.Height);
-            sfMapPreview                = new Surface(MapPreview_PictureBox.Width, MapPreview_PictureBox.Height, 0);
+            sfMapPreview                = new Surface(MapPreview_PictureBox.Width, MapPreview_PictureBox.Height);
 
-            rect.x = PAL_X(_iMapPos);
-            rect.y = PAL_Y(_iMapPos);
-            rect.w = sfMapPreview.w;
-            rect.h = sfMapPreview.h;
+            dwMaxMapPos                 = PAL_XY((WORD)(wMapHeight - MapPreview_PictureBox.Width), (WORD)(wMapHeight - MapPreview_PictureBox.Height));
+
+            rect.x                      = PAL_X(_dwMapPos);
+            rect.y                      = PAL_Y(_dwMapPos);
+            rect.w                      = sfMapPreview.w;
+            rect.h                      = sfMapPreview.h;
         }
 
         private void MapPreview_PictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -95,35 +99,57 @@ namespace SwordStudio.NET
 
         private void MapPreview_PictureBox_MouseMove(object sender, MouseEventArgs e)
         {
+            INT     iMaxWidth, iMaxHeight = wMapHeight - MapPreview_PictureBox.Height;
+
             if (fIsMovingMap)
             {
                 MouseEndPos     = Point.Subtract(Cursor.Position, new Size(MouseBeginPos));
-                MouseEndPos     = Point.Subtract(new Point(PAL_X(_iMapPos), PAL_Y(_iMapPos)), new Size(MouseEndPos));
-                _iMapPos        = PAL_XY((WORD)MouseEndPos.X, (WORD)MouseEndPos.Y);
+                MouseEndPos.X  /= 2;
+                MouseEndPos.Y  /= 2;
+                MouseEndPos     = Point.Subtract(new Point(PAL_X(_dwMapPos), PAL_Y(_dwMapPos)), new Size(MouseEndPos));
 
-                rect.x = PAL_X(_iMapPos);
-                rect.y = PAL_Y(_iMapPos);
+                MouseEndPos.X   = Math.Min(PAL_X(dwMaxMapPos), MouseEndPos.X);
+                MouseEndPos.X   = Math.Max(PAL_X(dwMinMapPos), MouseEndPos.X);
+
+                MouseEndPos.Y   = Math.Min(PAL_Y(dwMaxMapPos), MouseEndPos.Y);
+                MouseEndPos.Y   = Math.Max(PAL_Y(dwMinMapPos), MouseEndPos.Y);
+
+                _dwMapPos       = PAL_XY((WORD)MouseEndPos.X, (WORD)MouseEndPos.Y);
+
+                ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Value = (INT)(ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Maximum * ((double)PAL_X(_dwMapPos) / PAL_X(dwMaxMapPos)));
+                ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Value = (INT)(ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Maximum * ((double)PAL_Y(_dwMapPos) / PAL_Y(dwMaxMapPos)));
+
+                rect.x          = PAL_X(_dwMapPos);
+                rect.y          = PAL_Y(_dwMapPos);
                 PAL_DrawMapToSurface(sfMapPreview, rect, MapPreview_PictureBox, 1);
             }
         }
 
         private void ScrollTD_ScrollBoxT_MainBoxL_VScrollBar_ValueChanged(object sender, EventArgs e)
         {
-            double percentage = (double)ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Value / ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Maximum;
+            double percentage;
 
-            _iMapPos = PAL_XY(PAL_X(_iMapPos), (WORD)((wMapHeight - MapPreview_PictureBox.Height) * percentage));
+            if (fIsMovingMap) return;
 
-            rect.y = PAL_Y(_iMapPos);
+            percentage = (double)ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Value / ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Maximum;
+
+            _dwMapPos = PAL_XY(PAL_X(_dwMapPos), (WORD)((wMapHeight - MapPreview_PictureBox.Height) * percentage));
+
+            rect.y = PAL_Y(_dwMapPos);
             PAL_DrawMapToSurface(sfMapPreview, rect, MapPreview_PictureBox, 1);
         }
 
         private void ScrollLR_ScrollBoxD_MainBoxL_HScrollBar_ValueChanged(object sender, EventArgs e)
         {
-            double percentage = (double)ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Value / ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Maximum;
+            double percentage;
 
-            _iMapPos = PAL_XY((WORD)((wMapHeight - MapPreview_PictureBox.Width) * percentage), PAL_Y(_iMapPos));
+            if (fIsMovingMap) return;
 
-            rect.x = PAL_X(_iMapPos);
+            percentage = (double)ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Value / ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Maximum;
+
+            _dwMapPos = PAL_XY((WORD)((wMapHeight - MapPreview_PictureBox.Width) * percentage), PAL_Y(_dwMapPos));
+
+            rect.x = PAL_X(_dwMapPos);
             PAL_DrawMapToSurface(sfMapPreview, rect, MapPreview_PictureBox, 1);
         }
 
@@ -212,26 +238,26 @@ namespace SwordStudio.NET
                     }
 
                     //
-                    // Initialize map titles
+                    // Initialize map tiles
                     //
                     {
-                        const INT iTitleThird = 128, iTitleSsecond = 64, iTitleFirst = 2;
+                        const INT iTileThird = 128, iTileSsecond = 64, iTileFirst = 2;
 
                         //
-                        // Get map titles data
+                        // Get map tiles data
                         //
                         Map_Tmp = Pal_File_GetFile(lpszGameMap).bufFile;
                         PAL_MKFDecompressChunk(ref Data_Buf, Pal_Map.iMapNum, ref Map_Tmp);
 
-                        Pal_Map.Tiles = new DWORD[iTitleThird, iTitleSsecond, iTitleFirst];
+                        Pal_Map.Tiles = new DWORD[iTileThird, iTileSsecond, iTileFirst];
 
-                        for (i = 0; i < iTitleThird; i++)
+                        for (i = 0; i < iTileThird; i++)
                         {
-                            for (j = 0; j < iTitleSsecond; j++)
+                            for (j = 0; j < iTileSsecond; j++)
                             {
-                                for (k = 0; k < iTitleFirst; k++)
+                                for (k = 0; k < iTileFirst; k++)
                                 {
-                                    iOffset = i * iTitleSsecond * iTitleFirst + j * iTitleFirst + k;
+                                    iOffset = i * iTileSsecond * iTileFirst + j * iTileFirst + k;
 
                                     Pal_Map.Tiles[i, j, k] = BitConverter.ToUInt32(Data_Buf, iOffset * sizeof(DWORD));
                                 }
@@ -246,15 +272,15 @@ namespace SwordStudio.NET
                     //
                     {
                         //
-                        // Get map titles data
+                        // Get map tiles data
                         //
                         Map_Tmp = Pal_File_GetFile(lpszGameMapTile).bufFile;
                         PAL_MKFReadChunk(ref Pal_Map.TileSprite, Pal_Map.iMapNum, ref Map_Tmp);
                     }
 
-                    _iMapPos = PAL_XY(0, 0);
-                    rect.x = PAL_X(_iMapPos);
-                    rect.y = PAL_Y(_iMapPos);
+                    _dwMapPos   = dwMinMapPos;
+                    rect.x      = PAL_X(_dwMapPos);
+                    rect.y      = PAL_Y(_dwMapPos);
                     PAL_DrawMapToSurface(sfMapPreview, rect, MapPreview_PictureBox, 1);
 
                     ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Value   = 0;
@@ -309,7 +335,7 @@ namespace SwordStudio.NET
             //
             // Get the size of scenes data
             //
-            iSceneIndex = PAL_MKFGetChunkSize(iSceneIndex, ref pfFile_SSS.bufFile);
+            iSceneIndex = PAL_MKFGetChunkSize(iSceneIndex, pfFile_SSS.bufFile);
 
             //
             // Get the size of each group of scenes
@@ -324,9 +350,9 @@ namespace SwordStudio.NET
             //
             // Set the table header of the map list
             //
-            iColumnsW = MapNameList_SceneSelectBoxT_ListView.Width;
-            iColumnsW -= MapNameList_SceneSelectBoxT_ListView.Margin.Left;
-            iColumnsW -= MapNameList_SceneSelectBoxT_ListView.Margin.Right;
+            iColumnsW   = MapNameList_SceneSelectBoxT_ListView.Width;
+            iColumnsW  -= MapNameList_SceneSelectBoxT_ListView.Margin.Left;
+            iColumnsW  -= MapNameList_SceneSelectBoxT_ListView.Margin.Right;
             MapNameList_SceneSelectBoxT_ListView.Columns.Add("地图编号", iColumnsW, HorizontalAlignment.Center);
 
             //

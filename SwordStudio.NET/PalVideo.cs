@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using System.Collections;
+using System.Drawing;
 
 using BOOL      = System.Boolean;
 using CHAR      = System.Char;
@@ -22,8 +24,6 @@ using PalGlobal;
 using static PalGlobal.Pal_Global;
 using static PalGlobal.Pal_File;
 using static PalCommon.Pal_Common;
-using System.Collections;
-using System.Drawing;
 
 namespace PalVideo
 {
@@ -54,8 +54,8 @@ namespace PalVideo
         Surface(
             INT     iWidth,
             INT     iHeight,
-            INT     iPaletteNum,
-            BOOL    fNight = FALSE
+            INT     iPaletteNum = 0,
+            BOOL    fNight      = FALSE
         )
         {
             INT     i, j;
@@ -132,7 +132,7 @@ namespace PalVideo
             INT     iHeight
         )
         {
-            _Surface = new Surface(iWidth, iHeight, 0);
+            _Surface = new Surface(iWidth, iHeight);
         }
 
         public static void Video_DrawEnlargeBitmap(Surface surface, Image dest, INT n_tupling)
@@ -142,14 +142,14 @@ namespace PalVideo
             Bitmap originalBitmap, scaledBitmap;
             BYTE[] RGB_List;
 
-            Width = surface.w;
-            Height = surface.h;
+            Width           = surface.w;
+            Height          = surface.h;
 
-            scaledWidth = Width * n_tupling;
-            scaledHeight = Height * n_tupling;
+            scaledWidth     = Width * n_tupling;
+            scaledHeight    = Height * n_tupling;
 
-            originalBitmap = new Bitmap(Width, Height);
-            scaledBitmap = (Bitmap)dest;
+            originalBitmap  = new Bitmap(Width, Height);
+            scaledBitmap    = (Bitmap)dest;
 
             RGB_List = surface.GetPixelRGB();
 
@@ -172,8 +172,8 @@ namespace PalVideo
                 //
                 // Set the drawing mode of the image to pixel alignment
                 //
-                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+                graphics.InterpolationMode  = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                graphics.PixelOffsetMode    = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
                 //
                 // Clear the entire drawing surface and fill it with a transparent background color
@@ -185,6 +185,37 @@ namespace PalVideo
                 //
                 graphics.DrawImage(originalBitmap, new Rectangle(0, 0, scaledWidth, scaledHeight), new Rectangle(0, 0, Width, Height), GraphicsUnit.Pixel);
             }
+        }
+
+        public static Image Video_ChangeImageSize(Image Src, INT Width, INT Height)
+        {
+            Bitmap resizedImage;
+
+            if (Src == null) return null;
+
+            resizedImage = new Bitmap(Width, Height);
+
+            using (Graphics graphics = Graphics.FromImage(resizedImage))
+            {
+                //
+                // Set the drawing mode of the image to pixel alignment
+                //
+                graphics.InterpolationMode  = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                graphics.PixelOffsetMode    = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
+
+                //
+                // Clear the entire drawing surface and fill it with a transparent background color
+                //
+                graphics.Clear(Color.Transparent);
+
+                //
+                // Draw an enlarged image
+                //
+                graphics.DrawImage(Src, new Rectangle(0, 0, Width, Height));
+            }
+
+            return resizedImage;
         }
     }
 }

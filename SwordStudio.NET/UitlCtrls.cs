@@ -7,6 +7,18 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+
+using BOOL      = System.Boolean;
+using CHAR      = System.Char;
+using BYTE      = System.Byte;
+using SHORT     = System.Int16;
+using WORD      = System.UInt16;
+using INT       = System.Int32;
+using UINT      = System.UInt32;
+using SDWORD    = System.Int32;
+using DWORD     = System.UInt32;
+using LPSTR     = System.String;
 
 namespace UitlCtrls
 {

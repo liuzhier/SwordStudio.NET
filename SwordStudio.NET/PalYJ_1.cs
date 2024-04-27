@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System;
+using System.IO;
 
 using static System.Array;
 
+using PalCfg;
+
 using static PalYJ_1.Pal_YJ_1;
 using static PalUtil.Pal_Util;
-using PalCfg;
-using System;
-using System.IO;
 
 namespace PalYJ_1
 {

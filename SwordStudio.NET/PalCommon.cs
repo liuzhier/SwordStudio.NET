@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 using BOOL      = System.Boolean;
 using CHAR      = System.Char;
@@ -21,7 +22,6 @@ using static PalGlobal.Pal_Global;
 using static PalUtil.Pal_Util;
 using static PalYJ_1.Pal_YJ_1;
 using static PalVideo.Pal_Video;
-using System.IO;
 
 namespace PalCommon
 {
@@ -46,17 +46,17 @@ namespace PalCommon
 
         public static INT
         PAL_RLEBlitToSurface(
-           ref BYTE[]       lpBitmapRLE,
+           BYTE[]           lpBitmapRLE,
            Surface          lpDstSurface,
            PAL_POS          pos
         )
         {
-            return PAL_RLEBlitToSurfaceWithShadow(ref lpBitmapRLE, lpDstSurface, pos, FALSE);
+            return PAL_RLEBlitToSurfaceWithShadow(lpBitmapRLE, lpDstSurface, pos, FALSE);
         }
 
         public static INT
         PAL_RLEBlitToSurfaceWithShadow(
-           ref BYTE[]       lpBitmapRLE,
+           BYTE[]           lpBitmapRLE,
            Surface          lpDstSurface,
            PAL_POS          pos,
            BOOL             bShadow
@@ -834,7 +834,7 @@ namespace PalCommon
             //
             // Check whether the uiChunkNum is out of range..
             //
-            if (uiChunkNum >= PAL_MKFGetChunkCount(ref lpBuffer)) return null;
+            if (uiChunkNum >= PAL_MKFGetChunkCount(lpBuffer)) return null;
 
             //
             // Get the offset of the specified chunk and the next chunk.
@@ -854,7 +854,7 @@ namespace PalCommon
 
         public static WORD
         PAL_SpriteGetNumFrames(
-           ref BYTE[]       lpSprite
+            BYTE[]          lpSprite
         )
         /*++
           Purpose:
@@ -878,7 +878,7 @@ namespace PalCommon
 
         public static BYTE[]
         PAL_SpriteGetFrame(
-           ref BYTE[]       lpSprite,
+           BYTE[]           lpSprite,
            INT              iFrameNum
         )
         /*++
@@ -909,7 +909,7 @@ namespace PalCommon
             //
             //   imagecount = (lpSprite[0] | (lpSprite[1] << 8)) - 1;
             //imagecount = lpSprite[0] | (lpSprite[1] << 8);
-            imagecount = PAL_SpriteGetNumFrames(ref lpSprite);
+            imagecount = PAL_SpriteGetNumFrames(lpSprite);
 
             //
             // The frame does not exist
@@ -933,7 +933,7 @@ namespace PalCommon
 
         public static INT
         PAL_MKFGetChunkCount(
-           ref BYTE[]       lpFileBuf
+            BYTE[]          lpFileBuf
         )
         /*++
           Purpose:
@@ -959,7 +959,7 @@ namespace PalCommon
         public static INT
         PAL_MKFGetChunkSize(
            INT              iChunkNum,
-           ref BYTE[]       lpFileBuf
+           BYTE[]           lpFileBuf
         )
         /*++
           Purpose:
@@ -984,7 +984,7 @@ namespace PalCommon
             //
             // Get the total number of chunks.
             //
-            if (iChunkNum >= PAL_MKFGetChunkCount(ref lpFileBuf)) return -1;
+            if (iChunkNum >= PAL_MKFGetChunkCount(lpFileBuf)) return -1;
 
             //
             // Get the offset of the specified chunk and the next chunk.
@@ -1034,7 +1034,7 @@ namespace PalCommon
             //
             // Get the total number of chunks.
             //
-            iSize = PAL_MKFGetChunkCount(ref lpFileBuf);
+            iSize = PAL_MKFGetChunkCount(lpFileBuf);
             if (iChunkNum >= iSize) return -1;
 
             //
@@ -1090,12 +1090,12 @@ namespace PalCommon
             //
             // Get the total number of chunks.
             //
-            if (iChunkNum >= PAL_MKFGetChunkCount(ref lpFileBuf)) return -1;
+            if (iChunkNum >= PAL_MKFGetChunkCount(lpFileBuf)) return -1;
 
             //
             // Get the offset of the chunk.
             //
-            iByteOffset = (iChunkNum + 1) << 2;
+            iByteOffset = iChunkNum << 2;
             //iOffset     = BitConverter.ToInt32(lpFileBuf[iByteOffset..(iByteOffset += 4)]);
             //buf[0]      = BitConverter.ToUInt32(lpFileBuf[iOffset..(iOffset += 4)]);
             iOffset     = BitConverter.ToInt32( UTIL_SubBytes(lpFileBuf, ref iByteOffset, 4), 0);
@@ -1146,7 +1146,7 @@ namespace PalCommon
             BYTE[]  buf;
             int     len;
 
-            len = PAL_MKFGetChunkSize(iChunkNum, ref lpFileBuf);
+            len = PAL_MKFGetChunkSize(iChunkNum, lpFileBuf);
 
             if (len <= 0) return len;
 
