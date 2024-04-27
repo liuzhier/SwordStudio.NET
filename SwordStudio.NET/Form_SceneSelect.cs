@@ -47,7 +47,8 @@ namespace SwordStudio.NET
         private static Surface  sfMapPreview        = null;
         private static BYTE[]   Map_Tmp             = null;
         private static BOOL     fIsLoadingCompleted = FALSE;
-        private static Rect     rect = new Rect();
+        private static Rect     rect                = new Rect();
+        private const  WORD     wMapWidth           = 2064, wMapHeight = 2055;
 
         private static BOOL     fIsMovingMap        = FALSE;
         private static Point    MouseBeginPos;
@@ -98,13 +99,32 @@ namespace SwordStudio.NET
             {
                 MouseEndPos     = Point.Subtract(Cursor.Position, new Size(MouseBeginPos));
                 MouseEndPos     = Point.Subtract(new Point(PAL_X(_iMapPos), PAL_Y(_iMapPos)), new Size(MouseEndPos));
-                //_iMapPos        = PAL_XY((WORD)(PAL_X(_iMapPos) + MouseEndPos.X), (WORD)(PAL_Y(_iMapPos) + MouseEndPos.Y));
                 _iMapPos        = PAL_XY((WORD)MouseEndPos.X, (WORD)MouseEndPos.Y);
 
                 rect.x = PAL_X(_iMapPos);
                 rect.y = PAL_Y(_iMapPos);
                 PAL_DrawMapToSurface(sfMapPreview, rect, MapPreview_PictureBox, 1);
             }
+        }
+
+        private void ScrollTD_ScrollBoxT_MainBoxL_VScrollBar_ValueChanged(object sender, EventArgs e)
+        {
+            double percentage = (double)ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Value / ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Maximum;
+
+            _iMapPos = PAL_XY(PAL_X(_iMapPos), (WORD)((wMapHeight - MapPreview_PictureBox.Height) * percentage));
+
+            rect.y = PAL_Y(_iMapPos);
+            PAL_DrawMapToSurface(sfMapPreview, rect, MapPreview_PictureBox, 1);
+        }
+
+        private void ScrollLR_ScrollBoxD_MainBoxL_HScrollBar_ValueChanged(object sender, EventArgs e)
+        {
+            double percentage = (double)ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Value / ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Maximum;
+
+            _iMapPos = PAL_XY((WORD)((wMapHeight - MapPreview_PictureBox.Width) * percentage), PAL_Y(_iMapPos));
+
+            rect.x = PAL_X(_iMapPos);
+            PAL_DrawMapToSurface(sfMapPreview, rect, MapPreview_PictureBox, 1);
         }
 
         private void SubmitSelect_SceneSelectBoxD_UtilButton_Click(object sender, EventArgs e)
@@ -136,15 +156,6 @@ namespace SwordStudio.NET
                 if (_iThisScene == -1 || _iThisScene != iThisScene)
                 {
                     _iThisScene     = iThisScene;
-
-                    //
-                    // Allow clicking on the OK button
-                    //
-                    if (_iThisScene != -1)
-                    {
-                        SubmitSelect_SceneSelectBoxD_UtilButton.Enabled = TRUE;
-                        MapPreview_PictureBox.Enabled                   = TRUE;
-                    }
 
                     //
                     // Get file indexes for events and scenes
@@ -245,6 +256,20 @@ namespace SwordStudio.NET
                     rect.x = PAL_X(_iMapPos);
                     rect.y = PAL_Y(_iMapPos);
                     PAL_DrawMapToSurface(sfMapPreview, rect, MapPreview_PictureBox, 1);
+
+                    ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Value   = 0;
+                    ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Value   = 0;
+
+                    //
+                    // Allow clicking on the OK button
+                    //
+                    if (_iThisScene != -1)
+                    {
+                        SubmitSelect_SceneSelectBoxD_UtilButton.Enabled = TRUE;
+                        MapPreview_PictureBox.Enabled                   = TRUE;
+                        ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Enabled = TRUE;
+                        ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Enabled = TRUE;
+                    }
                 }
             }
         }

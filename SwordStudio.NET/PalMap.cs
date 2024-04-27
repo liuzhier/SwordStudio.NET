@@ -136,11 +136,11 @@ namespace PalMap
 
             for (y = sy; y < dy; y++)
             {
-                for (h = 0; h< 2; h++, yPos += 8)
+                for (h = 0; h < 2; h++, yPos += 8)
                 {
                     xPos = (WORD)(sx * 32 + h * 16 - 16 - SrcRect.x);
 
-                    for (x = sx; x<dx; x++, xPos += 32)
+                    for (x = sx; x < dx; x++, xPos += 32)
                     {
                         Bitmap = PAL_MapGetTileBitmap((BYTE) x, (BYTE) y, (BYTE) h, fLayer);
 

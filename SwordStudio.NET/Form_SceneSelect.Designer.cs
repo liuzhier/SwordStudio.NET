@@ -140,10 +140,14 @@
             // ScrollTD_ScrollBoxT_MainBoxL_VScrollBar
             // 
             this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Enabled = false;
+            this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.LargeChange = 1;
             this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Location = new System.Drawing.Point(0, 0);
+            this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Maximum = 127;
             this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Name = "ScrollTD_ScrollBoxT_MainBoxL_VScrollBar";
             this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Size = new System.Drawing.Size(24, 622);
             this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.TabIndex = 0;
+            this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.ValueChanged += new System.EventHandler(this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar_ValueChanged);
             // 
             // ScrollBoxD_MainBoxL_SplitContainer
             // 
@@ -162,10 +166,14 @@
             // ScrollLR_ScrollBoxD_MainBoxL_HScrollBar
             // 
             this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Enabled = false;
+            this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.LargeChange = 1;
             this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Location = new System.Drawing.Point(0, 0);
+            this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Maximum = 63;
             this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Name = "ScrollLR_ScrollBoxD_MainBoxL_HScrollBar";
             this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Size = new System.Drawing.Size(621, 24);
             this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.TabIndex = 0;
+            this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.ValueChanged += new System.EventHandler(this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar_ValueChanged);
             // 
             // SceneSelectBoxTD_MainBoxR_SplitContainer
             // 
