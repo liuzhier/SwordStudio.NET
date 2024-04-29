@@ -184,6 +184,12 @@ namespace SwordStudio.NET
                     _iThisScene     = iThisScene;
 
                     //
+                    // Clean up scene Wave
+                    //
+                    Pal_Global.wScreenWave      = 0;
+                    Pal_Global.sWaveProgression = 0;
+
+                    //
                     // Get file indexes for events and scenes
                     //
                     iSceneIndex = Pal_Cfg_GetCfgNodeItemIndex(lpszMainData, lpszScene);
@@ -278,7 +284,7 @@ namespace SwordStudio.NET
                         PAL_MKFReadChunk(ref Pal_Map.TileSprite, Pal_Map.iMapNum, ref Map_Tmp);
                     }
 
-                    _dwMapPos   = dwMinMapPos;
+                    _dwMapPos = dwMinMapPos;
                     rect.x      = PAL_X(_dwMapPos);
                     rect.y      = PAL_Y(_dwMapPos);
                     PAL_DrawMapToSurface(sfMapPreview, rect, MapPreview_PictureBox, 1);
@@ -295,6 +301,22 @@ namespace SwordStudio.NET
                         MapPreview_PictureBox.Enabled                   = TRUE;
                         ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Enabled = TRUE;
                         ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Enabled = TRUE;
+                    }
+                }
+                else
+                {
+                    //
+                    // Simulate scene wave
+                    //
+                    if (Pal_Global.wScreenWave > 0)
+                    {
+                        Pal_Global.wScreenWave      = 0;
+                        Pal_Global.sWaveProgression = 0;
+                    }
+                    else
+                    {
+                        Pal_Global.wScreenWave      = 6;
+                        Pal_Global.sWaveProgression = 0;
                     }
                 }
             }

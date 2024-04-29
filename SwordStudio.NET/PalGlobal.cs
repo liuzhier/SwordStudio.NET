@@ -82,10 +82,12 @@ namespace PalGlobal
 
         public const LPSTR  lpszEventObjectIndex = "EventObjectIndex";
 
-        public static TabControl        tcMainTabCtrl   = new TabControl();
-        public static BOOL              fIsRegEncode    = FALSE;
-        public static List<Pal_File>    pfFileList      = new List<Pal_File>();
-        public static INT               iThisScene      = -1;
+        public static TabControl        tcMainTabCtrl       = new TabControl();
+        public static BOOL              fIsRegEncode        = FALSE;
+        public static List<Pal_File>    pfFileList          = new List<Pal_File>();
+        public static INT               iThisScene          = -1;
+        public static WORD              wScreenWave         = 0;
+        public static SHORT             sWaveProgression    = 0;
 
         public        Pal_Video         pvMapEdit       = null;
 

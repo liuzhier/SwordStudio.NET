@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml.Linq;
 using System.Collections;
 using System.Drawing;
+using System.Security.Cryptography;
 
 using BOOL      = System.Boolean;
 using CHAR      = System.Char;
@@ -24,6 +25,7 @@ using PalGlobal;
 using static PalGlobal.Pal_Global;
 using static PalGlobal.Pal_File;
 using static PalCommon.Pal_Common;
+using static PalUtil.Pal_Util;
 
 namespace PalVideo
 {
@@ -216,6 +218,95 @@ namespace PalVideo
             }
 
             return resizedImage;
+        }
+
+        static INT index = 0;
+
+        public static void
+        Video_ApplyWave(
+           Surface                  surface
+        )
+        /*++
+           Purpose:
+
+             Apply screen waving effect when needed.
+
+           Parameters:
+
+             [OUT] lpSurface - the surface to be proceed.
+
+           Return value:
+
+             None.
+
+        --*/
+        {
+            INT[]           wave        = new INT[32];
+            INT             i, a, b, p;
+            BYTE[]          tmp;
+
+            Pal_Global.wScreenWave = (WORD)(Pal_Global.wScreenWave + Pal_Global.sWaveProgression);
+
+            if (Pal_Global.wScreenWave == 0 || Pal_Global.wScreenWave >= 256)
+            {
+                //
+                // No need to wave the screen
+                //
+                Pal_Global.wScreenWave      = 0;
+                Pal_Global.sWaveProgression = 0;
+                return;
+            }
+
+            //
+            // Calculate the waving offsets.
+            //
+            a = 0;
+            b = 60 + 8;
+
+            for (i = 0; i < 16; i++)
+            {
+                b -= 8;
+                a += b;
+
+                wave[i]         = a * Pal_Global.wScreenWave / 256;
+                wave[i + 16]    = surface.w - wave[i];
+
+                if (wave[i + 16] > surface.w / 2) wave[i + 16] = surface.w - wave[i + 16];
+            }
+
+            //
+            // Apply the effect.
+            //
+            a = index;
+            p = 0;
+
+            //
+            // Loop through all lines in the screen buffer.
+            //
+            for (i = 0; i < surface.h; i++)
+            {
+                b = wave[a];
+
+                if (b > 0)
+                {
+                    //
+                    // Do a shift on the current line with the calculated offset.
+                    //
+                    tmp = UTIL_SubBytes(surface.pixels, p + b, surface.pitch - b);
+
+                    for (b = p; b < (p + surface.pitch); b++) surface.pixels[b] = 0;
+
+                    Array.Copy(tmp, 0, surface.pixels, (b < surface.pitch) ? b : p, tmp.Length);
+                    //memcpy(buf, p, b);
+                    //memmove(p, &p[b], 320 - b);
+                    //memcpy(&p[320 - b], buf, b);
+                }
+
+                a = (a + 1) % 32;
+                p += surface.pitch;
+            }
+
+            index = (index + 1) % 32;
         }
     }
 }

@@ -22,6 +22,7 @@ using PalVideo;
 using static PalGlobal.Pal_Global;
 using static PalCommon.Pal_Common;
 using static PalVideo.Pal_Video;
+using PalGlobal;
 
 namespace PalMap
 {
@@ -169,12 +170,17 @@ namespace PalMap
         )
         {
             //
-            // Draw a scene map
+            // Step 1: Draw the complete map, for both of the layers.
             //
             {
                 PAL_MapBlitToSurface(sfMapPreview.CleanSpirit(), rect, FALSE);
                 PAL_MapBlitToSurface(sfMapPreview,               rect, TRUE);
             }
+
+            //
+            // Step 2: Apply screen waving effects.
+            //
+            Video_ApplyWave(sfMapPreview);
 
             //
             // Display the currently selected scene image
