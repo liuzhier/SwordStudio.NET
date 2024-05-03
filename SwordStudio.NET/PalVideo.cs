@@ -204,7 +204,7 @@ namespace PalVideo
                 // Set the drawing mode of the image to pixel alignment
                 //
                 graphics.InterpolationMode  = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                graphics.PixelOffsetMode    = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+                graphics.PixelOffsetMode    = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
                 //
                 // Clear the entire drawing surface and fill it with a transparent background color
@@ -237,7 +237,7 @@ namespace PalVideo
                 // Set the drawing mode of the image to pixel alignment
                 //
                 graphics.InterpolationMode  = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                graphics.PixelOffsetMode    = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+                graphics.PixelOffsetMode    = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
 
                 //

@@ -209,9 +209,9 @@
 	WORD	DeathSound	死亡音效
 	WORD	AttackSound	音效编号_普攻呼喊
 	WORD	WeaponSound	音效编号_武器砍中
-	WORD	CriticalSound	音效编号_倍攻\暴击呼喊
+	WORD	CriticalSound	音效编号_倍攻/暴击呼喊
 	WORD	MagicSound	音效编号_施法呼喊
-	WORD	CoverSound	音效编号_格挡\援护
+	WORD	CoverSound	音效编号_格挡/援护
 	WORD	DyingSound	音效编号_虚弱呼喊
 [END PlayerRole]
 
@@ -429,18 +429,18 @@
 	0x000C	$WALK_HALF_N	无	无	无	当前事件对象向北行走一步。方向为左上，移速为 2 级
 	0x000D	$WALK_HALF_E	无	无	无	当前事件对象向东行走一步。方向为右上，移速为 2 级
 	0x000E	$WALK_HALF_S	无	无	无	当前事件对象向南行走一步。方向为右下，移速为 2 级
-	0x000F	$SET_FACE_DIRF	方向编号	帧编号	无	设置当前事件对象的面朝方向和帧编号。参数1 指定面朝方向 详见 PALMOD\System\FaceDirection.TSV；参数2 指定当前面朝方向上的帧编号；参数1 和 参数2 != 0xFFFF
+	0x000F	$SET_FACE_DIRF	方向编号	帧编号	无	设置当前事件对象的面朝方向和帧编号。参数1 指定面朝方向 详见 PALMOD/System/FaceDirection.TSV；参数2 指定当前面朝方向上的帧编号；参数1 和 参数2 != 0xFFFF
 	0x0010	$WALK_TO	XBlock	YBlock	Half	当前对象直行相对移动到指定位置。参数1 指定XBlock；参数2 指定YBlock；参数3 指定Half；移速为 3 级
 	0x0011	$WALK_TO_LOWER	XBlock	YBlock	Half	当前对象以低速相对移动到指定位置。参数1 指定XBlock；参数2 指定YBlock；参数3 指定Half；移速为 2 级，游戏主循环帧数每过两帧才走一步
 	0x0012	$SET_POS_REL	无	XRel	YRel	设置事件对象到相对于队伍的位置。参数2 指定XRel；参数3 指定YRel
 	0x0013	$SET_POS_ABS	无	X	Y	设置事件对象到指定的位置。参数1 指定X；参数2 指定Y
 	0x0014	$SET_CURR_FRAME	帧编号	无	无	设置对象的帧编号；参数1 指定帧编号；置帧，从面朝西开始算，面朝方向 = 参数1 / 3 + 1
-	0x0015	@SET_FACE_DIRF	方向编号	帧编号	角色编号	为队员设置指定的面朝方向和帧编号。参数1 指定面朝方向 详见 PALMOD\System\FaceDirectionID.TSV；参数2 指定当前面朝方向上的帧编号；参数3 指定队员目标编号 详见 PALMOD\System\CharacterID.TSV
-	0x0016	$SET_FACE_DIRF2	事件编号	方向编号	帧编号	设置事件对象的面朝方向和帧编号。参数1 指定事件编号 != 0 0xFFFF:当前对象；参数2 指定面朝方向 详见 PALMOD\System\FaceDirection.TSV；参数3 指定当前面朝方向上的帧编号
-	0x0017	@SET_ATTR_EXTRA	装备类型编号	装备属性编号	属性值	为队员设置装备属性，战后清除。参数1 指定装备类型 详见 PALMOD\System\EquipTypeID.TSV；参数2 指定装备属性编号 详见 PALMOD\System\EquipAttrID.TSV；参数3 欲增加的属性值
-	0x0018	@EQIUP_WAER	装备类型编号	装备单位编号	无	为队员穿戴选定的装备。参数1 指定装备类型 详见 PALMOD\System\EquipTypeID.TSV；参数2 指定装备单位编号
-	0x0019	@ADD_ATTR	属性编号	属性值	角色编号	为队员增加属性。参数1 指定属性编号 详见 PALMOD\Data\PlayerRoles.TSV；指定属性值；参数3 指定队员目标编号 详见 PALMOD\System\CharacterID.TSV
-	0x001A	@SET_ATTR	属性编号	属性值	角色编号	为队员设置属性。参数1 指定属性编号 详见 PALMOD\Data\PlayerRoles.TSV；参数2 指定属性值；参数3 指定队员目标编号 详见 PALMOD\System\CharacterID.TSV
+	0x0015	@SET_FACE_DIRF	方向编号	帧编号	角色编号	为队员设置指定的面朝方向和帧编号。参数1 指定面朝方向 详见 PALMOD/System/FaceDirectionID.TSV；参数2 指定当前面朝方向上的帧编号；参数3 指定队员目标编号 详见 PALMOD/System/CharacterID.TSV
+	0x0016	$SET_FACE_DIRF2	事件编号	方向编号	帧编号	设置事件对象的面朝方向和帧编号。参数1 指定事件编号 != 0 0xFFFF:当前对象；参数2 指定面朝方向 详见 PALMOD/System/FaceDirection.TSV；参数3 指定当前面朝方向上的帧编号
+	0x0017	@SET_ATTR_EXTRA	装备类型编号	装备属性编号	属性值	为队员设置装备属性，战后清除。参数1 指定装备类型 详见 PALMOD/System/EquipTypeID.TSV；参数2 指定装备属性编号 详见 PALMOD/System/EquipAttrID.TSV；参数3 欲增加的属性值
+	0x0018	@EQIUP_WAER	装备类型编号	装备单位编号	无	为队员穿戴选定的装备。参数1 指定装备类型 详见 PALMOD/System/EquipTypeID.TSV；参数2 指定装备单位编号
+	0x0019	@ADD_ATTR	属性编号	属性值	角色编号	为队员增加属性。参数1 指定属性编号 详见 PALMOD/Data/PlayerRoles.TSV；指定属性值；参数3 指定队员目标编号 详见 PALMOD/System/CharacterID.TSV
+	0x001A	@SET_ATTR	属性编号	属性值	角色编号	为队员设置属性。参数1 指定属性编号 详见 PALMOD/Data/PlayerRoles.TSV；参数2 指定属性值；参数3 指定队员目标编号 详见 PALMOD/System/CharacterID.TSV
 	0x001B	@ADD_HP_CURR	作用目标	体力值	无	为队员恢复或损耗体力。参数1 指定作用目标 单人:0 全体:1；参数2 欲增加的体力值，负数则为减少
 	0x001C	@ADD_MP_CURR	作用目标	真气值	无	为队员恢复或损耗体力。参数1 指定作用目标 单人:0 全体:1；参数2 欲增加的体力值，负数则为减少
 	0x001D	@ADD_HMP_CURR	作用目标	真气值	无	为队员恢复或损耗体力。参数1 指定作用目标 单人:0 全体:1；参数2 欲增加的体力值，负数则为减少；参数3 欲增加的真气值，负数则为减少
@@ -449,21 +449,21 @@
 	0x0020	*POP_ITEM	道具单位编号	道具数量	脚本地址	失去道具。参数1 指定道具单位编号；参数2 指定损耗的道具的数量；参数3 欲损耗的道具数量不足则跳转到的脚本地址；若库存不足会把队员穿戴的装备直接删除掉，并清除掉该装备为队员增加的属性
 	0x0021	%SUB_HP	作用目标	体力值	无	为敌人损耗或恢复体力。参数1 指定作用目标 单人:0 全体:1；参数2 欲减少的体力值，负数则为增加
 	0x0022	@REVIVE_TENTHS	作用目标	体力恢复十分比	无	为队员复活并以十分比恢复体力。参数1 指定作用目标 单人:0 全体:1；参数2 欲恢复的体力十分比
-	0x0023	@EQIUP_TAKEOFF	队员编号	装备类型编号	无	为队员拆卸已穿戴的装备。参数1 指定队员编号 PALMOD\System\RoleID.TSV；参数2 指定装备类型 全部:0 头戴:1.披挂.身穿.手持.脚穿.配戴 依次加一
+	0x0023	@EQIUP_TAKEOFF	队员编号	装备类型编号	无	为队员拆卸已穿戴的装备。参数1 指定队员编号 PALMOD/System/RoleID.TSV；参数2 指定装备类型 全部:0 头戴:1.披挂.身穿.手持.脚穿.配戴 依次加一
 	0x0024	$SET_SCRIPT_A	事件编号	脚本地址	无	设置对象自动脚本地址。参数1 指定事件编号 != 0 0xFFFF:当前对象；参数2 欲设置的自动脚本地址
 	0x0025	$SET_SCRIPT_T	事件编号	脚本地址	无	设置对象互动脚本地址。参数1 指定事件编号 != 0 0xFFFF:当前对象；参数2 欲设置的互动脚本地址
-	0x0026	*MENU_STORE	店铺编号	无	无	进入店铺，购买道具菜单。参数1 指定店铺编号，详见 PALMOD\Data\Store.TSV
+	0x0026	*MENU_STORE	店铺编号	无	无	进入店铺，购买道具菜单。参数1 指定店铺编号，详见 PALMOD/Data/Store.TSV
 	0x0027	*MENU_SELL	无	无	无	进入当铺，出售道具菜单，典当会以半价出售道具。
-	0x0028	%SET_POISON	作用目标	毒性单位编号	无	为敌方中毒。参数1 指定作用目标 单人:0 全体:1；参数2 指定毒性单位编号 详见 PALMOD\Data\Object\Poison.TSV
-	0x0029	@SET_POISON	作用目标	毒性单位编号	无	为我方中毒。参数1 指定作用目标 单人:0 全体:1；参数2 指定毒性单位编号 详见 PALMOD\Data\Object\Poison.TSV
-	0x002A	%POP_POISON	作用目标	毒性单位编号	无	为敌方解毒。参数1 指定作用目标 单人:0 全体:1；参数2 指定毒性单位编号 详见 PALMOD\Data\Object\Poison.TSV
-	0x002B	@POP_POISON	作用目标	毒性单位编号	无	为队员解毒。参数1 指定作用目标 单人:0 全体:1；参数2 指定毒性等级 详见 PALMOD\Data\Object\Poison.TSV
-	0x002C	@POP_POISON_LV	作用目标	毒性等级	无	为队员解毒，解除不高于指定的等级的毒。参数1 指定作用目标 单人:0 全体:1；参数2 指定毒性单位编号 详见 PALMOD\Data\Object\Poison.TSV
-	0x002D	@SET_BUFF	BUFF编号	生效回合数	无	为队员添加特殊状态。参数1 指定 BUFF 状态编号 详见 PALMOD\System\ConditionID.TSV；参数2 指定生效回合数
-	0x002E	%SET_BUFF	BUFF编号	生效回合数	脚本地址	为敌人添加特殊状态。参数1 指定 BUFF 状态编号 详见 PALMOD\System\ConditionID.TSV；参数2 指定生效回合数；参数3 状态添加失败时跳转到的脚本地址
-	0x002F	@POP_BUFF	BUFF编号	无	无	为队员解除特殊状态。参数1 指定 BUFF 状态编号 详见 PALMOD\System\ConditionID.TSV
-	0x0030	@ADD_ATTR_TEMP	属性编号	暂时增加百分比	角色编号	为队员暂时增加属性。参数1 指定属性编号 详见 PALMOD\Data\PlayerRoles.TSV；参数2 指定欲增加的属性百分比；参数3 指定队员目标编号 详见 PALMOD\System\CharacterID.TSV
-	0x0031	@SET_BATTLE_IMG	战斗形象编号	无	无	为当前队员改变战斗形象。参数1 指定战斗形象编号 详见 PALMOD\System\PlayerBattleSpriteID.TSV
+	0x0028	%SET_POISON	作用目标	毒性单位编号	无	为敌方中毒。参数1 指定作用目标 单人:0 全体:1；参数2 指定毒性单位编号 详见 PALMOD/Data/Object/Poison.TSV
+	0x0029	@SET_POISON	作用目标	毒性单位编号	无	为我方中毒。参数1 指定作用目标 单人:0 全体:1；参数2 指定毒性单位编号 详见 PALMOD/Data/Object/Poison.TSV
+	0x002A	%POP_POISON	作用目标	毒性单位编号	无	为敌方解毒。参数1 指定作用目标 单人:0 全体:1；参数2 指定毒性单位编号 详见 PALMOD/Data/Object/Poison.TSV
+	0x002B	@POP_POISON	作用目标	毒性单位编号	无	为队员解毒。参数1 指定作用目标 单人:0 全体:1；参数2 指定毒性等级 详见 PALMOD/Data/Object/Poison.TSV
+	0x002C	@POP_POISON_LV	作用目标	毒性等级	无	为队员解毒，解除不高于指定的等级的毒。参数1 指定作用目标 单人:0 全体:1；参数2 指定毒性单位编号 详见 PALMOD/Data/Object/Poison.TSV
+	0x002D	@SET_BUFF	BUFF编号	生效回合数	无	为队员添加特殊状态。参数1 指定 BUFF 状态编号 详见 PALMOD/System/ConditionID.TSV；参数2 指定生效回合数
+	0x002E	%SET_BUFF	BUFF编号	生效回合数	脚本地址	为敌人添加特殊状态。参数1 指定 BUFF 状态编号 详见 PALMOD/System/ConditionID.TSV；参数2 指定生效回合数；参数3 状态添加失败时跳转到的脚本地址
+	0x002F	@POP_BUFF	BUFF编号	无	无	为队员解除特殊状态。参数1 指定 BUFF 状态编号 详见 PALMOD/System/ConditionID.TSV
+	0x0030	@ADD_ATTR_TEMP	属性编号	暂时增加百分比	角色编号	为队员暂时增加属性。参数1 指定属性编号 详见 PALMOD/Data/PlayerRoles.TSV；参数2 指定欲增加的属性百分比；参数3 指定队员目标编号 详见 PALMOD/System/CharacterID.TSV
+	0x0031	@SET_BATTLE_IMG	战斗形象编号	无	无	为当前队员改变战斗形象。参数1 指定战斗形象编号 详见 PALMOD/System/PlayerBattleSpriteID.TSV
 	0x0032	@LOST_SCRIPT_0	脚本地址	脚本地址	无	为队员进行战时/平时分派。参数1 指定战时分派脚本地址；参数2 指定平时分派脚本地址；此指令已被游戏弃用！
 	0x0033	*COLLECT_ENEMY	脚本地址	无	无	灵葫收妖。参数1 指定敌方没有灵葫值时跳转到的脚本地址
 	0x0034	*COLLECT_ITEM	脚本地址	无	无	灵壶炼丹。参数1 指定灵葫值告罄时跳转到的脚本地址
@@ -478,12 +478,12 @@
 	0x003D	&SET_LOWER	字体颜色	RGM肖像编号	是否正在播放RNG	在屏幕上方显示对话框,参数1 指定字体颜色；参数2 指定 RGM 肖像编号；参数3 当前是否正在播放RNG
 	0x003E	&SET_CENTER_SYS	字体颜色	无	无	在屏幕中间的系统提示窗口中显示文本。参数1 字体颜色
 	0x003F	@DRIVE_SLOW	XBlock	YBlock	Half	队员乘坐当前事件对象以低速相对移动到指定位置。参数1 指定XBlock；参数2 指定YBlock；参数3 指定Half；移速为 2 级
-	0x0040	$SET_TRIG_MODE	事件编号	触发方式编号	无	设置事件对象的触发方式。参数1 指定事件编号 != 0 0xFFFF:当前对象；参数2 指定事件触发方式编号 详见 PALMOD\System\TriggerModeID.TSV
+	0x0040	$SET_TRIG_MODE	事件编号	触发方式编号	无	设置事件对象的触发方式。参数1 指定事件编号 != 0 0xFFFF:当前对象；参数2 指定事件触发方式编号 详见 PALMOD/System/TriggerModeID.TSV
 	0x0041	ASSERT	无	无	无	使脚本执行失败。一般用于使仙术前序脚本执行失败，并不再执行后续脚本，如酒不足时不再召唤酒神，而是触发系统提示窗口。
 	0x0042	@SIMU_MAGIC	仙术单位编号	基础伤害值	敌方目标编号	为我方模拟仙术。多用于道具投掷脚本。参数1 指定仙术单位编号，参数2 指定基础伤害值，参数3 敌方目标编号 1~5 ，当前敌人:0
-	0x0043	*SET_BGM_SCENE	音乐编号	播放方式编号	无	设置场景音乐。参数1 指定背景音乐编号 详见 PALMOD\System\MusicID.TSV；参数2 指定播放方式编号 详见 PALMOD\System\MusicParamID.TSV
+	0x0043	*SET_BGM_SCENE	音乐编号	播放方式编号	无	设置场景音乐。参数1 指定背景音乐编号 详见 PALMOD/System/MusicID.TSV；参数2 指定播放方式编号 详见 PALMOD/System/MusicParamID.TSV
 	0x0044	@DRIVE_NORMAL	XBlock	YBlock	Half	队员乘坐当前事件对象以中速相对移动到指定位置。参数1 指定XBlock；参数2 指定YBlock；参数3 指定Half；移速为 4 级
-	0x0045	*SET_BGM_BATTLE	音乐编号	无	无	设置战斗音乐。参数1 指定背景音乐编号 详见 PALMOD\System\MusicID.TSV
+	0x0045	*SET_BGM_BATTLE	音乐编号	无	无	设置战斗音乐。参数1 指定背景音乐编号 详见 PALMOD/System/MusicID.TSV
 	0x0046	@SET_POSITION	XBlock	YBlock	Half	为队伍设置场景坐标。参数1 指定XBlock；参数2 指定YBlock；参数3 指定Half
 	0x0047	*PLAY_VOICE	音效编号	无	无	播放音效。参数1 指定音效编号 详见 ......这个没法总结
 [END ScriptDesc]

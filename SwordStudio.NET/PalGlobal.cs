@@ -225,6 +225,15 @@ namespace PalGlobal
         ) => Data[iItemIndex, Array.IndexOf(HeadName, HeadName.Where(Item => Item.Equals(lpszName)).First())];
     }
 
+    public enum PAL_DISPLAY_MODE
+    {
+        None        = 0,
+        LowTile     = 1 << 0,
+        HighTile    = 1 << 1,
+        NoPassTile  = 1 << 2,
+        EventSprite = 1 << 3,
+    }
+
     public enum PAL_FILE_READMODE
     {
         Vertical,
@@ -258,9 +267,10 @@ namespace PalGlobal
         public static readonly CHAR     PathDSC = (Environment.OSVersion.Platform == PlatformID.Win32NT) ? '\\' : '/';
         public static readonly LPSTR    NewLine = Environment.NewLine;
 
-        //public static readonly LPSTR    lpszCfgName = "SwordStudio.NET.ini";
-        public static readonly LPSTR    lpszCfgName     = $"F:{PathDSC}liuzhier{PathDSC}SwordStudio.NET{PathDSC}docs{PathDSC}SwordStudio.NET.ini.example";
-        public static readonly LPSTR    lpszGaemPath    = $"F:{PathDSC}PALDOS{PathDSC}pal";
+        public static readonly LPSTR    lpszCfgName     = "SwordStudio.NET.ini";
+        public static readonly LPSTR    lpszGaemPath    = $".{PathDSC}";
+        //public static readonly LPSTR    lpszCfgName     = $"F:{PathDSC}liuzhier{PathDSC}SwordStudio.NET{PathDSC}docs{PathDSC}SwordStudio.NET.ini.example";
+        //public static readonly LPSTR    lpszGaemPath    = $"F:{PathDSC}PALDOS{PathDSC}pal";
 
         public const  INT               SIZE_Of_QWORD       = sizeof(QWORD);
 

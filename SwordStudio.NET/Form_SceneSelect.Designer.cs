@@ -127,7 +127,7 @@
             // 
             // MapPreview_PictureBox
             // 
-            this.MapPreview_PictureBox.BackColor = System.Drawing.SystemColors.Desktop;
+            this.MapPreview_PictureBox.BackColor = System.Drawing.Color.Black;
             this.MapPreview_PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MapPreview_PictureBox.Enabled = false;
             this.MapPreview_PictureBox.Location = new System.Drawing.Point(0, 0);

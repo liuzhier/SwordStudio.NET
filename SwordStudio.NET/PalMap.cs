@@ -40,20 +40,61 @@ namespace PalMap
     {
         public class Pal_Map_Tile
         {
-            public SHORT LowTile_Num    = 0;
-            public BYTE LowTile_Layer   = 0;
-            public SHORT HighTile_Num   = 0;
-            public BYTE HighTile_Layer  = 0;
+            public BOOL     fIsNoPassBlock  = FALSE;
+            public SHORT    LowTile_Num     = 0;
+            public BYTE     LowTile_Layer   = 0;
+            public SHORT    HighTile_Num    = 0;
+            public BYTE     HighTile_Layer  = 0;
         }
 
+        public const    WORD                wMapWidth           = 2064, wMapHeight = 2055;
+        public static   readonly    PAL_POS dwMinMapPos         = PAL_XY(0, 0);
+
         public static   Surface             sfMapViewport;
-        public static   PAL_POS             Viewport            = PAL_XY(0, 0);
+        public static   PAL_POS             Viewport            = Pal_Map.dwMinMapPos;
+        public static   PAL_DISPLAY_MODE    DisplayMode;
         public static   Surface             TileSurface         = new Surface(Pal_Map.iTileWidth, Pal_Map.iTileHeight);
         public static   Image               TileImage           = new Bitmap(Pal_Map.TileSurface.w, Pal_Map.TileSurface.h);
         public const    WORD                iTileWidth          = 32, iTileHeight   = 15;
         public static   INT                 iMapNum             = -1, iSceneNum     = -1;
         public static   Pal_Map_Tile[,,]    Tiles               = new Pal_Map_Tile[128, 64, 2];
         public static   BYTE[]              TileSprite;
+
+        public static BOOL
+        PAL_MapTileIsBlocked(
+            BYTE        x,
+            BYTE        y,
+            BYTE        h
+        )
+        /*++
+          Purpose:
+
+            Check if the tile at the specified location is blocked.
+
+          Parameters:
+
+            [IN]  x - Column number of the tile.
+
+            [IN]  y - Line number in the map.
+
+            [IN]  h - Each line in the map has two lines of tiles, 0 and 1.
+                      (See map.h for details.)
+
+            [IN]  lpMap - Pointer to the loaded map.
+
+          Return value:
+
+            TRUE if the tile is blocked, FALSE if not.
+
+        --*/
+        {
+            //
+            // Check for invalid parameters.
+            //
+            if (x >= 64 || y >= 128 || h > 1) return TRUE;
+
+            return Tiles[y, x, h].fIsNoPassBlock;
+        }
 
         public static BYTE[]
         PAL_MapGetTileBitmap(
@@ -221,16 +262,21 @@ namespace PalMap
 
                     for (x = sx; x < dx; x++, xPos += 32)
                     {
-                        Bitmap = PAL_MapGetTileBitmap((BYTE) x, (BYTE) y, (BYTE) h, ucLayer);
-
-                        if (Bitmap == null)
+                        if (ucLayer < 2)
                         {
-                            if (ucLayer != 0) continue;
+                            Bitmap = PAL_MapGetTileBitmap((BYTE)x, (BYTE)y, (BYTE)h, ucLayer);
 
-                            Bitmap = PAL_MapGetTileBitmap(0, 0, 0, ucLayer);
+                            if (Bitmap == null)
+                            {
+                                if (ucLayer != 0) continue;
+
+                                Bitmap = PAL_MapGetTileBitmap(0, 0, 0, ucLayer);
+                            }
+
+                            PAL_RLEBlitToSurface(Bitmap, sfSurface, PAL_XY(xPos, yPos));
                         }
-
-                        PAL_RLEBlitToSurface(Bitmap, sfSurface, PAL_XY(xPos, yPos));
+                        else if (PAL_MapTileIsBlocked((BYTE)x, (BYTE)y, (BYTE)h))
+                            PAL_RLEBlitToSurface(bitmapNoPass, sfSurface, PAL_XY(xPos, yPos));
                     }
                 }
             }
@@ -384,23 +430,23 @@ namespace PalMap
 
         public static void
         PAL_DrawMapToSurface(
-            Surface         sfMapPreview,
-            Rect            rect,
-            PictureBox      pictureBox,
-            PAL_POS         dwMapPos,
-            INT             n_tupling = -1
+            Surface             sfMapPreview,
+            Rect                rect,
+            PictureBox          pictureBox,
+            PAL_POS             dwMapPos,
+            PAL_DISPLAY_MODE    pdmDisplayMode = PAL_DISPLAY_MODE.None | PAL_DISPLAY_MODE.LowTile | PAL_DISPLAY_MODE.HighTile | PAL_DISPLAY_MODE.NoPassTile | PAL_DISPLAY_MODE.EventSprite,
+            INT                 n_tupling = -1
         )
         {
             sfMapViewport   = sfMapPreview;
             Viewport        = dwMapPos;
+            DisplayMode     = pdmDisplayMode;
 
             //
             // Step 1: Draw the complete map, for both of the layers.
             //
-            {
-                PAL_MapBlitToSurface(sfMapViewport.CleanSpirit(), rect, 0);
-                PAL_MapBlitToSurface(sfMapViewport,               rect, 1);
-            }
+            if ((DisplayMode & PAL_DISPLAY_MODE.LowTile)  != 0) PAL_MapBlitToSurface(sfMapViewport.CleanSpirit(), rect, 0);
+            if ((DisplayMode & PAL_DISPLAY_MODE.HighTile) != 0) PAL_MapBlitToSurface(sfMapViewport,               rect, 1);
 
             //
             // Step 2: Apply screen waving effects.
@@ -410,7 +456,12 @@ namespace PalMap
             //
             // Step 3: Draw all the sprites.
             //
-            PAL_SceneDrawSprites();
+            if ((DisplayMode & PAL_DISPLAY_MODE.EventSprite) != 0) PAL_SceneDrawSprites();
+
+            //
+            // Step 4: Draw all NoPass blocks.
+            //
+            if ((DisplayMode & PAL_DISPLAY_MODE.NoPassTile) != 0) PAL_MapBlitToSurface(sfMapViewport, rect, 2);
 
             //
             // Display the currently selected scene image
