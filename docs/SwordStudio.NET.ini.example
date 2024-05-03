@@ -18,67 +18,43 @@
 #                                                                                                  #
 ####################################################################################################
 
+[BEGIN File]
+#	Type	NodeName	FileName	ArchiveMethod
+	File	EnemyBMP	abc.mkf	MKF | YJ_1 | SMKF | RLE
 
+	File	ItemBMP	ball.mkf	MKF | YJ_1 | SMKF | RLE
 
-#########################################                   ########################################
-######################################## System Config Nodes #######################################
-#########################################                   ########################################
+	File	CoreData	data.mkf	MKF | BIN
 
-[BEGIN SETTING]
-	VERSION	DOS	# Force specified resource version......AUTO, DOS, WIN,......AUTO means automatic judgment.
-[END SETTING]
+	File	UnitDescription	desc.dat	TXT : BIG5
 
+	File	PlayerBattleBMP	f.mkf	MKF | YJ_1 | SMKF | RLE
 
+	File	BackgroundBMP	fbp.mkf	MKF | YJ_1 | ColorNumList
 
-#########################################                   ########################################
-########################################  Uesr Config Nodes  #######################################
-#########################################                   ########################################
+	File	MagicBMP	fire.mkf	MKF | YJ_1 | SMKF | RLE
 
-[BEGIN FILE]
-#Version	Type	NodeName	FileName	ArchiveMethod
-DOS	FILE	EnemyBMP	abc.mkf	MKF | YJ_1 | SMKF | RLE
-WIN	FILE	EnemyBMP	abc.mkf	MKF | YJ_2 | SMKF | RLE
+	File	GameMapTile	gop.mkf	MKF | YJ_1 | SMKF | RLE
 
-DOS	FILE	ItemBMP	ball.mkf	MKF | YJ_1 | SMKF | RLE
-WIN	FILE	ItemBMP	ball.mkf	MKF | YJ_2 | SMKF | RLE
+	File	DialogMessage	m.msg	TXT : BIG5
 
-	FILE	CoreData	data.mkf	MKF | BIN
+	File	GameMap	map.mkf	MKF | YJ_1 | BIN
 
-HACK	File	UnitDescription	desc.dat	TXT : GB2312
+	File	EventBMP	mgo.mkf	MKF | YJ_1 | SMKF | RLE
 
-DOS	FILE	PlayerBattleBMP	f.mkf	MKF | YJ_1 | SMKF | RLE
-WIN	FILE	PlayerBattleBMP	f.mkf	MKF | YJ_2 | SMKF | RLE
+	File	Palette	pat.mkf	MKF | ACT
 
-DOS	FILE	BackgroundBMP	fbp.mkf	MKF | YJ_1 | BMP
-WIN	FILE	BackgroundBMP	fbp.mkf	MKF | YJ_2 | BMP
+	File	AvatarBMP	rgm.mkf	MKF | SMKF | RLE
 
-DOS	FILE	MagicBMP	fire.mkf	MKF | YJ_1 | SMKF | RLE
-WIN	FILE	MagicBMP	fire.mkf	MKF | YJ_2 | SMKF | RLE
+	File	CutScenesBMP	rng.mkf	MKF | MKF | YJ1 | RLE
 
-DOS	FILE	GameMapTile	gop.mkf	MKF | YJ_1 | SMKF | RLE
-WIN	FILE	GameMapTile	gop.mkf	MKF | YJ_2 | SMKF | RLE
+	File	Voice	voc.mkf	MKF | VOC
+	File	Voice_98	sounds.mkf	MKF | WAV
 
-DOS	FILE	DialogMessage	m.msg	TXT : BIG5
-WIN	FILE	DialogMessage	m.msg	TXT : GB2312
+	File	MainData	sss.mkf	MKF | BIN
 
-DOS	FILE	GameMap	map.mkf	MKF | YJ_1 | BIN
-WIN	FILE	GameMap	map.mkf	MKF | YJ_2 | BIN
-
-	FILE	Palette	pat.mkf	MKF | ACT
-
-	FILE	AvatarBMP	rgm.mkf	MKF | SMKF | RLE
-
-DOS	FILE	CutScenesBMP	rng.mkf	MKF | MKF | YJ1 | RLE
-WIN	FILE	CutScenesBMP	rng.mkf	MKF | MKF | YJ1 | RLE
-
-DOS	FILE	Voice	voc.mkf	MKF | VOC
-WIN	FILE	Voice	sounds.mkf	MKF | WAV
-
-	FILE	MainData	sss.mkf	MKF | BIN
-
-DOS	FILE	UnitName	word.dat	TXT : BIG5
-WIN	FILE	UnitName	word.dat	TXT : GB2312
-[END FILE]
+	File	UnitName	word.dat	TXT : BIG5
+[END File]
 
 [BEGIN CoreData]
 #	Type	NodeName	Title
@@ -99,6 +75,207 @@ WIN	FILE	UnitName	word.dat	TXT : GB2312
 	CHUNK	LevelUpExp	修行晋所需经验
 [END CoreData]
 
+[BEGIN Store]
+#	Type	NodeName	Title
+	WORD	Util_0	商品 0
+	WORD	Util_1	商品 1
+	WORD	Util_2	商品 2
+	WORD	Util_3	商品 3
+	WORD	Util_4	商品 4
+	WORD	Util_5	商品 5
+	WORD	Util_6	商品 6
+	WORD	Util_7	商品 7
+	WORD	Util_8	商品 8
+[END Store]
+
+[BEGIN Enemy]
+#	Type	NodeName	Title
+	WORD	IdleFrames	蠕动帧数
+	WORD	MagicFrames	施法帧数
+	WORD	AttackFrames	进攻帧数
+	WORD	IdleAnimSpeed	蠕动速度
+	WORD	ActWaitFrames	每帧延迟
+	WORD	YPosOffset	Y 轴偏移
+	SHORT	AttackSound	攻前音效
+	SHORT	ActionSound	击中音效
+	SHORT	MagicSound	施法音效
+	SHORT	DeathSound	死亡音效
+	SHORT	CallSound	攻击音效
+	WORD	Health	体力
+	WORD	Exp	可得经验
+	WORD	Cash	可得金钱
+	WORD	Level	修行
+	WORD	Magic	默认仙术
+	WORD	MagicRate	施法概率
+	WORD	AttackEquivItem	攻击附带
+	WORD	AttackEquivItemRate	附带概率
+	WORD	StealItem	偷窃可得
+	WORD	StealItem	可偷数量
+	WORD	AttackStrength	武术
+	WORD	MagicStrength	灵力
+	WORD	Defense	防御
+	WORD	Dexterity	身法/速度
+	WORD	FleeRate	吉运/逃跑
+	WORD	PoisonResistance	毒抗
+	WORD	ElemResistance_Wind	风抗
+	WORD	ElemResistance_Thunder	雷抗
+	WORD	ElemResistance_Water	水抗
+	WORD	ElemResistance_Fire	火抗
+	WORD	ElemResistance_Soil	土抗
+	WORD	PhysicalResistance	物抗
+	WORD	DualMove	行动次数
+	WORD	CollectValue	灵葫值
+[END Enemy]
+
+[BEGIN EnemyTeam]
+#	Type	NodeName	Title
+	SHORT	Util_EnemyNum_0	敌人编号_位置 0
+	SHORT	Util_EnemyNum_1	敌人编号_位置 1
+	SHORT	Util_EnemyNum_2	敌人编号_位置 2
+	SHORT	Util_EnemyNum_3	敌人编号_位置 3
+	SHORT	Util_EnemyNum_4	敌人编号_位置 4
+[END EnemyTeam]
+
+[BEGIN PlayerRole]
+#	Type	NodeName	Title
+	WORD	Avatar	肖像画
+	WORD	SpriteNum_Battle	战斗像
+	WORD	SpriteNum_Scene	行走像
+	WORD	Name	名字
+	WORD	AttackAllEnemy	全攻
+	WORD	<NULL>	<NULL>
+	WORD	Level	修行
+	WORD	HP_Max	体力上限
+	WORD	MP_Max	真气上限
+	WORD	HP	体力
+	WORD	MP	真气
+	WORD	Equipment_Hat	装备_头戴
+	WORD	Equipment_Cloak	装备_披挂
+	WORD	Equipment_Wear	装备_身穿
+	WORD	Equipment_Weapon	装备_手持
+	WORD	Equipment_Shoe	装备_脚穿
+	WORD	Equipment_Jewelry	装备_配戴
+	WORD	AttackStrength	武术
+	WORD	MagicStrength	灵力
+	WORD	Defense	防御
+	WORD	Dexterity	身法/速度
+	WORD	FleeRate	吉运/逃跑
+	WORD	wPoisonResistance	毒抗
+	WORD	wElemResistance_Wind	风抗
+	WORD	wElemResistance_Thunder	雷抗
+	WORD	wElemResistance_Water	水抗
+	WORD	wElemResistance_Fire	火抗
+	WORD	wElemResistance_Soil	土抗
+	WORD	<NULL>	<NULL>
+	WORD	<NULL>	<NULL>
+	WORD	<NULL>	<NULL>
+	WORD	CoveredBy	虚弱受援
+	WORD	Magic_0	仙术 0
+	WORD	Magic_1	仙术 1
+	WORD	Magic_2	仙术 2
+	WORD	Magic_3	仙术 3
+	WORD	Magic_4	仙术 4
+	WORD	Magic_5	仙术 5
+	WORD	Magic_6	仙术 6
+	WORD	Magic_7	仙术 7
+	WORD	Magic_8	仙术 8
+	WORD	Magic_9	仙术 9
+	WORD	Magic_10	仙术 10
+	WORD	Magic_11	仙术 11
+	WORD	Magic_12	仙术 12
+	WORD	Magic_13	仙术 13
+	WORD	Magic_14	仙术 14
+	WORD	Magic_15	仙术 15
+	WORD	Magic_16	仙术 16
+	WORD	Magic_17	仙术 17
+	WORD	Magic_18	仙术 18
+	WORD	Magic_19	仙术 19
+	WORD	Magic_20	仙术 20
+	WORD	Magic_21	仙术 21
+	WORD	Magic_22	仙术 22
+	WORD	Magic_23	仙术 23
+	WORD	Magic_24	仙术 24
+	WORD	Magic_25	仙术 25
+	WORD	Magic_26	仙术 26
+	WORD	Magic_27	仙术 27
+	WORD	Magic_28	仙术 28
+	WORD	Magic_29	仙术 29
+	WORD	Magic_30	仙术 30
+	WORD	Magic_31	仙术 31
+	WORD	WalkFrames	行走帧编号
+	WORD	CooperativeMagic	合体法术
+	WORD	<NULL>	<NULL>
+	WORD	<NULL>	<NULL>
+	WORD	DeathSound	死亡音效
+	WORD	AttackSound	音效编号_普攻呼喊
+	WORD	WeaponSound	音效编号_武器砍中
+	WORD	CriticalSound	音效编号_倍攻\暴击呼喊
+	WORD	MagicSound	音效编号_施法呼喊
+	WORD	CoverSound	音效编号_格挡\援护
+	WORD	DyingSound	音效编号_虚弱呼喊
+[END PlayerRole]
+
+[BEGIN Magic]
+#	Type	NodeName	Title
+	WORD	Effect	形象号
+	WORD	Type	作用域
+	WORD	XOffset	偏移 X
+	WORD	YOffset	偏移 Y
+	WORD	Specific	召唤神形
+	WORD	Speed	特效速度
+	WORD	KeepEffect	形象残留
+	WORD	FireDelay	音效延迟
+	WORD	EffectTimes	耗时
+	WORD	Shake	场景震动
+	WORD	Wave	场景波动
+	WORD	<NULL>	<NULL>
+	WORD	CostMP	消耗真气
+	WORD	BaseDamage	伤害
+	WORD	Elemental	系属
+	WORD	Sound	音效
+[END Magic]
+
+[BEGIN BattleField]
+#	Type	NodeName	Title
+	WORD	wScreenWave	场景波动等级
+	WORD	MagicEffect_Wind	自然属性_风
+	WORD	MagicEffect_Thunder	自然属性_雷
+	WORD	MagicEffect_Water	自然属性_水
+	WORD	MagicEffect_Fire	自然属性_火
+	WORD	MagicEffect_Soil	自然属性_土
+[END BattleField]
+
+[BEGIN LevelUpMagic]
+#	Type	NodeName	Title
+	WORD	Level	所需等级
+	WORD	Util_MagicNum	仙术单位编号
+[END LevelUpMagic]
+
+[BEGIN BattleEffectIndex]
+#	Type	NodeName	Title
+	WORD	AttackEffectNum	普攻特效编号
+	WORD	MagicEffectNum	施法特效编号
+[END BattleEffectIndex]
+
+[BEGIN EnemyPos]
+#	Type	NodeName	Title
+	WORD	Pos0_X	X 坐标_位置 0
+	WORD	Pos0_Y	Y 坐标_位置 0
+	WORD	Pos1_X	X 坐标_位置 1
+	WORD	Pos1_Y	Y 坐标_位置 1
+	WORD	Pos2_X	X 坐标_位置 2
+	WORD	Pos2_Y	Y 坐标_位置 2
+	WORD	Pos3_X	X 坐标_位置 3
+	WORD	Pos3_Y	Y 坐标_位置 3
+	WORD	Pos4_X	X 坐标_位置 4
+	WORD	Pos4_Y	Y 坐标_位置 4
+[END EnemyPos]
+
+[BEGIN LevelUpExp]
+#	Type	NodeName	Title
+	WORD	ExpNumber	所需经验
+[END LevelUpExp]
+
 [BEGIN MainData]
 #	Type	NodeName	Title
 	CHUNK	Event	事件
@@ -118,7 +295,7 @@ WIN	FILE	UnitName	word.dat	TXT : GB2312
 	WORD	AutoScript	自动脚本	# Auto script entry
 	SHORT	State	状态	# State of this object
 	WORD	TriggerMode	互动模式	# Trigger mode
-	WORD	SpriteID	形象编号	# Sprite ID
+	WORD	SpriteNum	形象编号	# Sprite ID
 	WORD	SpriteFrames	每方向帧数	# Total number of frames of the sprite
 	WORD	Direction	面朝方向	# Direction
 	WORD	CurrentFrameNum	当前方向	# Current frame number
@@ -138,37 +315,35 @@ WIN	FILE	UnitName	word.dat	TXT : GB2312
 
 [BEGIN Unit]
 #	Type	NodeName	Title	Range
-	UNION	UNIT_System	系统	OMIT	# Omitted, Because the rest are all system Unit......
-	UNION	UNIT_Player	队员	26~41	# Player UnitID 36~41
-	UNION	UNIT_Item	道具	61~294	# Item UnitID 61~294
-	UNION	UNIT_Magic	仙术	295~397 | 24	# Magic UnitID 295~397
-	UNION	UNIT_Enemy	敌人	398~550	# Enemy UnitID 398~550
-	UNION	UNIT_Posion	毒性	551~564	# Posion UnitID 551~564
+	UNION	Unit_System	系统	OMIT	# Omitted, Because the rest are all system Unit......
+	UNION	Unit_Player	队员	26~41	# Player UnitID 36~41
+	UNION	Unit_Item	道具	61~294	# Item UnitID 61~294
+	UNION	Unit_Magic	仙术	295~397 | 24	# Magic UnitID 295~397
+	UNION	Unit_Enemy	敌人	398~550	# Enemy UnitID 398~550
+	UNION	Unit_Posion	毒性	551~564	# Posion UnitID 551~564
 [END Unit]
 
-[BEGIN UNIT_System]
+[BEGIN Unit_System]
 #	Type	NodeName	Title
 	WORD	<NULL>	<NULL>
 	WORD	<NULL>	<NULL>
 	WORD	<NULL>	<NULL>
 	WORD	<NULL>	<NULL>
 	WORD	<NULL>	<NULL>
-WIN	WORD	<NULL>	<NULL>
 	WORD	<NULL>	<NULL>
-[END UNIT_System]
+[END Unit_System]
 
-[BEGIN UNIT_Player]
+[BEGIN Unit_Player]
 #	Type	NodeName	Title
 	WORD	<NULL>	<NULL>
 	WORD	<NULL>	<NULL>
 	WORD	ScriptOnFriendDeath	友亡怒燃脚本	# when friends in party dies, execute script from here
 	WORD	ScriptOnDying	友伤心焚脚本	# when dying, execute script from here
 	WORD	<NULL>	<NULL>
-WIN	WORD	<NULL>	<NULL>
 	WORD	<NULL>	<NULL>
-[END UNIT_Player]
+[END Unit_Player]
 
-[BEGIN UNIT_Item]
+[BEGIN Unit_Item]
 #	Type	NodeName	Title
 	WORD	Bitmap	形象编号	# bitmap number in BALL.MKF
 	WORD	Price	售价	# price
@@ -176,58 +351,68 @@ WIN	WORD	<NULL>	<NULL>
 	WORD	ScriptOnEquip	装备脚本	# script executed when equipping this item
 	WORD	ScriptOnThrow	投掷脚本	# script executed when throwing this item to enemy
 	WORD	<NULL>	<NULL>
-WIN	WORD	<NULL>	<NULL>
-	BIT	Flags	可使用	# flags
-	BIT	Flags	可装备	# flags
-	BIT	Flags	可投掷	# flags
-	BIT	Flags	数量耗损	# flags
-	BIT	Flags	作用于全体	# flags
-	BIT	Flags	可典当	# flags
-	BIT	Flags	李逍遥可装备	# flags
-	BIT	Flags	赵灵儿可装备	# flags
-	BIT	Flags	巫后可装备	# flags
-	BIT	Flags	阿奴可装备	# flags
-	BIT	Flags	盖罗娇可装备	# flags
-[END UNIT_Item]
+	BIT	Flags	可使用	# flags_0
+	BIT	Flags	可装备	# flags_1
+	BIT	Flags	可投掷	# flags_2
+	BIT	Flags	数量耗损	# flags_3
+	BIT	Flags	作用于全体	# flags_4
+	BIT	Flags	可典当	# flags_5
+	BIT	Flags	李逍遥可装备	# flags_6
+	BIT	Flags	赵灵儿可装备	# flags_7
+	BIT	Flags	巫后可装备	# flags_8
+	BIT	Flags	阿奴可装备	# flags_9
+	BIT	Flags	盖罗娇可装备	# flags_10
+[END Unit_Item]
 
-[BEGIN UNIT_Magic]
+[BEGIN Unit_Magic]
 #	Type	NodeName	Title
-	WORD	MagicNumber	属性编号	# magic number, according to DATA.MKF #3
+	WORD	MagicDataNum	属性编号	# magic number, according to DATA.MKF #3
 	WORD	<NULL>	<NULL>
 	WORD	ScriptOnSuccess	前戏成功脚本	# when magic succeed, execute script from here
 	WORD	ScriptOnUse	前戏脚本	# when use this magic, execute script from here
-WIN	WORD	ScriptDesc_WIN	描述脚本	# description script
 	WORD	<NULL>	<NULL>
-	BIT	Flags	战外可施展	# flags
-	BIT	Flags	战内可施展	# flags
-	BIT	Flags	<NULL>	# flags
-	BIT	Flags	目标为敌方	# flags
-	BIT	Flags	作用于全体	# flags
-[END UNIT_Magic]
+	BIT	Flags	战外可施展	# flags_0
+	BIT	Flags	战内可施展	# flags_1
+	BIT	Flags	<NULL>	# flags_2
+	BIT	Flags	目标为敌方	# flags_3
+	BIT	Flags	作用于全体	# flags_4
+[END Unit_Magic]
 
-[BEGIN UNIT_Enemy]
+[BEGIN Unit_Enemy]
 #	Type	NodeName	Title
-	WORD	EnemyID	属性编号	# ID of the enemy, according to DATA.MKF #1, Also indicates the bitmap number in ABC.MKF.
+	WORD	EnemyDataNum	属性编号	# ID of the enemy, according to DATA.MKF #1, Also indicates the bitmap number in ABC.MKF.
 	WORD	ResistanceToSorcery	巫抗	# resistance to sorcery and poison (0 min, 10 max)
 	WORD	ScriptOnTurnStart	战斗开始前脚本	# script executed when turn starts
 	WORD	ScriptOnBattleEnd	战斗结束后脚本	# script executed when battle ends
 	WORD	ScriptOnReady	战斗脚本	# script executed when the enemy is ready
-WIN	WORD	<NULL>	<NULL>
 	WORD	<NULL>	<NULL>
-[END UNIT_Enemy]
+[END Unit_Enemy]
 
-[BEGIN UNIT_Posion]
+[BEGIN Unit_Posion]
 #	Type	NodeName	Title
 	WORD	PoisonLevel	毒性等级	# level of the poison
 	WORD	Color	颜色	# color of avatars, according to PAT.MKF
 	WORD	PlayerScript	队员中毒脚本	# script executed when player has this poison (per round)
 	WORD	<NULL>	<NULL>
 	WORD	EnemyScript	敌人中毒脚本	# script executed when enemy has this poison (per round)
-WIN	WORD	<NULL>	<NULL>
 	WORD	<NULL>	<NULL>
-[END UNIT_Posion]
+[END Unit_Posion]
 
-[BEGIN SCRIPT_DESC]
+[BEGIN MessageIndex]
+#	Type	NodeName	Title
+	DWORD	MessageOffset	对话索引偏移
+[END MessageIndex]
+
+[BEGIN Script]
+#	Type	NodeName	Title
+	WORD	CommandID	指令编号
+	WORD	Parameter_0	参数 0
+	WORD	Parameter_1	参数 1
+	WORD	Parameter_2	参数 2
+	WORD	Parameter_3	参数 3
+[END Script]
+
+[BEGIN ScriptDesc]
 #	CommandID	脚本标题	参数1 标题	参数2 标题	参数3 标题	脚本注释
 	0x0000	END	无	无	无	===========================================
 	0x0001	PAUSE	无	无	无	暂停执行。将调用地址替换为下一条命令
@@ -301,9 +486,9 @@ WIN	WORD	<NULL>	<NULL>
 	0x0045	*SET_BGM_BATTLE	音乐编号	无	无	设置战斗音乐。参数1 指定背景音乐编号 详见 PALMOD\System\MusicID.TSV
 	0x0046	@SET_POSITION	XBlock	YBlock	Half	为队伍设置场景坐标。参数1 指定XBlock；参数2 指定YBlock；参数3 指定Half
 	0x0047	*PLAY_VOICE	音效编号	无	无	播放音效。参数1 指定音效编号 详见 ......这个没法总结
-[END SCRIPT_DESC]
+[END ScriptDesc]
 
-[BEGIN SCENE_DESC]
+[BEGIN SceneDesc]
 #	NodeName	Title
 	0x0000	空场景
 	0x0001	余杭.客栈各分立房间.原始
@@ -600,4 +785,4 @@ WIN	WORD	<NULL>	<NULL>
 	0x0124	无底深渊.2
 	0x0125	无底深渊.起始
 	0xFFFF	无
-[END SCENE_DESC]
+[END SceneDesc]

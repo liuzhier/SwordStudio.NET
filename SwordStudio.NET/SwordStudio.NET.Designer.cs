@@ -476,7 +476,6 @@
             this.ActualBox_ContentBox_World_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ActualBox_ContentBox_World_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ActualBox_ContentBox_World_SplitContainer.Enabled = false;
-            this.ActualBox_ContentBox_World_SplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.ActualBox_ContentBox_World_SplitContainer.IsSplitterFixed = true;
             this.ActualBox_ContentBox_World_SplitContainer.Location = new System.Drawing.Point(0, 0);
             this.ActualBox_ContentBox_World_SplitContainer.Name = "ActualBox_ContentBox_World_SplitContainer";

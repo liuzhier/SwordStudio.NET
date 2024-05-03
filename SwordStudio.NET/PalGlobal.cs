@@ -5,6 +5,7 @@ using System.Text;
 using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Security.AccessControl;
 
 using BOOL      = System.Boolean;
 using CHAR      = System.Char;
@@ -15,6 +16,8 @@ using INT       = System.Int32;
 using UINT      = System.UInt32;
 using SDWORD    = System.Int32;
 using DWORD     = System.UInt32;
+using SQWORD    = System.Int64;
+using QWORD     = System.UInt64;
 using LPSTR     = System.String;
 using FILE      = System.IO.File;
 
@@ -23,14 +26,211 @@ using SwordStudio.NET.Properties;
 using PalCfg;
 using PalMain;
 using PalVideo;
+using PalUtil;
 
 using static PalGlobal.Pal_File;
+using static PalGlobal.Pal_Global;
 using static PalUtil.Pal_Util;
+using static PalConfig.Pal_Config;
 using static PalCfg.Pal_Cfg;
 using static PalCommon.Pal_Common;
 
 namespace PalGlobal
 {
+    public enum PAL_OBJECT_TYPE
+    {
+        BOOL    = 0,
+        CHAR    = 1,
+        BYTE    = 2,
+
+        SHORT   = 3,
+        WORD    = 4,
+
+        INT     = 5,
+        UINT    = 6,
+
+        SDWORD  = 7,
+        DWORD   = 8,
+
+        SQWORD  = 9,
+        QWORD   = 10,
+    }
+
+    public class Pal_Object
+    {
+        public LPSTR                    TableName;
+        public LPSTR[]                  HeadName;
+        public dynamic[,]               Data;
+        public PAL_OBJECT_TYPE[,]       Type;
+
+        private Pal_Object() { }
+
+        public  Pal_Object(
+            BYTE[]                  binDataAll,
+            PalCfgNode              pcnNode,
+            PAL_FILE_READMODE       pdrReadMode = PAL_FILE_READMODE.Horizontal
+        )
+        {
+            INT             i, j, iByteOffset = 0, iChunkSize, iChunkCount, iTypeSize, iDataLenght = pcnNode.pcniItems.Count;
+            PalCfgNodeItem  pcniItem, pcniChildItem;
+            dynamic         data = null;
+
+            TableName   = pcnNode.lpszNodeName;
+
+            iChunkSize  = binDataAll.Length;
+            iChunkCount = iChunkSize / Pal_Cfg_GetChunkSize(pcnNode.lpszNodeName);
+
+            HeadName    = new LPSTR[iDataLenght];
+            Data        = new dynamic[iChunkCount, iDataLenght];
+            Type        = new PAL_OBJECT_TYPE[iChunkCount, iDataLenght];
+
+            if (pcnNode.pcniItems[0].lpszType.Equals(lpszUnion)) pcnNode = Pal_Cfg_GetCfgNode(pcnNode.pcniItems[0].lpszNodeName);
+
+            for (i = 0; i < iChunkCount; i++)
+            {
+                for (j = 0; j < iDataLenght; j++)
+                {
+                    pcniItem        = pcnNode.pcniItems[j];
+                    iTypeSize       = UTIL_GetTypeSize(pcniItem.lpszType);
+
+                    if (i == 0) HeadName[j] = pcniItem.lpszNodeName;
+
+                    if (pdrReadMode == PAL_FILE_READMODE.Horizontal)
+                    {
+                        data = BitConverter.ToInt64(UTIL_SubBytes(binDataAll, ref iByteOffset, iTypeSize, SIZE_Of_QWORD), 0);
+                    }
+                    else
+                    {
+                        if (j == 0) iByteOffset = 0;
+
+                        iByteOffset += i * iTypeSize;
+                        data = BitConverter.ToInt64(UTIL_SubBytes(binDataAll, iByteOffset, iTypeSize, SIZE_Of_QWORD), 0);
+                        iByteOffset += iTypeSize * (iChunkCount - i);
+                    }
+
+                    if (!pcniItem.lpszNodeName.Equals(lpszNull)) SetItem(i, j, data, pcniItem.lpszType);
+                }
+            }
+        }
+
+        public void
+        SetItem(
+            INT                 iItemGroupNum,
+            INT                 iItemNum,
+            dynamic             decData,
+            PAL_OBJECT_TYPE     pszType
+        )
+        {
+            Data[iItemGroupNum, iItemNum]   = GetActualData(decData, pszType);
+            Type[iItemGroupNum, iItemNum]   = pszType;
+        }
+
+        public void
+        SetItem(
+            INT         iItemGroupNum,
+            INT         iItemNum,
+            dynamic     decData,
+            LPSTR       lpszType
+        ) => SetItem(iItemGroupNum, iItemNum, decData, GetObjectType(lpszType));
+
+        public dynamic
+        GetActualData(
+            dynamic             decValue,
+            PAL_OBJECT_TYPE     pszType
+        )
+        {
+            switch (pszType)
+            {
+                case PAL_OBJECT_TYPE.BOOL:
+                case PAL_OBJECT_TYPE.CHAR:
+                    {
+                        return (CHAR)decValue;
+                    }
+
+                case PAL_OBJECT_TYPE.BYTE:
+                    {
+                        return (BYTE)decValue;
+                    }
+
+                case PAL_OBJECT_TYPE.SHORT:
+                    {
+                        return (SHORT)decValue;
+                    }
+
+                case PAL_OBJECT_TYPE.WORD:
+                    {
+                        return (WORD)decValue;
+                    }
+
+                case PAL_OBJECT_TYPE.SDWORD:
+                    {
+                        return (SDWORD)decValue;
+                    }
+
+                case PAL_OBJECT_TYPE.DWORD:
+                    {
+                        return (DWORD)decValue;
+                    }
+
+                case PAL_OBJECT_TYPE.SQWORD:
+                    {
+                        return (SQWORD)decValue;
+                    }
+
+                case PAL_OBJECT_TYPE.QWORD:
+                    {
+                        return (QWORD)decValue;
+                    }
+
+                default:
+                    {
+                        return (WORD)decValue;
+                    }
+            }
+        }
+
+        public dynamic
+        GetActualData(
+            dynamic     decValue,
+            LPSTR       lpszType
+        ) => GetActualData(decValue, GetObjectType(lpszType));
+
+        public static PAL_OBJECT_TYPE
+        GetObjectType(
+            LPSTR       lpszType
+        )
+        {
+            switch (lpszType)
+            {
+                case "BOOL":    return PAL_OBJECT_TYPE.BOOL;
+                case "CHAR":    return PAL_OBJECT_TYPE.CHAR;
+                case "BYTE":    return PAL_OBJECT_TYPE.BYTE;
+                case "SHORT":   return PAL_OBJECT_TYPE.SHORT;
+                case "WORD":    return PAL_OBJECT_TYPE.WORD;
+                case "INT":     return PAL_OBJECT_TYPE.INT;
+                case "UINT":    return PAL_OBJECT_TYPE.UINT;
+                case "SDWORD":  return PAL_OBJECT_TYPE.SDWORD;
+                case "DWORD":   return PAL_OBJECT_TYPE.DWORD;
+                case "SQWORD":  return PAL_OBJECT_TYPE.SQWORD;
+                case "QWORD":   return PAL_OBJECT_TYPE.QWORD;
+
+                default:        return PAL_OBJECT_TYPE.WORD;
+            }
+        }
+
+        public dynamic
+        GetItem(
+            INT         iItemIndex,
+            LPSTR       lpszName
+        ) => Data[iItemIndex, Array.IndexOf(HeadName, HeadName.Where(Item => Item.Equals(lpszName)).First())];
+    }
+
+    public enum PAL_FILE_READMODE
+    {
+        Vertical,
+        Horizontal
+    }
+
     public class Pal_File
     {
         public LPSTR    lpszNodeName        = null;
@@ -62,34 +262,26 @@ namespace PalGlobal
         public static readonly LPSTR    lpszCfgName     = $"F:{PathDSC}liuzhier{PathDSC}SwordStudio.NET{PathDSC}docs{PathDSC}SwordStudio.NET.ini.example";
         public static readonly LPSTR    lpszGaemPath    = $"F:{PathDSC}PALDOS{PathDSC}pal";
 
-        public const LPSTR  lpszSetting     = "SETTING";
-        public const LPSTR  lpszFile        = "FILE";
-        public const LPSTR  lpszMainData    = "MainData";
-        public const LPSTR  lpszEvent       = "Event";
-        public const LPSTR  lpszScene       = "Scene";
-        public const LPSTR  lpszUnit        = "Unit";
-        public const LPSTR  lpszUnitSystem  = "UNIT_System";
-        public const LPSTR  lpszUnion       = "UNION";
-        public const LPSTR  lpszSciptDesc   = "SCRIPT_DESC";
-        public const LPSTR  lpszSceneDesc   = "SCENE_DESC";
-
-        public const LPSTR  lpszEnemyBMP    = "EnemyBMP";
-        public const LPSTR  lpszGameMapTile = "GameMapTile";
-        public const LPSTR  lpszGameMap     = "GameMap";
-        public const LPSTR  lpszPalette     = "Palette";
-
-        public const LPSTR  lpszMapID       = "MapID";
-
-        public const LPSTR  lpszEventObjectIndex = "EventObjectIndex";
+        public const  INT               SIZE_Of_QWORD       = sizeof(QWORD);
 
         public static TabControl        tcMainTabCtrl       = new TabControl();
         public static BOOL              fIsRegEncode        = FALSE;
         public static List<Pal_File>    pfFileList          = new List<Pal_File>();
+        public static Pal_Object[]      poCoreData;
+        public static Pal_Object[]      poMainData;
         public static INT               iThisScene          = -1;
         public static WORD              wScreenWave         = 0;
         public static SHORT             sWaveProgression    = 0;
 
-        public        Pal_Video         pvMapEdit       = null;
+        public        Pal_Video         pvMapEdit           = null;
+
+        // state of event object, used by the sState field of the EVENTOBJECT struct
+        public enum OBJECTSTATE
+        {
+            Hidden  = 0,
+            Normal  = 1,
+            Blocker = 2
+        }
 
         public static BOOL
         PAL_IsWINVersion()
@@ -116,7 +308,7 @@ namespace PalGlobal
                 iSize       = pcnTmp.pcniItems.IndexOf(pcnTmp.pcniItems.Where(item => item.lpszNodeName.Equals(lpszUnit)).First());
                 data_size   = PAL_MKFGetChunkSize(iSize, pfFileTmp.bufFile);
                 bufTmp      = new BYTE[data_size];
-                PAL_MKFReadChunk(ref bufTmp, iSize, ref pfFileTmp.bufFile);
+                PAL_MKFReadChunk(ref bufTmp, iSize, pfFileTmp.bufFile);
             }
 
             //
@@ -152,14 +344,20 @@ namespace PalGlobal
 
         --*/
         {
+            INT                     i, j, iByteOffset, iChunkSize;
             List<PalCfgNodeItem>    pcniNodeItemList;
+            PalCfgNode              pcnNode;
+            PalCfgNode              pcnChildNode;
+            PalCfgNodeItem          pcniItem;
+            PalCfgNodeItem          pcniChildItem;
             Pal_File                pfThisFile;
             LPSTR                   lpszPath;
+            BYTE[]                  dataChunk = null, dataCount = null;
 
             //
             // Get the number of files
             //
-            pcniNodeItemList = Pal_Cfg.pcnRootList.Where(node => node.lpszNodeName == "FILE").First().pcniItems;
+            pcniNodeItemList = Pal_Cfg.pcnRootList.Where(node => node.lpszNodeName == lpszFile).First().pcniItems;
 
             //
             // Register text encoding set
@@ -182,7 +380,7 @@ namespace PalGlobal
                 pfThisFile.lpszNodeName = pcniThis.lpszNodeName;
                 pfThisFile.lpszFileName = pcniThis.lpszFileName;
 
-                if (pcniThis.Version == Pal_VERSION.HACK)
+                if (pcniThis.lpszArchiveMethod[0].Contains(lpszTXT))
                     pfThisFile.lpszFileText     = FILE.ReadAllLines(lpszPath, Encoding.GetEncoding(pcniThis.lpszTextEncoding));
                 else
                     pfThisFile.bufFile          = FILE.ReadAllBytes(lpszPath);
@@ -190,6 +388,68 @@ namespace PalGlobal
                 pfThisFile.lpszArchiveMethod    = pcniThis.lpszArchiveMethod;
 
                 Pal_Global.pfFileList.Add(pfThisFile);
+            }
+
+            //
+            // Initialize core data
+            //
+            {
+                pfThisFile              = Pal_File_GetFile(lpszCoreData);
+                pcnNode                 = Pal_Cfg_GetCfgNode(lpszCoreData);
+                Pal_Global.poCoreData   = new Pal_Object[pcnNode.pcniItems.Count];
+
+                //
+                // Initialize each item
+                //
+                for (i = 0; i < poCoreData.Length; i++)
+                {
+                    pcniItem = pcnNode.pcniItems[i];
+
+                    if (pcniItem.lpszNodeName.Equals(lpszNull)) continue;
+
+                    pcnChildNode = Pal_Cfg_GetCfgNode(pcniItem.lpszNodeName);
+                    PAL_MKFReadChunk(ref dataChunk, i, pfThisFile.bufFile);
+
+                    switch (i)
+                    {
+                        case 3:
+                        case 13:
+                            {
+                                Pal_Global.poCoreData[i] = new Pal_Object(dataChunk, pcnChildNode, PAL_FILE_READMODE.Vertical);
+                            }
+                            break;
+
+                        default:
+                            {
+                                Pal_Global.poCoreData[i] = new Pal_Object(dataChunk, pcnChildNode);
+                            }
+                            break;
+                    }
+                }
+            }
+
+            //
+            // Initialize main data
+            //
+            {
+                pfThisFile              = Pal_File_GetFile(lpszMainData);
+                pcnNode                 = Pal_Cfg_GetCfgNode(lpszMainData);
+                Pal_Global.poMainData   = new Pal_Object[pcnNode.pcniItems.Count];
+
+                //
+                // Initialize each item
+                //
+                for (i = 0; i < poMainData.Length; i++)
+                {
+                    pcniItem        = pcnNode.pcniItems[i];
+
+                    if (pcniItem.lpszNodeName.Equals(lpszNull)) continue;
+
+                    pcnChildNode    = Pal_Cfg_GetCfgNode(pcniItem.lpszNodeName);
+                    PAL_MKFReadChunk(ref dataChunk, i, pfThisFile.bufFile);
+
+                    Pal_Global.poMainData[i] = new Pal_Object(dataChunk, pcnChildNode);
+                }
             }
         }
 

@@ -28,12 +28,12 @@ namespace PalCommon
     public class Pal_Common
     {
         public static PAL_POS
-        PAL_XY(WORD x, WORD y)  => (PAL_POS) (((y << 16) & 0xFFFF0000) | (x & 0xFFFF));
+        PAL_XY(dynamic x, dynamic y)  => (PAL_POS) ((((WORD)y << 16) & 0xFFFF0000) | ((WORD)x & 0xFFFF));
 
-        public static WORD
+        public static dynamic
         PAL_X(PAL_POS xy)       => (WORD) ((xy) & 0xFFFF);
 
-        public static WORD
+        public static dynamic
         PAL_Y(PAL_POS xy)       => (WORD) (((xy) >> 16) & 0xFFFF);
 
         public static BYTE
@@ -726,7 +726,7 @@ namespace PalCommon
 
         public static INT
         PAL_RLEGetWidth(
-           ref BYTE[]       lpBitmapRLE
+            BYTE[]       lpBitmapRLE
         )
         /*++
           Purpose:
@@ -767,7 +767,7 @@ namespace PalCommon
 
         public static INT
         PAL_RLEGetHeight(
-           ref BYTE[]       lpBitmapRLE
+            BYTE[]       lpBitmapRLE
         )
         /*++
           Purpose:
@@ -925,7 +925,7 @@ namespace PalCommon
 
             if (iOffset     == 0x18444) iOffset = (WORD)iOffset;
             if (iOffset     == 0) return null;
-            if (iNextOffset == 0 || iFrameNum == imagecount || iNextOffset > iSMKFSize) iNextOffset = lpSprite.Length;
+            if (iNextOffset == 0 || iFrameNum == imagecount || iNextOffset > iSMKFSize || iNextOffset < iOffset) iNextOffset = lpSprite.Length;
 
             //return lpSprite[iOffset..iNextOffset];
             return UTIL_SubBytes(lpSprite, iOffset, iNextOffset - iOffset);
@@ -1003,9 +1003,9 @@ namespace PalCommon
 
         public static INT
         PAL_MKFReadChunk(
-           ref BYTE[]       lpBuffer,
-           INT              iChunkNum,
-           ref BYTE[]       lpFileBuf
+        ref BYTE[]          lpBuffer,
+            INT             iChunkNum,
+            BYTE[]          lpFileBuf
         )
         /*++
           Purpose:
@@ -1049,7 +1049,7 @@ namespace PalCommon
             //
             // Copy Array......
             //
-            iSize = iNextOffset - iOffset;
+            iSize       = iNextOffset - iOffset;
             //lpBuffer    = lpFileBuf[iOffset..iNextOffset];
             lpBuffer    = UTIL_SubBytes(lpFileBuf, iOffset, iSize);
 
@@ -1061,8 +1061,8 @@ namespace PalCommon
 
         public static INT
         PAL_MKFGetDecompressedSize(
-           INT              iChunkNum,
-           ref BYTE[]       lpFileBuf
+            INT              iChunkNum,
+            BYTE[]           lpFileBuf
         )
         /*++
           Purpose:
@@ -1119,9 +1119,9 @@ namespace PalCommon
 
         public static INT
         PAL_MKFDecompressChunk(
-           ref BYTE[]       lpBuffer,
-           INT              iChunkNum,
-           ref BYTE[]       lpFileBuf
+        ref BYTE[]          lpBuffer,
+            INT             iChunkNum,
+            BYTE[]          lpFileBuf
         )
         /*++
           Purpose:
@@ -1150,11 +1150,11 @@ namespace PalCommon
 
             if (len <= 0) return len;
 
-            if (lpBuffer == null) lpBuffer = new BYTE[PAL_MKFGetDecompressedSize(iChunkNum, ref lpFileBuf)];
-
             buf = new BYTE[len];
 
-            PAL_MKFReadChunk(ref buf, iChunkNum, ref lpFileBuf);
+            if (PAL_MKFReadChunk(ref buf, iChunkNum, lpFileBuf) == -1) return -1;
+
+            if (lpBuffer == null) lpBuffer = new BYTE[PAL_MKFGetDecompressedSize(iChunkNum, lpFileBuf)];
 
             len = Decompress(ref buf, ref lpBuffer);
 
@@ -1185,8 +1185,8 @@ namespace PalCommon
             //
             // 获取图像宽度
             //
-            iWidth  = PAL_RLEGetWidth(ref binRle);
-            iHeight = PAL_RLEGetHeight(ref binRle);
+            iWidth  = PAL_RLEGetWidth(binRle);
+            iHeight = PAL_RLEGetHeight(binRle);
 
             //
             // 初始化数组

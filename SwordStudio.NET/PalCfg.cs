@@ -22,6 +22,7 @@ using PAL_POS   = System.UInt64;
 using PalGlobal;
 
 using static PalGlobal.Pal_Global;
+using static PalConfig.Pal_Config;
 using static PalUtil.Pal_Util;
 
 namespace PalCfg
@@ -106,7 +107,7 @@ namespace PalCfg
                 //
                 if (lpszThisLine[0] == '#') continue;
 
-                lpszTagName = (!fIsBegin) ? "BEGIN" : "END";
+                lpszTagName = (!fIsBegin) ? lpszBegin : lpszEnd;
 
                 //
                 // Retrieve "BEGIN" or "END" tags
@@ -166,6 +167,7 @@ namespace PalCfg
                         if (String.IsNullOrEmpty(lpszParameterTable[i]))    break;
                         if (lpszParameterTable[i][0].Equals('#'))           break;
 
+                        /*++
                         //
                         // Check item version
                         //
@@ -196,12 +198,14 @@ namespace PalCfg
                                 }
                                 break;
                         }
+                        --*/
 
                         //
                         // Check system nodes
                         //
                         switch (lpszNodeName)
                         {
+                            /*++
                             case lpszSetting:
                                 {
                                     fIsSystemTag = TRUE;
@@ -234,6 +238,7 @@ namespace PalCfg
                                             }
                                             break;
 
+
                                         default:
                                             {
 
@@ -242,6 +247,7 @@ namespace PalCfg
                                     }
                                 }
                                 break;
+                            --*/
 
                             case lpszFile:
                                 {
@@ -280,6 +286,7 @@ namespace PalCfg
                                     pcniThisNodeItem.lpszTitle      = lpszParameterTable[i++];
                                 }
                                 break;
+
                             default:
                                 {
                                     //
@@ -291,7 +298,7 @@ namespace PalCfg
 
                                     switch (pcniThisNodeItem.lpszType)
                                     {
-                                        case "UNION":
+                                        case lpszUnion:
                                             {
                                                 INT         start, end;
                                                 LPSTR       input   = lpszParameterTable[i++];
@@ -378,7 +385,6 @@ namespace PalCfg
             return pcniTmp.IndexOf(pcniTmp.Where(item => item.lpszNodeName.Equals(_lpszItemNodeName)).First());
         }
 
-
         public static INT
         Pal_Cfg_GetChunkSize(
             LPSTR _lpszNodeName
@@ -401,6 +407,20 @@ namespace PalCfg
             }
 
             return iSize;
+        }
+
+        public static INT
+        Pal_Cfg_GetChunkCount(
+            LPSTR _lpszNodeName
+        )
+        {
+            INT         iChunkSize, iChunkCount;
+
+            iChunkSize = Pal_Cfg_GetChunkSize(_lpszNodeName);
+
+            iChunkCount = 0;
+
+            return iChunkCount;
         }
     }
 }

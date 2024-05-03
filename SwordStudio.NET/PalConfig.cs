@@ -18,9 +18,49 @@ namespace PalConfig
 {
 	public class Pal_Config
 	{
-        public static LPSTR[]   lpszCfgUser    = null;
+        public static LPSTR[]   lpszCfgUser         = null;
+        
+        public const LPSTR  lpszBegin       = "BEGIN";
+        public const LPSTR  lpszEnd         = "END";
 
-        public static LPSTR[]	lpszCfgDefault =
+        public const LPSTR  lpszNull        = "<NULL>";
+
+        public const LPSTR  lpszUnion       = "UNION";
+
+        //public const LPSTR  lpszSetting     = "SETTING";
+        public const LPSTR  lpszFile        = "File";
+        public const LPSTR  lpszCoreData    = "CoreData";
+        public const LPSTR  lpszMainData    = "MainData";
+        public const LPSTR  lpszEvent       = "Event";
+        public const LPSTR  lpszScene       = "Scene";
+        public const LPSTR  lpszUnit        = "Unit";
+        public const LPSTR  lpszUnitSystem  = "Unit_System";
+        public const LPSTR  lpszSciptDesc   = "ScriptDesc";
+        public const LPSTR  lpszSceneDesc   = "SceneDesc";
+
+        public const LPSTR  lpszEnemyBMP    = "EnemyBMP";
+        public const LPSTR  lpszEventBMP    = "EventBMP";
+        public const LPSTR  lpszGameMapTile = "GameMapTile";
+        public const LPSTR  lpszGameMap     = "GameMap";
+        public const LPSTR  lpszPalette     = "Palette";
+
+        public const LPSTR  lpszTXT         = "TXT";
+
+        public const LPSTR  lpszMapID       = "MapID";
+
+        public const LPSTR  lpszEventObjectIndex    = "EventObjectIndex";
+
+        public const LPSTR  lpszState           = "State";
+        public const LPSTR  lpszVanishTime      = "VanishTime";
+        public const LPSTR  lpszCurrentFrameNum = "CurrentFrameNum";
+        public const LPSTR  lpszSpriteFrames    = "SpriteFrames";
+        public const LPSTR  lpszDirection       = "Direction";
+        public const LPSTR  lpszX               = "X";
+        public const LPSTR  lpszY               = "Y";
+        public const LPSTR  lpszLayer           = "Layer";
+        public const LPSTR  lpszSpriteNum       = "SpriteNum";
+
+        public static LPSTR[]	lpszCfgDefault  =
 		{
 "##################################################################################",
 "# Configuration file for PalStudio.NET                                           #",

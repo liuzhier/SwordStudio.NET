@@ -26,6 +26,7 @@ using PalVideo;
 using PalMap;
 
 using static PalMain.Pal_Main;
+using static PalConfig.Pal_Config;
 using static PalCfg.Pal_Cfg;
 using static PalGlobal.Pal_Global;
 using static PalGlobal.Pal_File;

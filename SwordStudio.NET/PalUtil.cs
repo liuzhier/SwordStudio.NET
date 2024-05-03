@@ -33,11 +33,11 @@ namespace PalUtil
         INT     = (1 << 2),
         UINT    = (1 << 2),
 
-        SDWORD  = (1 << 3),
-        DWORD   = (1 << 3),
+        SDWORD  = (1 << 2),
+        DWORD   = (1 << 2),
 
-        SQWORD  = (1 << 4),
-        QWORD   = (1 << 4),
+        SQWORD  = (1 << 3),
+        QWORD   = (1 << 3),
     }
 
     public class Pal_Util
@@ -100,6 +100,37 @@ namespace PalUtil
 
                 return asList.ToArray();
                 */
+
+            return bytes;
+        }
+
+        public static BYTE[]
+        UTIL_SubBytes(
+            BYTE[]  array,
+        ref INT     iOffset,
+            INT     iLength         = -1,
+            INT     iAlignmentNum   = -1
+        )
+        {
+            BYTE[] bytes;
+            INT i, iRealLength = iLength;
+
+            if (iRealLength == -1)
+            {
+                iRealLength = array.Length - iOffset;
+            }
+
+            if (iAlignmentNum != -1 && iRealLength % iAlignmentNum != 0)
+            {
+                iRealLength += iAlignmentNum - (iRealLength + iAlignmentNum) % iAlignmentNum;
+            }
+
+            bytes = new BYTE[iRealLength];
+
+            if (iLength == -1) iLength = iRealLength;
+            for (i = 0; i < iLength; i++) bytes[i] = array[iOffset + i];
+
+            iOffset += iLength;
 
             return bytes;
         }

@@ -80,14 +80,15 @@
             // MainBoxLR_SplitContainer.Panel2
             // 
             this.MainBoxLR_SplitContainer.Panel2.Controls.Add(this.SceneSelectBoxTD_MainBoxR_SplitContainer);
-            this.MainBoxLR_SplitContainer.Size = new System.Drawing.Size(942, 654);
-            this.MainBoxLR_SplitContainer.SplitterDistance = 654;
+            this.MainBoxLR_SplitContainer.Size = new System.Drawing.Size(1132, 632);
+            this.MainBoxLR_SplitContainer.SplitterDistance = 832;
             this.MainBoxLR_SplitContainer.TabIndex = 0;
             // 
             // ScrollBoxTD_MainBoxL_SplitContainer
             // 
             this.ScrollBoxTD_MainBoxL_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ScrollBoxTD_MainBoxL_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ScrollBoxTD_MainBoxL_SplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.ScrollBoxTD_MainBoxL_SplitContainer.IsSplitterFixed = true;
             this.ScrollBoxTD_MainBoxL_SplitContainer.Location = new System.Drawing.Point(0, 0);
             this.ScrollBoxTD_MainBoxL_SplitContainer.Name = "ScrollBoxTD_MainBoxL_SplitContainer";
@@ -100,14 +101,15 @@
             // ScrollBoxTD_MainBoxL_SplitContainer.Panel2
             // 
             this.ScrollBoxTD_MainBoxL_SplitContainer.Panel2.Controls.Add(this.ScrollBoxD_MainBoxL_SplitContainer);
-            this.ScrollBoxTD_MainBoxL_SplitContainer.Size = new System.Drawing.Size(654, 654);
-            this.ScrollBoxTD_MainBoxL_SplitContainer.SplitterDistance = 624;
+            this.ScrollBoxTD_MainBoxL_SplitContainer.Size = new System.Drawing.Size(832, 632);
+            this.ScrollBoxTD_MainBoxL_SplitContainer.SplitterDistance = 602;
             this.ScrollBoxTD_MainBoxL_SplitContainer.TabIndex = 0;
             // 
             // ScrollBoxT_MainBoxL_SplitContainer
             // 
             this.ScrollBoxT_MainBoxL_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ScrollBoxT_MainBoxL_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ScrollBoxT_MainBoxL_SplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.ScrollBoxT_MainBoxL_SplitContainer.IsSplitterFixed = true;
             this.ScrollBoxT_MainBoxL_SplitContainer.Location = new System.Drawing.Point(0, 0);
             this.ScrollBoxT_MainBoxL_SplitContainer.Name = "ScrollBoxT_MainBoxL_SplitContainer";
@@ -119,8 +121,8 @@
             // ScrollBoxT_MainBoxL_SplitContainer.Panel2
             // 
             this.ScrollBoxT_MainBoxL_SplitContainer.Panel2.Controls.Add(this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar);
-            this.ScrollBoxT_MainBoxL_SplitContainer.Size = new System.Drawing.Size(654, 624);
-            this.ScrollBoxT_MainBoxL_SplitContainer.SplitterDistance = 624;
+            this.ScrollBoxT_MainBoxL_SplitContainer.Size = new System.Drawing.Size(832, 602);
+            this.ScrollBoxT_MainBoxL_SplitContainer.SplitterDistance = 802;
             this.ScrollBoxT_MainBoxL_SplitContainer.TabIndex = 0;
             // 
             // MapPreview_PictureBox
@@ -130,7 +132,7 @@
             this.MapPreview_PictureBox.Enabled = false;
             this.MapPreview_PictureBox.Location = new System.Drawing.Point(0, 0);
             this.MapPreview_PictureBox.Name = "MapPreview_PictureBox";
-            this.MapPreview_PictureBox.Size = new System.Drawing.Size(622, 622);
+            this.MapPreview_PictureBox.Size = new System.Drawing.Size(800, 600);
             this.MapPreview_PictureBox.TabIndex = 0;
             this.MapPreview_PictureBox.TabStop = false;
             this.MapPreview_PictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapPreview_PictureBox_MouseDown);
@@ -145,7 +147,7 @@
             this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Location = new System.Drawing.Point(0, 0);
             this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Maximum = 127;
             this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Name = "ScrollTD_ScrollBoxT_MainBoxL_VScrollBar";
-            this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Size = new System.Drawing.Size(24, 622);
+            this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.Size = new System.Drawing.Size(24, 600);
             this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.TabIndex = 0;
             this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar.ValueChanged += new System.EventHandler(this.ScrollTD_ScrollBoxT_MainBoxL_VScrollBar_ValueChanged);
             // 
@@ -153,14 +155,15 @@
             // 
             this.ScrollBoxD_MainBoxL_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ScrollBoxD_MainBoxL_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ScrollBoxD_MainBoxL_SplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.ScrollBoxD_MainBoxL_SplitContainer.Location = new System.Drawing.Point(0, 0);
             this.ScrollBoxD_MainBoxL_SplitContainer.Name = "ScrollBoxD_MainBoxL_SplitContainer";
             // 
             // ScrollBoxD_MainBoxL_SplitContainer.Panel1
             // 
             this.ScrollBoxD_MainBoxL_SplitContainer.Panel1.Controls.Add(this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar);
-            this.ScrollBoxD_MainBoxL_SplitContainer.Size = new System.Drawing.Size(654, 26);
-            this.ScrollBoxD_MainBoxL_SplitContainer.SplitterDistance = 623;
+            this.ScrollBoxD_MainBoxL_SplitContainer.Size = new System.Drawing.Size(832, 26);
+            this.ScrollBoxD_MainBoxL_SplitContainer.SplitterDistance = 802;
             this.ScrollBoxD_MainBoxL_SplitContainer.TabIndex = 0;
             // 
             // ScrollLR_ScrollBoxD_MainBoxL_HScrollBar
@@ -171,7 +174,7 @@
             this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Location = new System.Drawing.Point(0, 0);
             this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Maximum = 63;
             this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Name = "ScrollLR_ScrollBoxD_MainBoxL_HScrollBar";
-            this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Size = new System.Drawing.Size(621, 24);
+            this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.Size = new System.Drawing.Size(800, 24);
             this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.TabIndex = 0;
             this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar.ValueChanged += new System.EventHandler(this.ScrollLR_ScrollBoxD_MainBoxL_HScrollBar_ValueChanged);
             // 
@@ -179,6 +182,7 @@
             // 
             this.SceneSelectBoxTD_MainBoxR_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SceneSelectBoxTD_MainBoxR_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SceneSelectBoxTD_MainBoxR_SplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.SceneSelectBoxTD_MainBoxR_SplitContainer.IsSplitterFixed = true;
             this.SceneSelectBoxTD_MainBoxR_SplitContainer.Location = new System.Drawing.Point(0, 0);
             this.SceneSelectBoxTD_MainBoxR_SplitContainer.Name = "SceneSelectBoxTD_MainBoxR_SplitContainer";
@@ -191,14 +195,15 @@
             // SceneSelectBoxTD_MainBoxR_SplitContainer.Panel2
             // 
             this.SceneSelectBoxTD_MainBoxR_SplitContainer.Panel2.Controls.Add(this.SubmitSelect_SceneSelectBoxD_UtilButton);
-            this.SceneSelectBoxTD_MainBoxR_SplitContainer.Size = new System.Drawing.Size(284, 654);
-            this.SceneSelectBoxTD_MainBoxR_SplitContainer.SplitterDistance = 583;
+            this.SceneSelectBoxTD_MainBoxR_SplitContainer.Size = new System.Drawing.Size(296, 632);
+            this.SceneSelectBoxTD_MainBoxR_SplitContainer.SplitterDistance = 561;
             this.SceneSelectBoxTD_MainBoxR_SplitContainer.TabIndex = 0;
             // 
             // MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer
             // 
             this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.IsSplitterFixed = true;
             this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.Location = new System.Drawing.Point(0, 0);
             this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.Name = "MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer";
@@ -211,7 +216,7 @@
             // MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.Panel2
             // 
             this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.Panel2.Controls.Add(this.MapNameList_SceneSelectBoxT_ListView);
-            this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.Size = new System.Drawing.Size(284, 583);
+            this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.Size = new System.Drawing.Size(296, 561);
             this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.SplitterDistance = 49;
             this.MapNameListTD_SceneSelectBoxT_MainBoxR_SplitContainer.TabIndex = 0;
             // 
@@ -223,7 +228,7 @@
             this.ThisSceneName_MapNameListT_SceneSelectBoxT_MainBoxR_SplitContainer.ForeColor = System.Drawing.Color.Yellow;
             this.ThisSceneName_MapNameListT_SceneSelectBoxT_MainBoxR_SplitContainer.Location = new System.Drawing.Point(0, 0);
             this.ThisSceneName_MapNameListT_SceneSelectBoxT_MainBoxR_SplitContainer.Name = "ThisSceneName_MapNameListT_SceneSelectBoxT_MainBoxR_SplitContainer";
-            this.ThisSceneName_MapNameListT_SceneSelectBoxT_MainBoxR_SplitContainer.Size = new System.Drawing.Size(282, 47);
+            this.ThisSceneName_MapNameListT_SceneSelectBoxT_MainBoxR_SplitContainer.Size = new System.Drawing.Size(294, 47);
             this.ThisSceneName_MapNameListT_SceneSelectBoxT_MainBoxR_SplitContainer.TabIndex = 0;
             this.ThisSceneName_MapNameListT_SceneSelectBoxT_MainBoxR_SplitContainer.Text = "当前：未选择";
             this.ThisSceneName_MapNameListT_SceneSelectBoxT_MainBoxR_SplitContainer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -237,11 +242,12 @@
             this.MapNameList_SceneSelectBoxT_ListView.Location = new System.Drawing.Point(0, 0);
             this.MapNameList_SceneSelectBoxT_ListView.MultiSelect = false;
             this.MapNameList_SceneSelectBoxT_ListView.Name = "MapNameList_SceneSelectBoxT_ListView";
-            this.MapNameList_SceneSelectBoxT_ListView.Size = new System.Drawing.Size(282, 528);
+            this.MapNameList_SceneSelectBoxT_ListView.Size = new System.Drawing.Size(294, 506);
             this.MapNameList_SceneSelectBoxT_ListView.TabIndex = 0;
             this.MapNameList_SceneSelectBoxT_ListView.UseCompatibleStateImageBehavior = false;
             this.MapNameList_SceneSelectBoxT_ListView.View = System.Windows.Forms.View.Details;
             this.MapNameList_SceneSelectBoxT_ListView.ItemActivate += new System.EventHandler(this.MapNameList_SceneSelectBoxT_ListView_ItemActivate);
+            this.MapNameList_SceneSelectBoxT_ListView.Resize += new System.EventHandler(this.MapNameList_SceneSelectBoxT_ListView_Resize);
             // 
             // SubmitSelect_SceneSelectBoxD_UtilButton
             // 
@@ -252,7 +258,7 @@
             this.SubmitSelect_SceneSelectBoxD_UtilButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SubmitSelect_SceneSelectBoxD_UtilButton.Location = new System.Drawing.Point(0, 0);
             this.SubmitSelect_SceneSelectBoxD_UtilButton.Name = "SubmitSelect_SceneSelectBoxD_UtilButton";
-            this.SubmitSelect_SceneSelectBoxD_UtilButton.Size = new System.Drawing.Size(282, 65);
+            this.SubmitSelect_SceneSelectBoxD_UtilButton.Size = new System.Drawing.Size(294, 65);
             this.SubmitSelect_SceneSelectBoxD_UtilButton.TabIndex = 0;
             this.SubmitSelect_SceneSelectBoxD_UtilButton.Text = "确定";
             this.SubmitSelect_SceneSelectBoxD_UtilButton.UseVisualStyleBackColor = false;
@@ -262,16 +268,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(942, 654);
+            this.ClientSize = new System.Drawing.Size(1132, 632);
             this.Controls.Add(this.MainBoxLR_SplitContainer);
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(1150, 678);
             this.Name = "Form_SceneSelect";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "请选择欲编辑的场景";
             this.Load += new System.EventHandler(this.Form_SceneSelect_Load);
+            this.Resize += new System.EventHandler(this.Form_SceneSelect_Resize);
             this.MainBoxLR_SplitContainer.Panel1.ResumeLayout(false);
             this.MainBoxLR_SplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MainBoxLR_SplitContainer)).EndInit();

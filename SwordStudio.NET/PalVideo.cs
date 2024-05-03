@@ -24,6 +24,7 @@ using PalGlobal;
 
 using static PalGlobal.Pal_Global;
 using static PalGlobal.Pal_File;
+using static PalConfig.Pal_Config;
 using static PalCommon.Pal_Common;
 using static PalUtil.Pal_Util;
 
@@ -60,13 +61,25 @@ namespace PalVideo
             BOOL    fNight      = FALSE
         )
         {
-            INT     i, j;
-            BYTE[]  binPat;
+            ResetSurface(iWidth, iHeight, iPaletteNum, fNight);
+        }
+
+        public void
+        ResetSurface(
+            INT     iWidth,
+            INT     iHeight,
+            INT     iPaletteNum = 0,
+            BOOL    fNight      = FALSE
+        )
+        {
+            INT i, j;
+            BYTE[] binPat;
 
             w       = iWidth;
             h       = iHeight;
             pitch   = w * 1;
             pixels  = new BYTE[pitch * h];
+
             for (i = 0; i < pixels.Length; i++)
             {
                 pixels[i] = 0xFF;
@@ -75,9 +88,9 @@ namespace PalVideo
             //
             // Get palette data
             //
-            binPat  = Pal_File_GetFile(lpszPalette).bufFile;
+            binPat = Pal_File_GetFile(lpszPalette).bufFile;
 
-            PAL_MKFReadChunk(ref binPat, iPaletteNum, ref binPat);
+            PAL_MKFReadChunk(ref binPat, iPaletteNum, binPat);
 
             //
             // Initialize color palette
@@ -86,7 +99,7 @@ namespace PalVideo
             {
                 j = (fNight ? 256 * 3 : 0) + i * 3;
 
-                palette[i].red = (BYTE)(binPat[j] << 2);
+                palette[i].red  = (BYTE)(binPat[j] << 2);
                 palette[i].gree = (BYTE)(binPat[j + 1] << 2);
                 palette[i].blue = (BYTE)(binPat[j + 2] << 2);
             }
@@ -137,18 +150,23 @@ namespace PalVideo
             _Surface = new Surface(iWidth, iHeight);
         }
 
-        public static void Video_DrawEnlargeBitmap(Surface surface, Image dest, INT n_tupling)
+        public static void
+        Video_DrawEnlargeBitmap(
+            Surface     surface,
+            Image       dest,
+            INT         n_tupling
+        )
         {
-            INT scaledWidth, scaledHeight, Width, Height, i, j, x, y, iAlpha = -1;
-            Color color;
-            Bitmap originalBitmap, scaledBitmap;
-            BYTE[] RGB_List;
+            INT     scaledWidth, scaledHeight, Width, Height, i, j, x, y, iAlpha = -1;
+            Color   color;
+            Bitmap  originalBitmap, scaledBitmap;
+            BYTE[]  RGB_List;
 
             Width           = surface.w;
             Height          = surface.h;
 
-            scaledWidth     = Width * n_tupling;
-            scaledHeight    = Height * n_tupling;
+            scaledWidth     = Width  * (n_tupling == -1 ? 1 : n_tupling);
+            scaledHeight    = Height * (n_tupling == -1 ? 1 : n_tupling);
 
             originalBitmap  = new Bitmap(Width, Height);
             scaledBitmap    = (Bitmap)dest;
@@ -167,6 +185,17 @@ namespace PalVideo
 
                 color = Color.FromArgb(RGB_List[i], RGB_List[i + 1], RGB_List[i + 2]);
                 originalBitmap.SetPixel(x, y, color);
+            }
+
+            if (n_tupling == -1)
+            {
+                Width           = scaledBitmap.Width;
+                Height          = scaledBitmap.Height;
+
+                scaledWidth     = Width;
+                scaledHeight    = Height;
+
+                originalBitmap = (Bitmap)Video_ChangeImageSize(originalBitmap, Width, Height);
             }
 
             using (Graphics graphics = Graphics.FromImage(scaledBitmap))
@@ -189,7 +218,12 @@ namespace PalVideo
             }
         }
 
-        public static Image Video_ChangeImageSize(Image Src, INT Width, INT Height)
+        public static Image
+        Video_ChangeImageSize(
+            Image       Src,
+            INT         Width,
+            INT         Height
+        )
         {
             Bitmap resizedImage;
 
@@ -220,8 +254,6 @@ namespace PalVideo
             return resizedImage;
         }
 
-        static INT index = 0;
-
         public static void
         Video_ApplyWave(
            Surface                  surface
@@ -244,6 +276,7 @@ namespace PalVideo
             INT[]           wave        = new INT[32];
             INT             i, a, b, p;
             BYTE[]          tmp;
+            INT             index = 0;
 
             Pal_Global.wScreenWave = (WORD)(Pal_Global.wScreenWave + Pal_Global.sWaveProgression);
 
