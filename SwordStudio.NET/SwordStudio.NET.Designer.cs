@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SWORD));
             this.Main_TabControl = new System.Windows.Forms.TabControl();
             this.About_TabPage = new System.Windows.Forms.TabPage();
@@ -98,6 +99,7 @@
             this.Value_X_Status_Word_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Y_Status_Word_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Value_Y_Status_Word_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.Main_TabControl.SuspendLayout();
             this.About_TabPage.SuspendLayout();
             this.World_TabPage.SuspendLayout();
@@ -155,6 +157,7 @@
             this.ScrollBoxD_ActualBoxR_SplitContainer.Panel1.SuspendLayout();
             this.ScrollBoxD_ActualBoxR_SplitContainer.SuspendLayout();
             this.Status_Word_StatusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // Main_TabControl
@@ -328,6 +331,7 @@
             this.Select_ToolsBar_Word_Button.Size = new System.Drawing.Size(50, 50);
             this.Select_ToolsBar_Word_Button.TabIndex = 4;
             this.Select_ToolsBar_Word_Button.UseVisualStyleBackColor = true;
+            this.Select_ToolsBar_Word_Button.Click += new System.EventHandler(this.Select_ToolsBar_Word_Button_Click);
             // 
             // Edit_ToolsBar_Word_Button
             // 
@@ -342,6 +346,7 @@
             this.Edit_ToolsBar_Word_Button.Size = new System.Drawing.Size(50, 50);
             this.Edit_ToolsBar_Word_Button.TabIndex = 5;
             this.Edit_ToolsBar_Word_Button.UseVisualStyleBackColor = true;
+            this.Edit_ToolsBar_Word_Button.Click += new System.EventHandler(this.Edit_ToolsBar_Word_Button_Click);
             // 
             // Delete_ToolsBar_Word_Button
             // 
@@ -356,6 +361,7 @@
             this.Delete_ToolsBar_Word_Button.Size = new System.Drawing.Size(50, 50);
             this.Delete_ToolsBar_Word_Button.TabIndex = 6;
             this.Delete_ToolsBar_Word_Button.UseVisualStyleBackColor = true;
+            this.Delete_ToolsBar_Word_Button.Click += new System.EventHandler(this.Delete_ToolsBar_Word_Button_Click);
             // 
             // BlockDisplayMode_ToolsBarGroup_World_FlowLayoutPanel
             // 
@@ -1041,6 +1047,10 @@
             this.Value_Y_Status_Word_ToolStripStatusLabel.Size = new System.Drawing.Size(115, 27);
             this.Value_Y_Status_Word_ToolStripStatusLabel.Text = "65535(0XFFFF)";
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // SWORD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1114,6 +1124,7 @@
             this.ScrollBoxD_ActualBoxR_SplitContainer.ResumeLayout(false);
             this.Status_Word_StatusStrip.ResumeLayout(false);
             this.Status_Word_StatusStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1189,6 +1200,7 @@
         private System.Windows.Forms.SplitContainer ScrollBoxD_ActualBoxR_SplitContainer;
         private System.Windows.Forms.HScrollBar ScrollLR_ScrollBoxD_ActualBoxR_HScrollBar;
         private System.Windows.Forms.PictureBox WorldViewport_PictureBox;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
 

@@ -94,7 +94,6 @@ namespace SwordStudio.NET
                 rect.h = MapPreview_PictureBox.Height;
             }
 
-
             if (_iThisScene != -1) PAL_DrawMapToSurface(sfMapPreview, rect, MapPreview_PictureBox, _dwMapPos);
         }
 

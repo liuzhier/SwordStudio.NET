@@ -30,10 +30,10 @@ namespace PalCommon
         public static PAL_POS
         PAL_XY(dynamic x, dynamic y)  => (PAL_POS) ((((WORD)y << 16) & 0xFFFF0000) | ((WORD)x & 0xFFFF));
 
-        public static dynamic
+        public static WORD
         PAL_X(PAL_POS xy)       => (WORD) ((xy) & 0xFFFF);
 
-        public static dynamic
+        public static WORD
         PAL_Y(PAL_POS xy)       => (WORD) (((xy) >> 16) & 0xFFFF);
 
         public static BYTE

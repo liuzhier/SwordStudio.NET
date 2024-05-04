@@ -35,6 +35,7 @@ using static PalGlobal.Pal_File;
 using static PalCommon.Pal_Common;
 using static PalVideo.Pal_Video;
 using static PalMap.Pal_Map;
+using static PalRes.Pal_Res;
 
 namespace SwordStudio.NET
 {
@@ -46,14 +47,15 @@ namespace SwordStudio.NET
         INT                 _iThisMapTitleNum   = -1;
 
         Surface             sfWorldViewport;
+        PAL_POS             dwMaxMapPos;
         PAL_POS             posWorldViewport    = PAL_XY(0, 0);
         Rect                rectWorldViewport   = new Rect();
-        PAL_POS             dwMaxMapPos;
 
         BOOL                fIsMovingMap        = FALSE;
         Point               MouseBeginPos;
         Point               MouseEndPos;
 
+        PAL_EDIT_MODE       pemEditMode         = PAL_EDIT_MODE.None;
         PAL_DISPLAY_MODE    pdmDisplayMode      = PAL_DISPLAY_MODE.None | PAL_DISPLAY_MODE.LowTile | PAL_DISPLAY_MODE.HighTile;
 
         public SWORD()
@@ -265,6 +267,21 @@ namespace SwordStudio.NET
             }
         }
 
+        private void Select_ToolsBar_Word_Button_Click(object sender, EventArgs e)
+        {
+            pemEditMode = PAL_EDIT_MODE.Select;
+        }
+
+        private void Edit_ToolsBar_Word_Button_Click(object sender, EventArgs e)
+        {
+            pemEditMode = PAL_EDIT_MODE.Edit;
+        }
+
+        private void Delete_ToolsBar_Word_Button_Click(object sender, EventArgs e)
+        {
+            pemEditMode = PAL_EDIT_MODE.Delete;
+        }
+
         private void NoPassBlock_ToolsBar_Word_Button_Click(object sender, EventArgs e)
         {
             UtilButton  ubButton        = sender as UtilButton;
@@ -312,11 +329,35 @@ namespace SwordStudio.NET
 
         private void WorldViewport_PictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if ((pemEditMode & PAL_EDIT_MODE.Select) != 0)
             {
-                fIsMovingMap    = true;
+                if (e.Button == MouseButtons.Left)
+                {
+                    fIsMovingMap = TRUE;
 
-                MouseBeginPos   = Cursor.Position;
+                    MouseBeginPos = Cursor.Position;
+                }
+            }
+            else if ((pemEditMode & PAL_EDIT_MODE.Edit) != 0)
+            {
+                Point   mousePosition;
+                WORD x, y, h;
+
+                mousePosition = WorldViewport_PictureBox.PointToClient(Cursor.Position);
+
+                x = (WORD)(sfWorldViewport.w * ((double)mousePosition.X / WorldViewport_PictureBox.Width));
+                y = (WORD)(sfWorldViewport.h * ((double)mousePosition.Y / WorldViewport_PictureBox.Height));
+
+                PAL_POS_TO_XYH(PAL_XY(x, y), out x, out y, out h);
+                posClick = PAL_XYH_TO_POS(x, y, h);
+
+                PAL_RLEBlitToSurface(bitmapNoPass, sfWorldViewport, posClick);
+
+                //
+                // Display the currently selected scene image
+                //
+                Video_DrawEnlargeBitmap(sfMapViewport, WorldViewport_PictureBox.Image, -1);
+                WorldViewport_PictureBox.Refresh();
             }
         }
 
@@ -327,6 +368,19 @@ namespace SwordStudio.NET
 
         private void WorldViewport_PictureBox_MouseMove(object sender, MouseEventArgs e)
         {
+            Point mousePosition;
+            WORD x, y, h;
+
+            mousePosition = WorldViewport_PictureBox.PointToClient(Cursor.Position);
+
+            x = (WORD)(sfWorldViewport.w * ((double)mousePosition.X / WorldViewport_PictureBox.Width));
+            y = (WORD)(sfWorldViewport.h * ((double)mousePosition.Y / WorldViewport_PictureBox.Height));
+
+            PAL_POS_TO_XYH(PAL_XY(x, y), out x, out y, out h);
+            posClick = PAL_XYH_TO_POS(x, y, h);
+
+            PAL_DrawMapToSurface(sfWorldViewport, rectWorldViewport, WorldViewport_PictureBox, posWorldViewport, pdmDisplayMode);
+
             if (!fIsMovingMap) return;
 
             MouseEndPos     = Point.Subtract(Cursor.Position, new Size(MouseBeginPos));

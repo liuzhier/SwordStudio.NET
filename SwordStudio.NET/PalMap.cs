@@ -15,6 +15,8 @@ using INT       = System.Int32;
 using UINT      = System.UInt32;
 using SDWORD    = System.Int32;
 using DWORD     = System.UInt32;
+using SQWORD    = System.Int64;
+using QWORD     = System.UInt64;
 using LPSTR     = System.String;
 
 using PAL_POS   = System.UInt32;
@@ -38,6 +40,27 @@ namespace PalMap
 {
     public class Pal_Map
     {
+        //The width of the horizontal slice of Tile at different y-coordinates
+        private static WORD[,] SegmentTable = new WORD[16,32]
+        {
+            { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, }, // 0
+            { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, }, // 1
+            { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, }, // 2
+            { 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, }, // 3
+            { 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, }, // 4
+            { 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, }, // 5
+            { 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, }, // 6
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, // 7
+            { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, }, // 8
+            { 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, }, // 9
+            { 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, }, // 10
+            { 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, }, // 11
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, }, // 12
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, }, // 13
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, }, // 14
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, }, // 14
+        };
+
         public class Pal_Map_Tile
         {
             public BOOL     fIsNoPassBlock  = FALSE;
@@ -52,6 +75,7 @@ namespace PalMap
 
         public static   Surface             sfMapViewport;
         public static   PAL_POS             Viewport            = Pal_Map.dwMinMapPos;
+        public static   PAL_POS             posClick            = PAL_XY(0, 0);
         public static   PAL_DISPLAY_MODE    DisplayMode;
         public static   Surface             TileSurface         = new Surface(Pal_Map.iTileWidth, Pal_Map.iTileHeight);
         public static   Image               TileImage           = new Bitmap(Pal_Map.TileSurface.w, Pal_Map.TileSurface.h);
@@ -458,6 +482,8 @@ namespace PalMap
             //
             if ((DisplayMode & PAL_DISPLAY_MODE.EventSprite) != 0) PAL_SceneDrawSprites();
 
+            PAL_RLEBlitToSurface(bitmapNoPass, sfMapViewport, posClick);
+
             //
             // Step 4: Draw all NoPass blocks.
             //
@@ -470,5 +496,131 @@ namespace PalMap
 
             pictureBox.Refresh();
         }
+
+        public static PAL_POS
+        PAL_XYH_TO_POS(
+            WORD        x,
+            WORD        y,
+            WORD        h
+        ) => PAL_XY(x * 32 + h * 16, y * 16 + h * 8);
+
+        public static void
+        PAL_POS_TO_XYH(
+            PAL_POS     pos,
+        out WORD        x,
+        out WORD        y,
+        out WORD        h
+        )
+        {
+            WORD Segment, SegmentX, SegmentY;
+
+            if (((SHORT)PAL_X(pos)) < 0 || ((SHORT)PAL_Y(pos)) < 0)
+            {
+                x   = 0xFFFF;
+                y   = 0xFFFF;
+                h   = 1;
+
+                return;
+            }
+
+            SegmentX    = (WORD)(PAL_X(pos) % 32);
+            SegmentY    = (WORD)(PAL_Y(pos) % 16);
+            Segment     = SegmentTable[SegmentY, SegmentX];
+
+            x = (BYTE)(PAL_X(pos) / 32);
+            y = (BYTE)(PAL_Y(pos) / 16);
+            h           = 0;
+
+            if (Segment != 0)
+            {
+                if (((SHORT)(PAL_X(pos) - 16)) < 0 || ((SHORT)(PAL_Y(pos) - 8)) < 0)
+                {
+                    x = 0xFFFF;
+                    y = 0xFFFF;
+                    h = 1;
+
+                    return;
+                }
+
+                SegmentX    = (WORD)((PAL_X(pos) - 16) % 32);
+                SegmentY    = (WORD)((PAL_Y(pos) - 8) % 16);
+                Segment     = SegmentTable[SegmentY, SegmentX];
+
+                x = (BYTE)((PAL_X(pos) - 16) / 32);
+                y = (BYTE)((PAL_Y(pos) - 8) / 16);
+                h           = 1;
+            }
+
+            switch (Segment)
+            {
+                case 1:
+                    {
+                        if (h != 0)
+                        {
+                            y  += 1;
+                            h   = 0;
+                        }
+                        else
+                        {
+                            x  -= 1;
+                            h   = 1;
+                        }
+                    }
+                    break;
+
+                case 2:
+                    {
+                        if (h != 0)
+                        {
+                            h   = 0;
+                        }
+                        else
+                        {
+                            x  -= 1;
+                            y  -= 1;
+                            h   = 1;
+                        }
+                    }
+                    break;
+
+                case 3:
+                    {
+                        if (h != 0)
+                        {
+                            x  += 1;
+                            h   = 0;
+                        }
+                        else
+                        {
+                            y  -= 1;
+                            h   = 1;
+                        }
+                    }
+                    break;
+
+                case 4:
+                    {
+                        if (h != 0)
+                        {
+                            x  += 1;
+                            y  += 1;
+                            h   = 0;
+                        }
+                        else
+                        {
+                            h   = 1;
+                        }
+                    }
+                    break;
+
+                case 0:
+                default:
+                    {
+
+                    }
+                    break;
+            }
+        }
+            
     }
 }
