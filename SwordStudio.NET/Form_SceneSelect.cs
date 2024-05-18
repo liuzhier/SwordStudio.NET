@@ -86,6 +86,8 @@ namespace SwordStudio.NET
 
         private void Form_SceneSelect_Resize(object sender, EventArgs e)
         {
+            if (MapPreview_PictureBox == null || MapPreview_PictureBox.Image == null) return;
+
             if (MapPreview_PictureBox.Image.Width != MapPreview_PictureBox.Width || MapPreview_PictureBox.Image.Height != MapPreview_PictureBox.Height)
             {
                 MapPreview_PictureBox.Image = new Bitmap(MapPreview_PictureBox.Width, MapPreview_PictureBox.Height);
@@ -101,7 +103,7 @@ namespace SwordStudio.NET
         {
             System.Windows.Forms.ListView listView = sender as System.Windows.Forms.ListView;
 
-            if (listView != null) listView.Columns[0].Width = listView.Width;
+            if (listView != null && listView.Columns.Count > 0) listView.Columns[0].Width = listView.Width;
         }
 
         private void MapPreview_PictureBox_MouseDown(object sender, MouseEventArgs e)
